@@ -1,0 +1,1329 @@
+<title>Sylphe One</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Sylphe One, la souris sans fil de 39 grammes. Site de démonstration.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..500&display=swap">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+/* Layout: full-bleed bands (paper, night) around a 1120px column. The product stays pinned through the opening story while the copy trades sides. */
+:root{
+  --paper:#fbfbfc;
+  --paper-2:#f1f2f5;
+  --ink:#111215;
+  --ink-2:#666a73;
+  --line:#e2e4e9;
+  --accent:#2f5bea;
+  --btn:#2f5bea;
+  --btn-hover:#2449c9;
+  --btn-ink:#ffffff;
+  --night:#0b0c0e;
+  --night-2:#181a1e;
+  --night-ink:#f4f5f7;
+  --night-ink-2:#9ca0a9;
+  --night-line:#2a2d33;
+  --night-accent:#7f9cff;
+  --glass:rgba(251,251,252,.72);
+  --spot:rgba(47,91,234,.10);
+  --edge:rgba(17,18,21,.14);
+  --font-sans:"Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono:"Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --wrap:1120px;
+  --nav-h:52px;
+  --gl:max(clamp(16px, 5vw, 48px), env(safe-area-inset-left, 0px));
+  --gr:max(clamp(16px, 5vw, 48px), env(safe-area-inset-right, 0px));
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#050506; --paper-2:#131417; --ink:#f4f5f7; --ink-2:#9a9ea8; --line:#24262b;
+    --accent:#7f9cff; --btn:#3c63e8; --btn-hover:#4f74f2; --btn-ink:#ffffff;
+    --night:#101215; --night-2:#1b1e23; --night-ink:#f4f5f7; --night-ink-2:#9ca0a9; --night-line:#2c3036; --night-accent:#7f9cff;
+    --glass:rgba(5,5,6,.66); --spot:rgba(127,156,255,.12); --edge:rgba(255,255,255,.16);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#050506; --paper-2:#131417; --ink:#f4f5f7; --ink-2:#9a9ea8; --line:#24262b;
+  --accent:#7f9cff; --btn:#3c63e8; --btn-hover:#4f74f2; --btn-ink:#ffffff;
+  --night:#101215; --night-2:#1b1e23; --night-ink:#f4f5f7; --night-ink-2:#9ca0a9; --night-line:#2c3036; --night-accent:#7f9cff;
+  --glass:rgba(5,5,6,.66); --spot:rgba(127,156,255,.12); --edge:rgba(255,255,255,.16);
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html.lenis, html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto !important}
+.lenis.lenis-stopped{overflow:hidden}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:var(--font-sans); font-size:17px; line-height:1.5;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  overflow-x:clip;
+}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top, 0px); z-index:60; background:var(--glass)}
+::selection{background:var(--accent); color:var(--btn-ink)}
+a{color:inherit}
+p{margin:0}
+h1,h2,h3{margin:0; text-wrap:balance}
+.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+.wrap{width:100%; max-width:calc(var(--wrap) + 96px); margin-inline:auto; padding-left:var(--gl); padding-right:var(--gr)}
+
+/* ---------- type */
+.eyebrow{font:500 12px/1 var(--font-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--accent)}
+.h2{font-size:clamp(40px, 6vw, 80px); font-weight:600; letter-spacing:-.042em; line-height:1}
+.lead{font-size:clamp(18px, 1.5vw, 21px); line-height:1.5; color:var(--ink-2); max-width:34em}
+.band{padding-block:clamp(104px, 14vw, 184px)}
+.section-head{display:grid; gap:18px; max-width:780px; margin-bottom:clamp(48px, 7vw, 88px)}
+
+/* ---------- buttons */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.45em;
+  min-height:46px; padding:0 24px; border-radius:999px; border:0; cursor:pointer;
+  font:500 16px/1 var(--font-sans); letter-spacing:-.01em; text-decoration:none;
+  transition:background-color .25s, color .25s, box-shadow .25s;
+}
+.btn--primary{background:var(--btn); color:var(--btn-ink)}
+.btn--primary:hover{background:var(--btn-hover)}
+.btn--ghost{color:var(--accent); background:transparent; box-shadow:inset 0 0 0 1px var(--accent)}
+.btn--ghost:hover{background:var(--spot)}
+.btn--lg{min-height:56px; padding:0 34px; font-size:18px}
+.btn:focus-visible,.swatch:focus-visible,.cps__pad:focus-visible,.nav a:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+.btn svg{width:14px; height:14px}
+
+/* ---------- nav */
+.nav{
+  position:fixed; inset:0 0 auto; z-index:50;
+  padding-top:env(safe-area-inset-top, 0px);
+  background:var(--glass);
+  -webkit-backdrop-filter:saturate(180%) blur(20px); backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid transparent; transition:border-color .4s;
+}
+.nav.is-scrolled{border-bottom-color:var(--line)}
+.nav__inner{display:flex; align-items:center; gap:32px; height:var(--nav-h); max-width:calc(var(--wrap) + 96px); margin-inline:auto; padding-left:var(--gl); padding-right:var(--gr)}
+.brand{display:inline-flex; align-items:center; gap:9px; text-decoration:none; font-weight:600; font-size:18px; letter-spacing:-.03em}
+.brand svg{width:13px; height:20px}
+.nav__links{display:flex; gap:28px; margin:0 auto; padding:0; list-style:none}
+.nav__links a{font-size:13px; text-decoration:none; color:var(--ink-2); transition:color .2s}
+.nav__links a:hover{color:var(--ink)}
+.nav .btn{min-height:30px; padding:0 14px; font-size:13px}
+@media (max-width: 819.98px){ .nav__links{display:none} .nav .btn{margin-left:auto} }
+
+/* ---------- story (pinned hero) */
+.story{position:relative; height:540vh}
+.story__stage{position:sticky; top:0; height:100vh; height:100svh; overflow:hidden}
+.story__canvas{position:absolute; inset:0; width:100%; height:100%; display:block}
+.chapter{position:absolute; z-index:2}
+.js .chapter[data-ch="1"], .js .chapter[data-ch="2"], .js .chapter[data-ch="3"]{opacity:0; visibility:hidden}
+.chapter--hero{
+  top:calc(var(--nav-h) + env(safe-area-inset-top, 0px) + clamp(24px, 6vh, 72px)); left:0; right:0;
+  padding-left:var(--gl); padding-right:var(--gr);
+  display:grid; justify-items:center; text-align:center; gap:14px;
+}
+.hero__title{
+  font-size:clamp(68px, 12.5vw, 176px); font-weight:600; letter-spacing:-.055em; line-height:.88;
+  padding-bottom:.06em;
+  background:linear-gradient(180deg, var(--ink) 35%, var(--ink-2) 120%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero__sub{font-size:clamp(20px, 2.2vw, 28px); font-weight:500; letter-spacing:-.025em; color:var(--ink-2)}
+.hero__cta{display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-top:10px}
+.hero__price{font:400 13px/1.4 var(--font-mono); color:var(--ink-2); letter-spacing:.02em}
+
+.chapter--side{top:50%; translate:0 -50%; width:min(440px, 38vw); display:grid; gap:14px}
+.chapter--left{left:max(var(--gl), calc((100vw - var(--wrap)) / 2))}
+.chapter--right{right:max(var(--gr), calc((100vw - var(--wrap)) / 2))}
+.chapter__big{font-size:clamp(72px, 10vw, 150px); font-weight:600; letter-spacing:-.06em; line-height:.9; font-variant-numeric:tabular-nums; white-space:nowrap}
+.chapter__big small{font-size:.3em; font-weight:500; letter-spacing:-.01em; color:var(--ink-2); margin-left:.2em}
+.chapter p:not(.eyebrow){font-size:clamp(17px, 1.4vw, 20px); color:var(--ink-2); line-height:1.5}
+.chapter strong{color:var(--ink); font-weight:600}
+
+.story__dots{position:absolute; z-index:3; right:var(--gr); top:50%; translate:0 -50%; display:grid; gap:8px}
+.story__dots span{display:block; width:6px; height:6px; border-radius:3px; background:var(--line); transition:height .5s var(--ease), background-color .5s}
+.story__dots span.is-on{height:24px; background:var(--accent)}
+.scroll-cue{position:absolute; z-index:2; left:50%; translate:-50% 0; bottom:calc(env(safe-area-inset-bottom, 0px) + 28px); display:grid; justify-items:center; gap:10px; font:500 11px/1 var(--font-mono); letter-spacing:.16em; text-transform:uppercase; color:var(--ink-2)}
+.scroll-cue i{display:block; width:1px; height:36px; background:linear-gradient(var(--ink-2), transparent); transform-origin:top; animation:cue 2.2s var(--ease) infinite}
+@keyframes cue{0%{transform:scaleY(0); opacity:1} 60%{transform:scaleY(1); opacity:1} 100%{transform:scaleY(1); opacity:0}}
+
+.fallback{position:absolute; inset:0; display:none; place-items:center; pointer-events:none}
+.fallback svg{height:46%; width:auto; filter:drop-shadow(0 30px 40px rgba(0,0,0,.18))}
+.no-webgl .fallback{display:grid}
+.no-webgl canvas{visibility:hidden}
+
+@media (max-width: 819.98px){
+  .story{height:500vh}
+  .chapter--side{top:auto; bottom:calc(env(safe-area-inset-bottom, 0px) + 6svh); translate:none; left:var(--gl); right:var(--gr); width:auto; text-align:center; justify-items:center}
+  .chapter__big{font-size:clamp(64px, 19vw, 104px)}
+  .story__dots{display:none}
+  .fallback{place-items:start center; padding-top:42svh}
+  .fallback svg{height:30svh}
+}
+
+/* static fallback when motion is reduced or libraries are unavailable */
+.no-motion .story{height:auto}
+.no-motion .story__stage{position:relative; height:auto; overflow:visible; display:grid; gap:64px; padding-block:calc(var(--nav-h) + 56px) 72px}
+.no-motion .story__canvas{position:relative; height:56vh; order:1}
+.no-motion .fallback{position:relative; order:1; height:46vh; padding:0}
+.no-motion .chapter{position:relative; inset:auto; translate:none; width:auto; max-width:560px; margin-inline:auto; text-align:center; justify-items:center; order:2}
+.no-motion .chapter[data-ch]{opacity:1; visibility:visible}
+.no-motion .chapter--hero{order:0; padding:0; max-width:none}
+.no-motion .story__dots, .no-motion .scroll-cue{display:none}
+
+/* ---------- statement */
+.statement__text{font-size:clamp(30px, 4.5vw, 62px); font-weight:600; letter-spacing:-.038em; line-height:1.1; max-width:21em; text-wrap:balance}
+.statement__text .w{display:inline}
+
+/* ---------- bento */
+.bento{display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:16px}
+.card{
+  position:relative; isolation:isolate; overflow:hidden; min-width:0;
+  display:flex; flex-direction:column; gap:10px; min-height:380px;
+  padding:clamp(26px, 3vw, 36px); border-radius:28px; background:var(--paper-2);
+  transition:transform .7s var(--ease);
+}
+.card::before{
+  content:""; position:absolute; inset:0; z-index:-1; opacity:0; transition:opacity .4s;
+  background:radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), var(--spot), transparent 70%);
+}
+.card:hover::before{opacity:1}
+.cell{display:flex; min-width:0}
+.cell > .card{flex:1}
+.span-2{grid-column:span 2}
+.card__label{font:500 12px/1 var(--font-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--ink-2)}
+.card__stat{font-size:clamp(44px, 4.6vw, 60px); font-weight:600; letter-spacing:-.05em; line-height:1; font-variant-numeric:tabular-nums}
+.card__stat small{font-size:.42em; font-weight:500; letter-spacing:-.01em; color:var(--ink-2); margin-left:.15em}
+.card__text{color:var(--ink-2); max-width:30em}
+.card__viz{margin-top:auto; padding-top:24px}
+@media (max-width: 999.98px){ .bento{grid-template-columns:repeat(2, minmax(0, 1fr))} }
+@media (max-width: 639.98px){ .bento{grid-template-columns:minmax(0, 1fr)} .span-2{grid-column:auto} .card{min-height:0} }
+
+/* battery */
+.battery{display:grid; gap:12px}
+.battery__body{display:flex; align-items:center; gap:4px}
+.battery__cell{flex:1; height:44px; border-radius:14px; padding:5px; box-shadow:inset 0 0 0 1.5px var(--edge)}
+.battery__fill{position:relative; overflow:hidden; height:100%; width:6%; border-radius:9px; background:linear-gradient(90deg, var(--accent), var(--night-accent)); transition:width 2.4s var(--ease)}
+.battery.is-in .battery__fill{width:100%}
+.battery__fill::after{content:""; position:absolute; inset:0; background:linear-gradient(100deg, transparent 30%, rgba(255,255,255,.45) 50%, transparent 70%); translate:-100% 0; animation:shine 3.2s 1.2s ease-in-out infinite}
+@keyframes shine{to{translate:100% 0}}
+.battery__cap{width:5px; height:16px; border-radius:0 3px 3px 0; background:var(--edge)}
+.battery__scale{display:flex; justify-content:space-between; font:400 12px/1 var(--font-mono); color:var(--ink-2); padding-right:9px}
+
+/* switch */
+.switch{display:flex; align-items:flex-end; justify-content:center; gap:22px; height:150px}
+.switch__key{position:relative; width:110px; height:96px}
+.switch__cap{position:absolute; inset:0 0 18px; border-radius:18px 18px 10px 10px; background:linear-gradient(180deg, var(--paper-2), var(--paper) 40%); box-shadow:0 1px 0 var(--edge), 0 10px 24px -10px rgba(0,0,0,.25), inset 0 0 0 1px var(--edge); animation:press 1.8s var(--ease) infinite}
+.switch__base{position:absolute; left:8px; right:8px; bottom:0; height:22px; border-radius:6px; background:var(--line)}
+.switch__beam{position:absolute; left:-6px; right:-6px; bottom:10px; height:2px; border-radius:2px; background:var(--accent); box-shadow:0 0 12px var(--accent); animation:beam 1.8s linear infinite}
+.switch__ms{font:500 13px/1 var(--font-mono); color:var(--accent); padding-bottom:12px; animation:blink 1.8s linear infinite}
+@keyframes press{0%,8%{translate:0 0} 14%,30%{translate:0 10px} 40%,100%{translate:0 0}}
+@keyframes beam{0%,12%{opacity:1} 13%,31%{opacity:.08} 32%,100%{opacity:1}}
+@keyframes blink{0%,12%{opacity:.25} 13%,40%{opacity:1} 50%,100%{opacity:.25}}
+
+/* glide */
+.glide svg{width:100%; height:auto; max-width:100%; overflow:visible; display:block}
+.glide__path{fill:none; stroke:var(--ink-2); stroke-opacity:.45; stroke-width:2; stroke-dasharray:2 7; stroke-linecap:round}
+.glide__trail{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:round; stroke-dasharray:110 890; stroke-dashoffset:110; animation:trail 3.6s linear infinite}
+.glide__dot{fill:var(--accent)}
+@keyframes trail{to{stroke-dashoffset:-890}}
+
+/* wheel */
+.wheel{display:flex; justify-content:center; align-items:center; gap:22px; height:150px}
+.wheel__body{position:relative; width:52px; height:132px; border-radius:26px; overflow:hidden; background:var(--ink); box-shadow:0 14px 30px -14px rgba(0,0,0,.45)}
+.wheel__ribs{position:absolute; inset:-12px 0; background:repeating-linear-gradient(180deg, transparent 0 3px, var(--ink-2) 3px 5.5px); opacity:.55; animation:roll 2.4s steps(24) infinite}
+.wheel__body::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, var(--ink) 0%, transparent 34%, transparent 66%, var(--ink) 100%)}
+.wheel__band{position:absolute; left:50%; top:0; bottom:0; width:3px; translate:-50% 0; background:var(--accent); opacity:.9; z-index:1}
+.wheel__notch{font:500 13px/1.6 var(--font-mono); color:var(--ink-2)}
+@keyframes roll{from{transform:translateY(0)} to{transform:translateY(-132px)}}
+
+/* modes */
+.modes{display:grid; gap:8px; margin:0; padding:0; list-style:none}
+.modes li{display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-radius:14px; background:var(--paper); box-shadow:inset 0 0 0 1px var(--line); font-size:15px; animation:mode 4.5s var(--ease) infinite}
+.modes li span{font:400 12px/1 var(--font-mono); color:var(--ink-2)}
+.modes li:nth-child(2){animation-delay:1.5s}
+.modes li:nth-child(3){animation-delay:3s}
+@keyframes mode{0%,30%{box-shadow:inset 0 0 0 1.5px var(--accent)} 34%,100%{box-shadow:inset 0 0 0 1px var(--line)}}
+
+/* ---------- grips (horizontal) */
+.grips{background:var(--night); color:var(--night-ink); overflow:hidden}
+.grips .eyebrow{color:var(--night-accent)}
+.grips__track{display:flex; align-items:center; gap:clamp(80px, 13vw, 220px); height:100vh; height:100svh; width:max-content; padding-left:max(var(--gl), calc((100vw - var(--wrap)) / 2)); padding-right:var(--gr)}
+.grip{flex:0 0 auto; width:min(84vw, 700px); display:grid; grid-template-columns:auto minmax(0, 1fr); align-items:center; gap:clamp(24px, 3vw, 40px)}
+.grip--intro{width:min(84vw, 540px); grid-template-columns:minmax(0, 1fr); gap:20px}
+.grip--intro p:not(.eyebrow){color:var(--night-ink-2); font-size:clamp(17px, 1.4vw, 20px)}
+.grip svg{height:min(56vh, 440px); width:auto; overflow:visible}
+.grip__copy{display:grid; gap:14px; min-width:0}
+.grip__name{font-size:clamp(34px, 4vw, 52px); font-weight:600; letter-spacing:-.04em; line-height:1}
+.grip__copy p:not(.grip__name):not(.grip__tip){color:var(--night-ink-2); font-size:clamp(16px, 1.3vw, 19px)}
+.grip__tip{font:500 13px/1.4 var(--font-mono); color:var(--night-accent); letter-spacing:.04em}
+.outline{fill:var(--night-2); stroke:var(--night-ink-2); stroke-width:1.5}
+.detail{fill:none; stroke:var(--night-ink-2); stroke-width:1.2; opacity:.7}
+.zone{fill:url(#zoneGrad); animation:pulse 2.6s ease-in-out infinite}
+.zone:nth-of-type(2n){animation-delay:.4s}
+.zone:nth-of-type(3n){animation-delay:.9s}
+@keyframes pulse{0%,100%{opacity:.95} 50%{opacity:.55}}
+@media (max-width: 819.98px){
+  .grip{grid-template-columns:minmax(0, 1fr); justify-items:center; text-align:center; gap:24px}
+  .grip svg{height:min(36svh, 300px)}
+}
+.no-motion .grips__track{width:auto; height:auto; overflow-x:auto; padding-block:96px}
+
+/* ---------- colors */
+.colors__grid{display:grid; grid-template-columns:minmax(0, 5fr) minmax(0, 7fr); align-items:center; gap:clamp(32px, 6vw, 80px)}
+.colors__copy{display:grid; gap:18px; min-width:0}
+.colors__copy .h2{font-size:clamp(40px, 4.6vw, 64px)}
+.colors__viewer{position:relative; width:100%; max-width:100%; aspect-ratio:1 / 1; border-radius:36px; background:radial-gradient(70% 60% at 50% 42%, var(--paper), var(--paper-2))}
+.colors__viewer canvas{position:absolute; inset:0; width:100%; height:100%; display:block; cursor:grab; touch-action:pan-y}
+.colors__viewer canvas:active{cursor:grabbing}
+.colors__hint{position:absolute; left:50%; translate:-50% 0; bottom:22px; font:500 11px/1 var(--font-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--ink-2); white-space:nowrap}
+.swatches{display:flex; flex-wrap:wrap; gap:16px; padding:4px}
+.swatch{width:34px; height:34px; border-radius:50%; border:0; padding:0; cursor:pointer; background:var(--sw, #888); box-shadow:inset 0 0 0 1px var(--edge), 0 0 0 3px var(--paper), 0 0 0 4px transparent; transition:box-shadow .3s, transform .4s var(--ease)}
+.swatch:hover{transform:scale(1.08)}
+.swatch[aria-checked="true"]{box-shadow:inset 0 0 0 1px var(--edge), 0 0 0 3px var(--paper), 0 0 0 5px var(--ink)}
+.buy .swatch{box-shadow:inset 0 0 0 1px var(--edge), 0 0 0 3px var(--paper-2), 0 0 0 4px transparent}
+.buy .swatch[aria-checked="true"]{box-shadow:inset 0 0 0 1px var(--edge), 0 0 0 3px var(--paper-2), 0 0 0 5px var(--ink)}
+.swatch-name{font-size:15px; color:var(--ink-2)}
+.swatch-name b{color:var(--ink); font-weight:600}
+@media (max-width: 819.98px){ .colors__grid{grid-template-columns:minmax(0, 1fr)} }
+
+/* ---------- CPS test */
+.cps{background:var(--night); color:var(--night-ink)}
+.cps .eyebrow{color:var(--night-accent)}
+.cps .lead{color:var(--night-ink-2)}
+.cps__pad{
+  position:relative; overflow:hidden; isolation:isolate;
+  display:grid; place-items:center; width:100%; min-height:clamp(320px, 44vw, 460px);
+  border-radius:36px; border:1px solid var(--night-line);
+  background:radial-gradient(120% 90% at 50% 0%, var(--night-2), var(--night));
+  color:inherit; font:inherit; cursor:pointer; touch-action:manipulation;
+  -webkit-user-select:none; user-select:none; -webkit-tap-highlight-color:transparent;
+  transition:border-color .3s;
+}
+.cps__pad:hover{border-color:var(--night-ink-2)}
+.cps__center{display:grid; justify-items:center; gap:10px; pointer-events:none; padding:24px; transition:transform .12s}
+.cps__pad:active .cps__center{transform:scale(.97)}
+.cps__value{font-size:clamp(96px, 15vw, 190px); font-weight:600; letter-spacing:-.06em; line-height:1; margin-bottom:-.06em; font-variant-numeric:tabular-nums}
+.cps__unit{font:500 13px/1 var(--font-mono); letter-spacing:.18em; color:var(--night-ink-2)}
+.cps__hint{font-size:17px; color:var(--night-ink-2); margin-top:12px; text-align:center}
+.cps__hint b{color:var(--night-ink); font-weight:600}
+.cps__bar{position:absolute; left:0; bottom:0; height:3px; width:100%; background:var(--night-accent); transform-origin:left; transform:scaleX(0)}
+.ripple{position:absolute; z-index:-1; width:24px; height:24px; margin:-12px 0 0 -12px; border-radius:50%; background:var(--night-accent); pointer-events:none; animation:ripple .8s var(--ease) forwards}
+@keyframes ripple{from{transform:scale(0); opacity:.38} to{transform:scale(16); opacity:0}}
+.cps__stats{display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); margin-top:16px; border-radius:24px; border:1px solid var(--night-line)}
+.cps__stats div{display:grid; gap:8px; padding:20px 24px; min-width:0}
+.cps__stats div + div{border-left:1px solid var(--night-line)}
+.cps__stats .k{font:500 11px/1 var(--font-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--night-ink-2)}
+.cps__stats .v{font-size:clamp(22px, 2.6vw, 30px); font-weight:600; letter-spacing:-.03em; font-variant-numeric:tabular-nums}
+@media (max-width: 519.98px){ .cps__stats div{padding:16px} }
+
+/* ---------- specs */
+.specs__list{display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); column-gap:56px; margin:0}
+.specs__list > div{display:grid; grid-template-columns:minmax(0, 2fr) minmax(0, 3fr); gap:16px; padding-block:22px; border-top:1px solid var(--line)}
+.specs__list dt{color:var(--ink-2); font-size:15px}
+.specs__list dd{margin:0; font-size:17px; font-variant-numeric:tabular-nums}
+@media (max-width: 819.98px){ .specs__list{grid-template-columns:minmax(0, 1fr)} }
+@media (max-width: 459.98px){ .specs__list > div{grid-template-columns:minmax(0, 1fr); gap:4px} }
+
+/* ---------- buy */
+.buy{background:var(--paper-2); text-align:center}
+.buy__inner{display:grid; justify-items:center; gap:18px}
+.buy__title{font-size:clamp(60px, 10vw, 132px); font-weight:600; letter-spacing:-.055em; line-height:.9}
+.buy__price{font-size:clamp(24px, 2.6vw, 32px); font-weight:500; letter-spacing:-.02em}
+.buy__alt{color:var(--ink-2); font-size:15px; margin-top:-10px}
+.buy__perks{display:flex; flex-wrap:wrap; justify-content:center; gap:10px 28px; margin:12px 0 0; padding:0; list-style:none; font:400 13px/1.4 var(--font-mono); color:var(--ink-2)}
+.buy .btn{margin-top:10px}
+
+/* ---------- footer */
+.footer{padding-block:40px calc(40px + env(safe-area-inset-bottom, 0px)); border-top:1px solid var(--line); font-size:13px; color:var(--ink-2)}
+.footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px 32px}
+.footer p{max-width:62ch}
+
+/* ---------- toast */
+.toast{
+  position:fixed; z-index:70; left:50%; bottom:calc(24px + env(safe-area-inset-bottom, 0px));
+  width:max-content; max-width:calc(100vw - 32px);
+  padding:14px 20px; border-radius:18px;
+  background:var(--night-2); color:var(--night-ink); font-size:15px; line-height:1.4;
+  box-shadow:0 20px 50px -18px rgba(0,0,0,.5);
+  translate:-50% 24px; opacity:0; transition:translate .6s var(--ease), opacity .4s;
+}
+.toast.is-on{translate:-50% 0; opacity:1}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mouse-top" viewBox="0 0 200 340">
+      <path d="M100 14C140 14 160 40 162 88C163 128 157 150 158 180C160 214 166 240 164 270C161 308 136 328 100 328C64 328 39 308 36 270C34 240 40 214 42 180C43 150 37 128 38 88C40 40 60 14 100 14Z"/>
+    </symbol>
+    <radialGradient id="zoneGrad">
+      <stop offset="0" stop-color="#7f9cff" stop-opacity=".95"/>
+      <stop offset=".6" stop-color="#4d74f5" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#4d74f5" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="brand" href="#top" aria-label="Sylphe, retour en haut">
+      <svg viewBox="0 0 200 340" aria-hidden="true"><use href="#mouse-top" fill="currentColor"/></svg>
+      Sylphe
+    </a>
+    <ul class="nav__links">
+      <li><a href="#design">Design</a></li>
+      <li><a href="#details">Détails</a></li>
+      <li><a href="#prises">Ergonomie</a></li>
+      <li><a href="#couleurs">Couleurs</a></li>
+      <li><a href="#test">Test CPS</a></li>
+      <li><a href="#caracteristiques">Caractéristiques</a></li>
+    </ul>
+    <a class="btn btn--primary" href="#acheter">Acheter</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ===== Story: pinned product with scroll-driven chapters ===== -->
+  <section class="story" id="story" aria-label="Présentation de Sylphe One">
+    <div class="story__stage">
+      <canvas class="story__canvas" id="hero-canvas" aria-label="Modèle 3D de la souris Sylphe One" role="img"></canvas>
+      <div class="fallback" aria-hidden="true">
+        <svg viewBox="0 0 200 340"><use href="#mouse-top" fill="var(--ink)"/></svg>
+      </div>
+
+      <div class="chapter chapter--hero" data-ch="0">
+        <p class="eyebrow">Nouveau</p>
+        <h1 class="hero__title">Sylphe One</h1>
+        <p class="hero__sub">39 grammes. Aucun compromis.</p>
+        <div class="hero__cta">
+          <a class="btn btn--primary magnetic" href="#acheter">Acheter</a>
+          <a class="btn btn--ghost magnetic" href="#design">Découvrir
+            <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 2v10M2.5 7.5 7 12l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <p class="hero__price">149 € · Livraison gratuite</p>
+      </div>
+
+      <div class="chapter chapter--side chapter--left" data-ch="1">
+        <p class="eyebrow">Poids</p>
+        <h2 class="chapter__big"><span data-scrub="39">39</span><small>g</small></h2>
+        <p>Plus légère qu'un œuf. La coque est <strong>pleine, sans aucun trou</strong>, moulée d'une seule pièce dans un polymère à structure alvéolaire interne.</p>
+      </div>
+
+      <div class="chapter chapter--side chapter--right" data-ch="2">
+        <p class="eyebrow">Capteur</p>
+        <h2 class="chapter__big"><span data-scrub="32000">32&#8239;000</span><small>DPI</small></h2>
+        <p>750 pouces par seconde, 50 G d'accélération. Le capteur optique suit <strong>chaque micro-ajustement</strong>, sans lissage ni accélération ajoutés.</p>
+      </div>
+
+      <div class="chapter chapter--side chapter--left" data-ch="3">
+        <p class="eyebrow">Sans fil</p>
+        <h2 class="chapter__big"><span data-scrub="8000">8&#8239;000</span><small>Hz</small></h2>
+        <p>Huit rapports par milliseconde. Sans fil, Sylphe répond <strong>aussi vite qu'une souris filaire</strong>.</p>
+      </div>
+
+      <div class="story__dots" aria-hidden="true"><span class="is-on"></span><span></span><span></span><span></span></div>
+      <div class="scroll-cue" aria-hidden="true">Défiler<i></i></div>
+    </div>
+  </section>
+
+  <!-- ===== Statement ===== -->
+  <section class="band statement" id="design">
+    <div class="wrap">
+      <p class="statement__text" data-words>Chaque gramme en moins rend chaque geste plus précis. On a repensé chaque pièce, de la coque aux patins. Il ne reste que ta main, ta visée, et rien entre les deux.</p>
+    </div>
+  </section>
+
+  <!-- ===== Bento ===== -->
+  <section class="band" id="details" style="padding-top:0">
+    <div class="wrap">
+      <header class="section-head" data-reveal>
+        <p class="eyebrow">Dans le détail</p>
+        <h2 class="h2">Chaque composant compte.</h2>
+      </header>
+
+      <div class="bento">
+        <div class="cell span-2"><article class="card">
+          <p class="card__label">Autonomie</p>
+          <p class="card__stat"><span data-count="120">120</span><small>h</small></p>
+          <p class="card__text">À 1&#8239;000 Hz, sur une seule charge. Quinze minutes en USB-C suffisent pour 24 heures de jeu.</p>
+          <div class="card__viz battery" aria-hidden="true">
+            <div class="battery__body"><div class="battery__cell"><div class="battery__fill"></div></div><div class="battery__cap"></div></div>
+            <div class="battery__scale"><span>0 h</span><span>30 h</span><span>60 h</span><span>90 h</span><span>120 h</span></div>
+          </div>
+        </article></div>
+
+        <div class="cell"><article class="card">
+          <p class="card__label">Switches optiques</p>
+          <p class="card__stat"><span data-count="100">100</span><small>M de clics</small></p>
+          <p class="card__text">Un faisceau infrarouge remplace le contact métal. Aucun double-clic fantôme, même après des années.</p>
+          <div class="card__viz switch" aria-hidden="true">
+            <div class="switch__key"><div class="switch__base"></div><div class="switch__beam"></div><div class="switch__cap"></div></div>
+            <span class="switch__ms">0,2 ms</span>
+          </div>
+        </article></div>
+
+        <div class="cell"><article class="card">
+          <p class="card__label">Patins</p>
+          <p class="card__stat">PTFE<small>100 %</small></p>
+          <p class="card__text">Bords arrondis, sans additif. La glisse est la même au premier jour et au millième.</p>
+          <div class="card__viz glide" aria-hidden="true">
+            <svg viewBox="0 0 300 110">
+              <path class="glide__path" d="M12 82C62 12 112 104 160 54S256 18 288 70"/>
+              <path class="glide__trail" pathLength="1000" d="M12 82C62 12 112 104 160 54S256 18 288 70"/>
+              <circle class="glide__dot" r="7"><animateMotion dur="3.6s" repeatCount="indefinite" path="M12 82C62 12 112 104 160 54S256 18 288 70"/></circle>
+            </svg>
+          </div>
+        </article></div>
+
+        <div class="cell"><article class="card">
+          <p class="card__label">Molette</p>
+          <p class="card__stat"><span data-count="24">24</span><small>crans</small></p>
+          <p class="card__text">Encodeur optique et crans nets. Un cran, une ligne, sans saut.</p>
+          <div class="card__viz wheel" aria-hidden="true">
+            <div class="wheel__body"><div class="wheel__ribs"></div><div class="wheel__band"></div></div>
+            <p class="wheel__notch">15°<br>par cran</p>
+          </div>
+        </article></div>
+
+        <div class="cell"><article class="card">
+          <p class="card__label">Connexion</p>
+          <p class="card__stat">3<small>modes</small></p>
+          <p class="card__text">Passe d'un appareil à l'autre d'une pression, sous la souris.</p>
+          <ul class="card__viz modes">
+            <li>2,4 GHz <span>8&#8239;000 Hz</span></li>
+            <li>Bluetooth 5.3 <span>125 Hz</span></li>
+            <li>USB-C filaire <span>8&#8239;000 Hz</span></li>
+          </ul>
+        </article></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Grips: horizontal scroll ===== -->
+  <section class="grips" id="prises">
+    <div class="grips__track">
+      <div class="grip grip--intro">
+        <p class="eyebrow">Ergonomie</p>
+        <h2 class="h2">Une forme.<br>Trois prises.</h2>
+        <p>120 mm de long, 62 mm de large, la bosse placée au tiers arrière. Que tu joues en paume, en griffe ou du bout des doigts, ta main trouve sa place.</p>
+      </div>
+
+      <div class="grip">
+        <svg viewBox="0 0 200 340" role="img" aria-label="Zones de contact en prise paume">
+          <use href="#mouse-top" class="outline"/>
+          <path class="detail" d="M100 16V148M42 150Q100 172 158 150"/><rect class="detail" x="93" y="60" width="14" height="40" rx="7"/>
+          <ellipse class="zone" cx="70" cy="76" rx="20" ry="46"/>
+          <ellipse class="zone" cx="130" cy="76" rx="20" ry="46"/>
+          <ellipse class="zone" cx="36" cy="206" rx="14" ry="30"/>
+          <ellipse class="zone" cx="164" cy="212" rx="13" ry="28"/>
+          <ellipse class="zone" cx="100" cy="270" rx="60" ry="46"/>
+        </svg>
+        <div class="grip__copy">
+          <p class="grip__name">Paume</p>
+          <p>Toute la main repose sur la coque. C'est la prise la plus stable pour suivre une cible en mouvement.</p>
+          <p class="grip__tip">Sensibilité de départ · 800 DPI</p>
+        </div>
+      </div>
+
+      <div class="grip">
+        <svg viewBox="0 0 200 340" role="img" aria-label="Zones de contact en prise griffe">
+          <use href="#mouse-top" class="outline"/>
+          <path class="detail" d="M100 16V148M42 150Q100 172 158 150"/><rect class="detail" x="93" y="60" width="14" height="40" rx="7"/>
+          <ellipse class="zone" cx="70" cy="58" rx="16" ry="18"/>
+          <ellipse class="zone" cx="130" cy="56" rx="16" ry="18"/>
+          <ellipse class="zone" cx="38" cy="196" rx="13" ry="20"/>
+          <ellipse class="zone" cx="162" cy="200" rx="12" ry="18"/>
+          <ellipse class="zone" cx="100" cy="316" rx="42" ry="14"/>
+        </svg>
+        <div class="grip__copy">
+          <p class="grip__name">Griffe</p>
+          <p>La paume s'appuie sur l'arrière, les doigts se cambrent. L'équilibre entre stabilité et micro-corrections rapides.</p>
+          <p class="grip__tip">Sensibilité de départ · 1&#8239;600 DPI</p>
+        </div>
+      </div>
+
+      <div class="grip">
+        <svg viewBox="0 0 200 340" role="img" aria-label="Zones de contact en prise bout des doigts">
+          <use href="#mouse-top" class="outline"/>
+          <path class="detail" d="M100 16V148M42 150Q100 172 158 150"/><rect class="detail" x="93" y="60" width="14" height="40" rx="7"/>
+          <ellipse class="zone" cx="70" cy="44" rx="13" ry="13"/>
+          <ellipse class="zone" cx="130" cy="42" rx="13" ry="13"/>
+          <ellipse class="zone" cx="40" cy="168" rx="12" ry="12"/>
+          <ellipse class="zone" cx="160" cy="174" rx="11" ry="11"/>
+        </svg>
+        <div class="grip__copy">
+          <p class="grip__name">Bout des doigts</p>
+          <p>Seuls les doigts touchent la souris. Avec 39 g, chaque flick part et s'arrête exactement où tu veux.</p>
+          <p class="grip__tip">Sensibilité de départ · 3&#8239;200 DPI</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Colors: second 3D viewer ===== -->
+  <section class="band" id="couleurs">
+    <div class="wrap colors__grid">
+      <div class="colors__copy" data-reveal>
+        <p class="eyebrow">Couleurs</p>
+        <h2 class="h2">Quatre teintes. Toutes mates.</h2>
+        <p class="lead">Un revêtement doux au toucher qui ne garde pas les traces de doigts. Choisis une teinte, puis fais tourner la souris.</p>
+        <div class="swatches" role="radiogroup" aria-label="Couleur de la souris">
+          <button class="swatch" type="button" role="radio" data-color="graphite" aria-label="Graphite"></button>
+          <button class="swatch" type="button" role="radio" data-color="nacre" aria-label="Nacre"></button>
+          <button class="swatch" type="button" role="radio" data-color="brume" aria-label="Brume"></button>
+          <button class="swatch" type="button" role="radio" data-color="aube" aria-label="Aube"></button>
+        </div>
+        <p class="swatch-name">Teinte : <b data-color-name>Graphite</b></p>
+      </div>
+      <div class="colors__viewer">
+        <canvas id="color-canvas" aria-label="Aperçu 3D de la couleur choisie" role="img"></canvas>
+        <div class="fallback" aria-hidden="true"><svg viewBox="0 0 200 340"><use href="#mouse-top" fill="var(--sw-current, #2d2e33)"/></svg></div>
+        <p class="colors__hint" aria-hidden="true">Glisse pour tourner</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CPS test ===== -->
+  <section class="band cps" id="test">
+    <div class="wrap">
+      <header class="section-head" data-reveal>
+        <p class="eyebrow">Test de clics</p>
+        <h2 class="h2">Combien de clics en 5 secondes&#8239;?</h2>
+        <p class="lead">Les switches optiques de Sylphe réagissent en 0,2 ms. La suite dépend de toi.</p>
+      </header>
+
+      <button class="cps__pad" id="cps-pad" type="button" aria-describedby="cps-hint">
+        <span class="cps__center">
+          <span class="cps__value" id="cps-value">0,0</span>
+          <span class="cps__unit">CLICS PAR SECONDE</span>
+          <span class="cps__hint" id="cps-hint">Clique ici pour lancer le test</span>
+        </span>
+        <span class="cps__bar" id="cps-bar"></span>
+      </button>
+
+      <div class="cps__stats" aria-live="polite">
+        <div><span class="k">Clics</span><span class="v" id="cps-clicks">0</span></div>
+        <div><span class="k">Temps</span><span class="v" id="cps-time">5,00 s</span></div>
+        <div><span class="k">Record</span><span class="v" id="cps-best">—</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Specs ===== -->
+  <section class="band" id="caracteristiques">
+    <div class="wrap">
+      <header class="section-head" data-reveal>
+        <p class="eyebrow">Caractéristiques</p>
+        <h2 class="h2">Tout est dans les chiffres.</h2>
+      </header>
+      <dl class="specs__list">
+        <div><dt>Poids</dt><dd>39 g</dd></div>
+        <div><dt>Dimensions</dt><dd>120 × 62 × 38 mm</dd></div>
+        <div><dt>Capteur</dt><dd>Optique, 100 à 32&#8239;000 DPI, 750 IPS, 50 G</dd></div>
+        <div><dt>Fréquence d'interrogation</dt><dd>8&#8239;000 Hz en 2,4 GHz et en filaire, 125 Hz en Bluetooth</dd></div>
+        <div><dt>Autonomie</dt><dd>120 h à 1&#8239;000 Hz, 30 h à 8&#8239;000 Hz</dd></div>
+        <div><dt>Boutons</dt><dd>5, switches optiques garantis 100 millions de clics</dd></div>
+        <div><dt>Distance de décollage</dt><dd>0,7, 1 ou 2 mm, réglable</dd></div>
+        <div><dt>Patins</dt><dd>PTFE 100 %, bords arrondis</dd></div>
+        <div><dt>Compatibilité</dt><dd>Windows, macOS, Linux, sans logiciel</dd></div>
+        <div><dt>Dans la boîte</dt><dd>Souris, récepteur 8&#8239;000 Hz, câble USB-C tressé de 1,8 m, patins de rechange</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ===== Buy ===== -->
+  <section class="band buy" id="acheter">
+    <div class="wrap buy__inner" data-reveal>
+      <p class="eyebrow">Disponible maintenant</p>
+      <h2 class="buy__title">Sylphe One</h2>
+      <p class="buy__price">149 €</p>
+      <p class="buy__alt">ou 3 × 49,67 € sans frais</p>
+      <div class="swatches" role="radiogroup" aria-label="Couleur à commander">
+        <button class="swatch" type="button" role="radio" data-color="graphite" aria-label="Graphite"></button>
+        <button class="swatch" type="button" role="radio" data-color="nacre" aria-label="Nacre"></button>
+        <button class="swatch" type="button" role="radio" data-color="brume" aria-label="Brume"></button>
+        <button class="swatch" type="button" role="radio" data-color="aube" aria-label="Aube"></button>
+      </div>
+      <p class="swatch-name"><b data-color-name>Graphite</b></p>
+      <button class="btn btn--primary btn--lg magnetic" type="button" id="buy-btn">Ajouter au panier</button>
+      <ul class="buy__perks">
+        <li>Livraison gratuite en 48 h</li>
+        <li>Retours sous 30 jours</li>
+        <li>Garantie 2 ans</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>Sylphe est une marque imaginaire. Ce site est une démonstration de design web : le produit, les prix et les caractéristiques sont inventés.</p>
+    <p>© 2026 Sylphe</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+
+<script>
+(() => {
+  const root = document.documentElement;
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const isDark = () => root.dataset.theme === 'dark' ||
+    (root.dataset.theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+  const fmtInt = new Intl.NumberFormat('fr-FR');
+  const fmt1 = new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const fmt2 = new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  const COLORS = {
+    graphite: { name: 'Graphite', hex: '#2d2e33' },
+    nacre:    { name: 'Nacre',    hex: '#e6e4df' },
+    brume:    { name: 'Brume',    hex: '#8ea2b8' },
+    aube:     { name: 'Aube',     hex: '#e0ad9d' },
+  };
+
+  /* Shared state read by the 3D module */
+  const S = window.SYLPHE = {
+    COLORS,
+    color: isDark() ? 'nacre' : 'graphite',
+    pose: { rx: .42, ry: 2.45, rz: 0, px: 0, py: -.3, s: 1, shadow: 1, led: 0, sensor: 0 },
+    intro: reduce ? 1 : 0,
+    heroWeight: 1,
+    pointer: { x: 0, y: 0 },
+    reduce,
+  };
+
+  /* ---------- colour pickers (two synced radio groups) */
+  function setColor(key, focusGroup) {
+    if (!COLORS[key]) return;
+    S.color = key;
+    $$('.swatch').forEach(b => {
+      const on = b.dataset.color === key;
+      b.setAttribute('aria-checked', String(on));
+      b.tabIndex = on ? 0 : -1;
+    });
+    $$('[data-color-name]').forEach(el => { el.textContent = COLORS[key].name; });
+    root.style.setProperty('--sw-current', COLORS[key].hex);
+    if (focusGroup) focusGroup.querySelector(`[data-color="${key}"]`)?.focus();
+    window.dispatchEvent(new CustomEvent('sylphe:color', { detail: key }));
+  }
+  $$('.swatch').forEach(b => {
+    b.style.setProperty('--sw', COLORS[b.dataset.color].hex);
+    b.addEventListener('click', () => setColor(b.dataset.color));
+    b.addEventListener('keydown', e => {
+      const keys = Object.keys(COLORS);
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      if (!step) return;
+      e.preventDefault();
+      const i = (keys.indexOf(S.color) + step + keys.length) % keys.length;
+      setColor(keys[i], b.parentElement);
+    });
+  });
+  setColor(S.color);
+
+  /* ---------- toast */
+  const toast = $('#toast');
+  let toastTimer;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('is-on')));
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toast.classList.remove('is-on');
+      setTimeout(() => { toast.hidden = true; }, 500);
+    }, 4600);
+  }
+  $('#buy-btn').addEventListener('click', () => {
+    showToast(`Sylphe One ${COLORS[S.color].name}, 149 €. Ce site est une démo : rien n'a été ajouté au panier.`);
+  });
+
+  /* ---------- CPS test */
+  (() => {
+    const pad = $('#cps-pad'), out = $('#cps-value'), hint = $('#cps-hint'), bar = $('#cps-bar');
+    const elClicks = $('#cps-clicks'), elTime = $('#cps-time'), elBest = $('#cps-best');
+    const DURATION = 5000;
+    let state = 'idle', clicks = 0, t0 = 0, cooldown = 0, best = 0;
+    try { best = parseFloat(localStorage.getItem('sylphe-cps-best')) || 0; } catch (e) {}
+    if (best) elBest.textContent = fmt1.format(best);
+
+    const rank = c => c < 5 ? 'Tranquille' : c < 7 ? 'Régulier' : c < 9 ? 'Rapide' : c < 12 ? 'Redoutable' : 'Inhumain';
+
+    function ripple(e) {
+      if (reduce) return;
+      const r = pad.getBoundingClientRect();
+      const x = e && e.clientX ? e.clientX - r.left : r.width / 2;
+      const y = e && e.clientY ? e.clientY - r.top : r.height / 2;
+      const s = document.createElement('span');
+      s.className = 'ripple';
+      s.style.left = x + 'px'; s.style.top = y + 'px';
+      s.addEventListener('animationend', () => s.remove());
+      pad.appendChild(s);
+    }
+    function tick() {
+      if (state !== 'running') return;
+      const el = performance.now() - t0;
+      const left = Math.max(0, DURATION - el);
+      elTime.textContent = fmt2.format(left / 1000) + ' s';
+      bar.style.transform = `scaleX(${Math.min(1, el / DURATION)})`;
+      if (el > 250) out.textContent = fmt1.format(clicks / (el / 1000));
+      if (left <= 0) return finish();
+      requestAnimationFrame(tick);
+    }
+    function finish() {
+      state = 'done';
+      cooldown = performance.now() + 900;
+      const cps = clicks / (DURATION / 1000);
+      out.textContent = fmt1.format(cps);
+      elTime.textContent = '0,00 s';
+      bar.style.transform = 'scaleX(1)';
+      let rec = '';
+      if (cps > best) {
+        best = cps;
+        elBest.textContent = fmt1.format(best);
+        try { localStorage.setItem('sylphe-cps-best', String(best)); } catch (e) {}
+        rec = ' Nouveau record.';
+      }
+      hint.innerHTML = `<b>${rank(cps)}</b>, ${clicks} clics.${rec} Clique pour rejouer.`;
+    }
+    function hit(e) {
+      const now = performance.now();
+      if (state === 'done' && now < cooldown) return;
+      if (state !== 'running') {
+        state = 'running'; clicks = 0; t0 = now;
+        hint.textContent = 'Clique, clique, clique…';
+        out.textContent = '0,0';
+        requestAnimationFrame(tick);
+      }
+      clicks++;
+      elClicks.textContent = clicks;
+      ripple(e);
+    }
+    pad.addEventListener('pointerdown', e => { if (e.button === 0) hit(e); });
+    pad.addEventListener('keydown', e => {
+      if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) { e.preventDefault(); hit(null); }
+    });
+    pad.addEventListener('click', e => e.preventDefault());
+  })();
+
+  /* ---------- pointer for the 3D parallax */
+  window.addEventListener('pointermove', e => {
+    S.pointer.x = (e.clientX / innerWidth) * 2 - 1;
+    S.pointer.y = (e.clientY / innerHeight) * 2 - 1;
+  }, { passive: true });
+
+  /* ---------- nav state */
+  const nav = $('#nav');
+  const onScroll = () => nav.classList.toggle('is-scrolled', scrollY > 8);
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  /* ---------- 3D fallback if the module never reported in */
+  addEventListener('load', () => setTimeout(() => { if (!S.ready3d) root.classList.add('no-webgl'); }, 400));
+
+  /* ---------- motion */
+  const hasGsap = !!(window.gsap && window.ScrollTrigger);
+  let lenis = null;
+
+  function scrollToTarget(t) {
+    if (lenis) lenis.scrollTo(t, { duration: 1.6 });
+    else t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+  }
+  $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+    const id = a.getAttribute('href');
+    const t = id === '#top' ? document.body : document.querySelector(id);
+    if (!t) return;
+    e.preventDefault();
+    if (id === '#top') { lenis ? lenis.scrollTo(0, { duration: 1.6 }) : scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); return; }
+    scrollToTarget(t);
+  }));
+
+  if (!hasGsap || reduce) {
+    root.classList.add('no-motion');
+    S.intro = 1;
+    Object.assign(S.pose, { py: 0, s: 1.1 });
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  if (window.Lenis) {
+    lenis = new Lenis({ lerp: .1, wheelMultiplier: 1 });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(t => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  /* intro */
+  gsap.to(S, { intro: 1, duration: 2.4, ease: 'expo.out', delay: .1 });
+  gsap.from('.chapter--hero > *', { y: 30, autoAlpha: 0, filter: 'blur(12px)', duration: 1.4, ease: 'expo.out', stagger: .08, delay: .15 });
+  gsap.from('.nav__inner > *', { y: -12, autoAlpha: 0, duration: 1, ease: 'expo.out', stagger: .06 });
+  gsap.from('.scroll-cue', { autoAlpha: 0, duration: 1, delay: 1.2 });
+
+  /* story: one timeline, scrubbed by the scroll position */
+  const mm = gsap.matchMedia();
+  mm.add({ desk: '(min-width: 820px)', mob: '(max-width: 819.98px)' }, ctx => {
+    const desk = ctx.conditions.desk;
+    const TAU = Math.PI * 2;
+    const P = desk ? [
+      { rx: .42, ry: 2.45,       rz: 0,   px: 0,    py: -.32, s: 1.15, shadow: 1, led: 0, sensor: 0 },
+      { rx: .1,  ry: 1.571,      rz: 0,   px: .44,  py: -.04, s: 1.3,  shadow: 1, led: 0, sensor: 0 },
+      { rx: -1.2, ry: 3.7,       rz: 0,   px: -.42, py: .02,  s: 1.35, shadow: 0, led: 0, sensor: 1 },
+      { rx: 1.3, ry: TAU - .45,  rz: 0,   px: .42,  py: 0,    s: 1.3,  shadow: 0, led: 1, sensor: 0 },
+      { rx: .42, ry: TAU + 2.45, rz: 0,   px: 0,    py: -.06, s: .95,  shadow: 1, led: 0, sensor: 0 },
+    ] : [
+      { rx: .42, ry: 2.45,       rz: 0,   px: 0,    py: -.2,  s: 1.12,    shadow: 1, led: 0, sensor: 0 },
+      { rx: .1,  ry: 1.571,      rz: 0,   px: 0,    py: .3,   s: 1.05, shadow: 1, led: 0, sensor: 0 },
+      { rx: -1.2, ry: 3.7,       rz: 0,   px: 0,    py: .3,   s: 1.05, shadow: 0, led: 0, sensor: 1 },
+      { rx: 1.3, ry: TAU - .45,  rz: 0,   px: 0,    py: .3,   s: 1.05, shadow: 0, led: 1, sensor: 0 },
+      { rx: .42, ry: TAU + 2.45, rz: 0,   px: 0,    py: .2,   s: .9,   shadow: 1, led: 0, sensor: 0 },
+    ];
+    Object.assign(S.pose, P[0]);
+
+    const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } });
+    const inn = { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: .5, ease: 'power2.out' };
+    const out = { autoAlpha: 0, y: -40, filter: 'blur(10px)', duration: .5, ease: 'power2.in' };
+    const from = { autoAlpha: 0, y: 50, filter: 'blur(10px)' };
+    const scrub = (sel, end, at) => {
+      const el = document.querySelector(`[data-ch="${sel}"] [data-scrub]`);
+      const o = { v: 0 };
+      tl.to(o, { v: end, duration: .9, ease: 'power3.out', onUpdate: () => { el.textContent = fmtInt.format(Math.round(o.v)); } }, at);
+    };
+
+    tl.to('.chapter--hero', { autoAlpha: 0, y: -60, filter: 'blur(10px)', duration: .55, ease: 'power2.in' }, .15)
+      .to('.scroll-cue', { autoAlpha: 0, duration: .2 }, 0)
+      .to(S.pose, { ...P[1], duration: 1 }, .15)
+      .fromTo('[data-ch="1"]', from, inn, .8);
+    scrub(1, 39, .8);
+    tl.to('[data-ch="1"]', out, 1.85)
+      .to(S.pose, { ...P[2], duration: 1 }, 1.85)
+      .fromTo('[data-ch="2"]', from, inn, 2.45);
+    scrub(2, 32000, 2.45);
+    tl.to('[data-ch="2"]', out, 3.5)
+      .to(S.pose, { ...P[3], duration: 1 }, 3.5)
+      .fromTo('[data-ch="3"]', from, inn, 4.1);
+    scrub(3, 8000, 4.1);
+    tl.to('[data-ch="3"]', out, 5.15)
+      .to(S.pose, { ...P[4], duration: .9 }, 5.15)
+      .to({}, { duration: .25 });
+
+    const marks = [0, .75, 2.4, 4.05];
+    const dots = $$('.story__dots span');
+    ScrollTrigger.create({
+      trigger: '#story', start: 'top top', end: 'bottom bottom',
+      animation: tl, scrub: .7,
+      onUpdate: self => {
+        const t = self.progress * tl.duration();
+        let idx = 0;
+        marks.forEach((m, i) => { if (t >= m) idx = i; });
+        dots.forEach((d, i) => d.classList.toggle('is-on', i === idx));
+        S.heroWeight = Math.max(0, 1 - self.progress * 10);
+      },
+    });
+  });
+
+  /* grips: vertical scroll drives a horizontal track */
+  const track = $('.grips__track');
+  const dist = () => Math.max(0, track.scrollWidth - innerWidth);
+  const hTween = gsap.to(track, {
+    x: () => -dist(), ease: 'none',
+    scrollTrigger: { trigger: '.grips', start: 'top top', end: () => '+=' + dist(), pin: true, scrub: .6, invalidateOnRefresh: true, anticipatePin: 1 },
+  });
+  $$('.grip').forEach(g => {
+    const zones = g.querySelectorAll('.zone');
+    if (zones.length) gsap.from(zones, {
+      scale: 0, transformOrigin: '50% 50%', duration: .9, ease: 'back.out(2)', stagger: .07,
+      scrollTrigger: { trigger: g, containerAnimation: hTween, start: 'left 70%', toggleActions: 'play none none reverse' },
+    });
+    gsap.from(g.querySelectorAll('.grip__copy > *, .grip--intro > *'), {
+      x: 60, autoAlpha: 0, duration: 1, ease: 'expo.out', stagger: .07,
+      scrollTrigger: { trigger: g, containerAnimation: hTween, start: 'left 80%', toggleActions: 'play none none reverse' },
+    });
+  });
+
+  /* statement: words light up as you scroll */
+  $$('[data-words]').forEach(el => {
+    const words = el.textContent.trim().split(/\s+/);
+    el.innerHTML = words.map(w => `<span class="w">${w}</span>`).join(' ');
+    gsap.fromTo(el.querySelectorAll('.w'), { opacity: .14 }, {
+      opacity: 1, ease: 'none', stagger: .1,
+      scrollTrigger: { trigger: el, start: 'top 80%', end: 'bottom 45%', scrub: true },
+    });
+  });
+
+  /* section heads */
+  $$('[data-reveal]').forEach(el => {
+    gsap.from(el.children, {
+      y: 40, autoAlpha: 0, filter: 'blur(8px)', duration: 1.2, ease: 'expo.out', stagger: .08,
+      scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+    });
+  });
+
+  /* bento cards */
+  gsap.from('.cell', {
+    y: 70, autoAlpha: 0, scale: .96, duration: 1.3, ease: 'expo.out', stagger: .09,
+    scrollTrigger: { trigger: '.bento', start: 'top 85%', once: true },
+  });
+  ScrollTrigger.create({ trigger: '.battery', start: 'top 92%', once: true, onEnter: () => $('.battery').classList.add('is-in') });
+  $$('[data-count]').forEach(el => {
+    const end = parseFloat(el.dataset.count);
+    ScrollTrigger.create({
+      trigger: el, start: 'top 92%', once: true,
+      onEnter: () => {
+        const o = { v: 0 };
+        gsap.to(o, { v: end, duration: 1.8, ease: 'power3.out', onUpdate: () => { el.textContent = fmtInt.format(Math.round(o.v)); } });
+      },
+    });
+  });
+
+  /* colour viewer + specs + cps */
+  gsap.from('.colors__viewer', { y: 80, autoAlpha: 0, scale: .94, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: '.colors__viewer', start: 'top 88%', once: true } });
+  gsap.from('.cps__pad, .cps__stats', { y: 60, autoAlpha: 0, duration: 1.2, ease: 'expo.out', stagger: .1, scrollTrigger: { trigger: '.cps__pad', start: 'top 88%', once: true } });
+  gsap.from('.specs__list > div', { y: 24, autoAlpha: 0, duration: .9, ease: 'expo.out', stagger: .05, scrollTrigger: { trigger: '.specs__list', start: 'top 85%', once: true } });
+
+  /* hover: tilt + spotlight on cards, magnetic buttons */
+  if (fine) {
+    $$('.card').forEach(card => {
+      card.addEventListener('pointermove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        card.style.setProperty('--mx', (x * 100) + '%');
+        card.style.setProperty('--my', (y * 100) + '%');
+        card.style.transform = `perspective(1000px) rotateX(${(.5 - y) * 5}deg) rotateY(${(x - .5) * 6}deg)`;
+      });
+      card.addEventListener('pointerleave', () => { card.style.transform = ''; });
+    });
+    $$('.magnetic').forEach(b => {
+      b.addEventListener('pointermove', e => {
+        const r = b.getBoundingClientRect();
+        gsap.to(b, { x: (e.clientX - r.left - r.width / 2) * .3, y: (e.clientY - r.top - r.height / 2) * .4, duration: .4, ease: 'power3.out' });
+      });
+      b.addEventListener('pointerleave', () => gsap.to(b, { x: 0, y: 0, duration: .9, ease: 'elastic.out(1, .4)' }));
+    });
+  }
+
+  addEventListener('load', () => ScrollTrigger.refresh());
+  if (document.fonts) document.fonts.ready.then(() => ScrollTrigger.refresh());
+})();
+</script>
+
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/environments/RoomEnvironment.js';
+
+const S = window.SYLPHE;
+const ACCENT = new THREE.Color('#4d74f5');
+
+/* ---------- procedural mouse body: a reshaped sphere ---------- */
+const pw = (a, e) => Math.sign(a) * Math.pow(Math.abs(a), e);
+const halfWidth = t => (0.262 + 0.025 * (t + 1)) * (1 - 0.06 * Math.exp(-(((t - 0.02) / 0.36) ** 2)));
+const heightAt = t => 0.2 + 0.185 * Math.exp(-(((t - 0.26) / 0.62) ** 2));
+
+function weldNormals(g) {
+  const p = g.attributes.position, n = g.attributes.normal, map = new Map();
+  for (let i = 0; i < p.count; i++) {
+    const k = `${Math.round(p.getX(i) * 1e4)}|${Math.round(p.getY(i) * 1e4)}|${Math.round(p.getZ(i) * 1e4)}`;
+    let a = map.get(k);
+    if (!a) map.set(k, a = { x: 0, y: 0, z: 0, ids: [] });
+    a.x += n.getX(i); a.y += n.getY(i); a.z += n.getZ(i); a.ids.push(i);
+  }
+  for (const a of map.values()) {
+    if (a.ids.length < 2) continue;
+    const l = Math.hypot(a.x, a.y, a.z) || 1;
+    for (const i of a.ids) n.setXYZ(i, a.x / l, a.y / l, a.z / l);
+  }
+}
+
+function buildBody() {
+  const g = new THREE.SphereGeometry(1, 192, 144);
+  g.rotateX(Math.PI / 2);
+  const p = g.attributes.position;
+  for (let i = 0; i < p.count; i++) {
+    const x = p.getX(i), y = p.getY(i), z = p.getZ(i);
+    const t = z < 0 ? pw(z, 0.6) : pw(z, 0.74);
+    const X = pw(x, 0.8) * halfWidth(t);
+    const Y = y >= 0 ? Math.pow(y, 0.6) * heightAt(t) : -Math.pow(-y, 0.55) * 0.03;
+    p.setXYZ(i, X, Y + 0.03, t * 0.6);
+  }
+  g.computeVertexNormals();
+  weldNormals(g);
+  return g;
+}
+const BODY = buildBody();
+function topY(z) {
+  const p = BODY.attributes.position;
+  let best = 0, bd = 1e9;
+  for (let i = 0; i < p.count; i++) {
+    if (Math.abs(p.getX(i)) > 0.01 || p.getY(i) < 0.08) continue;
+    const d = Math.abs(p.getZ(i) - z);
+    if (d < bd || (Math.abs(d - bd) < 1e-4 && p.getY(i) > best)) { bd = d; best = p.getY(i); }
+  }
+  return best;
+}
+const WHEEL_Z = -0.30, LOGO_Z = 0.32;
+const WHEEL_TOP = topY(WHEEL_Z), LOGO_TOP = topY(LOGO_Z);
+
+/* Panel lines, side buttons, logo ring, skates and sensor are drawn in the shader from object-space position. */
+function bodyMaterial(hex) {
+  const mat = new THREE.MeshPhysicalMaterial({
+    color: hex, roughness: 0.46, metalness: 0,
+    clearcoat: 0.2, clearcoatRoughness: 0.4, envMapIntensity: 0.6,
+  });
+  const uniforms = { uLed: { value: 0 }, uSensor: { value: 0 }, uAccent: { value: ACCENT.clone() } };
+  mat.onBeforeCompile = sh => {
+    Object.assign(sh.uniforms, uniforms);
+    sh.vertexShader = sh.vertexShader
+      .replace('#include <common>', '#include <common>\nvarying vec3 vPos;\nvarying vec3 vObjN;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvPos = position;\nvObjN = normal;');
+    sh.fragmentShader = sh.fragmentShader
+      .replace('#include <common>', `#include <common>
+varying vec3 vPos; varying vec3 vObjN;
+uniform float uLed; uniform float uSensor; uniform vec3 uAccent;
+float lineMask(float d, float w){ return 1.0 - smoothstep(w * 0.45, w, abs(d)); }
+float sdRR(vec2 p, vec2 b, float r){ vec2 q = abs(p) - b + r; return length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - r; }`)
+      .replace('#include <color_fragment>', `#include <color_fragment>
+float ledMask = 0.0; float sensorMask = 0.0; float roughAdj = 0.0;
+{
+  vec3 p = vPos; vec3 n = normalize(vObjN);
+  vec3 base = diffuseColor.rgb;
+  float top = smoothstep(0.35, 0.6, n.y);
+  float slot = 1.0 - smoothstep(0.85, 1.0, length(vec2(p.x / 0.026, (p.z + 0.30) / 0.074)));
+  float split = lineMask(p.x, 0.0045) * (1.0 - step(-0.08, p.z)) * top;
+  float rear = lineMask(p.z - (-0.075 + 1.1 * p.x * p.x), 0.0045) * top;
+  float seam = lineMask(p.y - 0.05, 0.0045) * (1.0 - smoothstep(0.5, 0.8, abs(n.y)));
+  float side = 1.0 - smoothstep(-0.8, -0.5, n.x);
+  vec2 b1 = vec2((p.z + 0.13) / 0.075, (p.y - 0.2) / 0.03);
+  vec2 b2 = vec2((p.z - 0.035) / 0.075, (p.y - 0.2) / 0.03);
+  float sb = max(lineMask(length(b1) - 1.0, 0.1), lineMask(length(b2) - 1.0, 0.1)) * side;
+  float sbFill = max(1.0 - step(1.0, length(b1)), 1.0 - step(1.0, length(b2))) * side;
+  float ring = lineMask(length(vec2(p.x, p.z - 0.32)) - 0.034, 0.0055) * top;
+  ledMask = ring;
+  float g = max(max(split, rear), max(seam, sb));
+  diffuseColor.rgb = mix(base, base * 0.86, sbFill * 0.7);
+  diffuseColor.rgb = mix(diffuseColor.rgb, base * 0.16, g * 0.92);
+  diffuseColor.rgb = mix(diffuseColor.rgb, base * 0.55, ring * 0.75);
+  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.01), slot);
+  roughAdj += g * 0.3;
+  float under = 1.0 - smoothstep(-0.75, -0.45, n.y);
+  if (under > 0.0) {
+    vec3 u = base * 0.38 + 0.015;
+    float sk = 1.0 - smoothstep(0.0, 0.004, sdRR(vec2(p.x, p.z + 0.47), vec2(0.16, 0.032), 0.03));
+    sk = max(sk, 1.0 - smoothstep(0.0, 0.004, sdRR(vec2(p.x, p.z - 0.44), vec2(0.19, 0.038), 0.035)));
+    float r = length(vec2(p.x, p.z + 0.04));
+    float lens = 1.0 - smoothstep(0.026, 0.03, r);
+    float sring = lineMask(r - 0.045, 0.009);
+    float btn = lineMask(sdRR(vec2(p.x, p.z - 0.17), vec2(0.03, 0.014), 0.012), 0.004);
+    u = mix(u, vec3(0.86), sk);
+    u = mix(u, vec3(0.012), lens);
+    u = mix(u, base * 0.15, max(sring, btn));
+    diffuseColor.rgb = mix(diffuseColor.rgb, u, under);
+    sensorMask = sring * under;
+    roughAdj -= 0.28 * sk * under;
+  }
+}`)
+      .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = clamp(roughnessFactor + roughAdj, 0.05, 1.0);')
+      .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\ntotalEmissiveRadiance += uAccent * (ledMask * uLed * 3.0 + sensorMask * uSensor * 4.0);');
+  };
+  mat.userData.uniforms = uniforms;
+  return mat;
+}
+
+function shadowTexture() {
+  const c = document.createElement('canvas');
+  c.width = c.height = 256;
+  const x = c.getContext('2d');
+  const g = x.createRadialGradient(128, 128, 0, 128, 128, 128);
+  g.addColorStop(0, 'rgba(0,0,0,0.5)');
+  g.addColorStop(0.45, 'rgba(0,0,0,0.2)');
+  g.addColorStop(1, 'rgba(0,0,0,0)');
+  x.fillStyle = g; x.fillRect(0, 0, 256, 256);
+  return new THREE.CanvasTexture(c);
+}
+const SHADOW_TEX = shadowTexture();
+
+function createMouse(hex) {
+  const group = new THREE.Group();
+  const pivot = new THREE.Group();
+  pivot.position.y = -0.17;
+  group.add(pivot);
+
+  const mat = bodyMaterial(hex);
+  pivot.add(new THREE.Mesh(BODY, mat));
+
+  const wheelGeo = new THREE.CylinderGeometry(0.043, 0.043, 0.026, 48).rotateZ(Math.PI / 2);
+  const wheel = new THREE.Mesh(wheelGeo, new THREE.MeshPhysicalMaterial({ color: 0x18191c, roughness: 0.6, sheen: 0.6, sheenRoughness: 0.5, sheenColor: new THREE.Color(0x777777) }));
+  wheel.position.set(0, WHEEL_TOP - 0.016, WHEEL_Z);
+  const bandMat = new THREE.MeshStandardMaterial({ color: ACCENT, emissive: ACCENT, emissiveIntensity: 0.25, roughness: 0.35 });
+  wheel.add(new THREE.Mesh(new THREE.TorusGeometry(0.0432, 0.0035, 10, 64).rotateY(Math.PI / 2), bandMat));
+  pivot.add(wheel);
+
+  const ringGeo = new THREE.RingGeometry(0.965, 1, 96).rotateX(-Math.PI / 2);
+  const rings = [0, 1, 2].map(() => {
+    const m = new THREE.Mesh(ringGeo, new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true, opacity: 0, depthWrite: false, side: THREE.DoubleSide, toneMapped: false }));
+    m.position.set(0, LOGO_TOP + 0.006, LOGO_Z);
+    m.visible = false;
+    pivot.add(m);
+    return m;
+  });
+
+  const shadow = new THREE.Mesh(new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2),
+    new THREE.MeshBasicMaterial({ map: SHADOW_TEX, transparent: true, depthWrite: false, toneMapped: false }));
+  shadow.renderOrder = -1;
+
+  const target = new THREE.Color(hex);
+  return { group, pivot, mat, wheel, bandMat, rings, shadow, target };
+}
+
+/* ---------- viewer ---------- */
+class Viewer {
+  constructor(canvas, opts) {
+    this.canvas = canvas;
+    this.o = opts;
+    const r = this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+    r.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    r.outputColorSpace = THREE.SRGBColorSpace;
+    r.toneMapping = THREE.ACESFilmicToneMapping;
+    r.toneMappingExposure = 1.0;
+    this.scene = new THREE.Scene();
+    const pm = new THREE.PMREMGenerator(r);
+    this.scene.environment = pm.fromScene(new RoomEnvironment(r), 0.04).texture;
+    pm.dispose();
+    this.camera = new THREE.PerspectiveCamera(28, 1, 0.1, 60);
+    this.camera.position.set(0, opts.camY, 7);
+    this.camera.lookAt(0, 0, 0);
+    const key = new THREE.DirectionalLight(0xffffff, 1.3); key.position.set(-3, 5, 4);
+    const rim = new THREE.DirectionalLight(0xdbe4ff, 2.2); rim.position.set(4, 2.5, -5);
+    this.scene.add(key, rim);
+
+    this.m = createMouse(S.COLORS[S.color].hex);
+    this.scene.add(this.m.group, this.m.shadow);
+
+    this.visible = true;
+    new IntersectionObserver(es => es.forEach(e => { this.visible = e.isIntersecting; }), { rootMargin: '120px' }).observe(canvas);
+    new ResizeObserver(() => this.resize()).observe(canvas);
+    this.resize();
+  }
+  resize() {
+    const w = this.canvas.clientWidth, h = this.canvas.clientHeight;
+    if (!w || !h) return;
+    this.renderer.setSize(w, h, false);
+    this.camera.aspect = w / h;
+    this.camera.updateProjectionMatrix();
+    const d = this.camera.position.length();
+    this.halfH = Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2)) * d;
+    this.halfW = this.halfH * this.camera.aspect;
+    this.fit = Math.min(this.halfH * 2 * this.o.fitH, this.halfW * 2 * this.o.fitW) / 1.2;
+  }
+  setColor(key) { this.m.target.set(S.COLORS[key].hex); }
+  tickCommon(dt, t, led, sensor) {
+    const m = this.m, k = 1 - Math.exp(-dt * 5);
+    m.mat.color.lerp(m.target, k);
+    m.mat.userData.uniforms.uLed.value = led * (0.75 + 0.25 * Math.sin(t * 6));
+    m.mat.userData.uniforms.uSensor.value = sensor;
+    m.bandMat.emissiveIntensity = 0.25 + led * 1.6;
+    m.rings.forEach((r, i) => {
+      const ph = (t * 0.6 + i / 3) % 1;
+      r.visible = led > 0.02;
+      r.scale.setScalar(0.04 + ph * 0.62);
+      r.material.opacity = Math.pow(1 - ph, 1.6) * 0.9 * led;
+    });
+  }
+  render() { this.renderer.render(this.scene, this.camera); }
+}
+
+/* Hero: follows the scroll-driven pose written by GSAP */
+class HeroViewer extends Viewer {
+  constructor(canvas) {
+    super(canvas, { camY: 1.1, fitH: 0.44, fitW: 0.62 });
+    this.cur = { ...S.pose };
+    this.lastY = window.scrollY;
+  }
+  update(dt, t) {
+    const P = S.pose, c = this.cur, hw = S.heroWeight;
+    const k = 1 - Math.exp(-dt * 6);
+    const tg = { rx: P.rx + S.pointer.y * 0.12 * hw, ry: P.ry + S.pointer.x * 0.3 * hw, rz: P.rz, px: P.px, py: P.py, s: P.s, shadow: P.shadow };
+    for (const key in tg) c[key] += (tg[key] - c[key]) * k;
+    const ie = 1 - Math.pow(1 - S.intro, 3);
+    const g = this.m.group;
+    const float = S.reduce ? 0 : Math.sin(t * 1.1) * 0.025;
+    g.rotation.set(c.rx, c.ry - (1 - ie) * 1.5, c.rz + (S.reduce ? 0 : Math.sin(t * 0.8) * 0.012));
+    const sc = this.fit * c.s * (0.8 + 0.2 * ie);
+    g.position.set(c.px * this.halfW, c.py * this.halfH + float - (1 - ie) * 0.25, 0);
+    g.scale.setScalar(sc);
+    const sh = this.m.shadow;
+    sh.position.set(g.position.x, g.position.y - 0.28 * sc, 0);
+    sh.scale.set(0.95 * sc, 1, 1.45 * sc);
+    sh.rotation.y = c.ry;
+    sh.material.opacity = c.shadow * ie * 0.9;
+    sh.visible = sh.material.opacity > 0.01;
+    const sy = window.scrollY;
+    this.m.wheel.rotation.x -= (sy - this.lastY) * 0.01;
+    this.lastY = sy;
+    this.tickCommon(dt, t, P.led, P.sensor);
+  }
+}
+
+/* Colours: slow turntable, drag to spin with inertia */
+class ColorViewer extends Viewer {
+  constructor(canvas) {
+    super(canvas, { camY: 1.6, fitH: 0.6, fitW: 0.62 });
+    this.yaw = 0.6; this.vel = 0.35; this.drag = false;
+    let lx = 0, lt = 0;
+    canvas.addEventListener('pointerdown', e => { this.drag = true; lx = e.clientX; lt = performance.now(); canvas.setPointerCapture(e.pointerId); });
+    canvas.addEventListener('pointermove', e => {
+      if (!this.drag) return;
+      const now = performance.now(), dx = e.clientX - lx;
+      this.yaw += dx * 0.012;
+      this.vel = (dx * 0.012) / Math.max(0.008, (now - lt) / 1000);
+      lx = e.clientX; lt = now;
+    });
+    const end = () => { this.drag = false; };
+    canvas.addEventListener('pointerup', end);
+    canvas.addEventListener('pointercancel', end);
+  }
+  update(dt, t) {
+    if (!this.drag) {
+      this.vel += ((S.reduce ? 0 : 0.35) - this.vel) * (1 - Math.exp(-dt * 1.6));
+      this.yaw += this.vel * dt;
+    }
+    const g = this.m.group, sc = this.fit;
+    g.rotation.set(0.18, this.yaw, 0);
+    g.position.set(0, -0.04 * this.halfH + (S.reduce ? 0 : Math.sin(t * 1.2) * 0.02), 0);
+    g.scale.setScalar(sc);
+    const sh = this.m.shadow;
+    sh.position.set(0, g.position.y - 0.25 * sc, 0);
+    sh.scale.set(1.0 * sc, 1, 1.5 * sc);
+    sh.rotation.y = this.yaw;
+    sh.material.opacity = 0.75;
+    this.tickCommon(dt, t, 0, 0);
+  }
+}
+
+try {
+  const viewers = [new HeroViewer(document.getElementById('hero-canvas')), new ColorViewer(document.getElementById('color-canvas'))];
+  window.addEventListener('sylphe:color', e => viewers.forEach(v => v.setColor(e.detail)));
+  let last = performance.now();
+  const frame = now => {
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    const t = now / 1000;
+    for (const v of viewers) if (v.visible) { v.update(dt, t); v.render(); }
+    requestAnimationFrame(frame);
+  };
+  requestAnimationFrame(frame);
+  S.ready3d = true;
+} catch (err) {
+  document.documentElement.classList.add('no-webgl');
+  console.warn('3D indisponible', err);
+}
+</script>
