@@ -1,0 +1,609 @@
+{
+  "meta": {
+    "description": "Catalogue de la boutique cocooning. Source unique : le site, les exports Shopify et le tableau des marges sont générés à partir de ce fichier (node build.mjs).",
+    "mise_a_jour": "2026-11-12",
+    "taux_usd_vers_eur": 0.86,
+    "tva_fr": 0.2,
+    "coef_minimum_conseille": 2.5
+  },
+
+  "marches": {
+    "fr": {
+      "langue": "fr",
+      "locale": "fr-FR",
+      "devise": "EUR",
+      "nom_boutique": "Maison Cocon",
+      "slogan": "Le confort chaud, toute l'année",
+      "hero_titre": "Faites de votre maison un cocon",
+      "hero_texte": "Plaids, chaussons chauffants, lumières douces : tout pour rester au chaud chez soi, en hiver comme à la mi-saison.",
+      "reassurance": ["Paiement sécurisé", "Retour sous 14 jours", "Livraison suivie", "Service client par e-mail"]
+    },
+    "us": {
+      "langue": "en",
+      "locale": "en-US",
+      "devise": "USD",
+      "nom_boutique": "Warm Nest",
+      "slogan": "Cozy comfort, all year round",
+      "hero_titre": "Turn your home into a cozy nest",
+      "hero_texte": "Heated throws, warm slippers and soft lighting: everything you need to stay snug at home, in winter and beyond.",
+      "reassurance": ["Secure checkout", "30-day returns", "Tracked shipping", "Friendly email support"]
+    }
+  },
+
+  "categories": [
+    {
+      "id": "textiles",
+      "icone": "plaid",
+      "fr": { "nom": "Couvertures et textiles", "slug": "textiles-cocooning", "intro": "Plaids, draps et rideaux pour une maison qui garde sa chaleur." },
+      "en": { "nom": "Blankets & Textiles", "slug": "blankets-textiles", "intro": "Throws, sheets and curtains for a home that holds on to its warmth." }
+    },
+    {
+      "id": "chauffage",
+      "icone": "chaleur",
+      "fr": { "nom": "Chauffage personnel", "slug": "chauffage-personnel", "intro": "Pieds, mains, nuque : de la chaleur là où on en a besoin." },
+      "en": { "nom": "Personal Warmers", "slug": "personal-warmers", "intro": "Feet, hands, neck: warmth right where you need it." }
+    },
+    {
+      "id": "bureau",
+      "icone": "tasse",
+      "fr": { "nom": "Bureau et télétravail", "slug": "bureau-teletravail", "intro": "Mains au chaud et boisson chaude, même dans un bureau frais." },
+      "en": { "nom": "Desk & Home Office", "slug": "desk-home-office", "intro": "Warm hands and a hot drink, even in a chilly office." }
+    },
+    {
+      "id": "deco",
+      "icone": "flamme",
+      "fr": { "nom": "Déco et ambiance", "slug": "deco-ambiance", "intro": "Lumière douce et parfums pour une ambiance cocooning." },
+      "en": { "nom": "Decor & Ambiance", "slug": "decor-ambiance", "intro": "Soft light and scents for a cozy mood." }
+    }
+  ],
+
+  "produits": [
+    {
+      "id": "plaid-chauffant",
+      "categorie": "textiles",
+      "vedette": null,
+      "fr": {
+        "nom": "Plaid chauffant électrique",
+        "slug": "plaid-chauffant-electrique",
+        "description": "Plaid doux qui chauffe en quelques minutes, avec plusieurs niveaux de chaleur et un arrêt automatique. Idéal sur le canapé.",
+        "points_forts": ["Chaud en quelques minutes", "Plusieurs niveaux de chaleur", "Arrêt automatique pour plus de sécurité"]
+      },
+      "en": {
+        "nom": "Heated Throw Blanket",
+        "slug": "heated-throw-blanket",
+        "description": "A soft throw that warms up in minutes, with several heat settings and auto shut-off. Perfect for the couch.",
+        "points_forts": ["Warm in minutes", "Multiple heat settings", "Auto shut-off for peace of mind"]
+      },
+      "prix_achat": { "min": 17, "max": 30, "devise": "USD", "fiabilite": "verifie" },
+      "prix_vente": 59,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-throw-blanket-electric.html" },
+        { "nom": "BigBuy", "type": "categorie", "url": "https://www.bigbuy.eu/fr/shop/category/maison-et-cuisine-textiles-de-maison" }
+      ]
+    },
+    {
+      "id": "sweat-plaid-sherpa",
+      "categorie": "textiles",
+      "vedette": 2,
+      "fr": {
+        "nom": "Sweat-plaid oversize sherpa",
+        "slug": "sweat-plaid-oversize-sherpa",
+        "description": "Un plaid qu'on porte comme un sweat : capuche, manches, poche ventrale et doublure sherpa ultra douce.",
+        "points_forts": ["Capuche et manches : on bouge sans perdre la chaleur", "Grande poche ventrale", "Doublure sherpa ultra douce"]
+      },
+      "en": {
+        "nom": "Oversized Sherpa Blanket Hoodie",
+        "slug": "sherpa-blanket-hoodie",
+        "description": "A blanket you wear like a hoodie: hood, sleeves, front pocket and an ultra-soft sherpa lining.",
+        "points_forts": ["Hood and sleeves, so you stay wrapped up while you move", "Roomy front pocket", "Ultra-soft sherpa lining"]
+      },
+      "prix_achat": { "min": 12, "max": 22, "devise": "USD", "fiabilite": "verifie" },
+      "prix_vente": 42,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-sherpa-blanket-hoodie.html" },
+        { "nom": "CJ Dropshipping", "type": "fiche", "url": "https://cjdropshipping.com/product/winter-hoodie-blanket-with-button-design-warm-home-clothes-women-men-oversized-pullover-p-1592402824729088000.html" },
+        { "nom": "BigBuy", "type": "categorie", "url": "https://www.bigbuy.eu/fr/shop/category/vetements-homme_19729" }
+      ]
+    },
+    {
+      "id": "pack-plaid-coussins",
+      "categorie": "textiles",
+      "vedette": null,
+      "fr": {
+        "nom": "Pack plaid + housses de coussin assorties",
+        "slug": "pack-plaid-housses-coussin",
+        "description": "Ensemble coordonné plaid et housses de coussin, en couleurs neutres de style scandinave. Parfait en cadeau.",
+        "points_forts": ["Plaid et housses assortis", "Couleurs neutres, style scandinave", "Idée cadeau toute prête"]
+      },
+      "en": {
+        "nom": "Cozy Blanket & Pillow Cover Set",
+        "slug": "blanket-pillow-cover-set",
+        "description": "A matching throw and pillow cover set in neutral, Scandinavian-style colors. A ready-made gift.",
+        "points_forts": ["Throw and covers that match", "Neutral Scandinavian palette", "An easy, ready-to-give gift"]
+      },
+      "prix_achat": { "min": 12, "max": 20, "devise": "EUR", "fiabilite": "estimation" },
+      "prix_vente": 49,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-throw-blanket-pillow-cover-set.html" }
+      ]
+    },
+    {
+      "id": "draps-flanelle",
+      "categorie": "textiles",
+      "vedette": null,
+      "fr": {
+        "nom": "Draps en flanelle",
+        "slug": "draps-flanelle",
+        "description": "Draps en flanelle épaisse et douce pour un lit chaud dès qu'on se couche.",
+        "points_forts": ["Flanelle épaisse et douce", "Fini la sensation de draps froids au coucher", "Un lit douillet tout l'hiver"]
+      },
+      "en": {
+        "nom": "Flannel Bed Sheets",
+        "slug": "flannel-bed-sheets",
+        "description": "Thick, soft flannel sheets for a bed that feels warm the moment you get in.",
+        "points_forts": ["Thick, soft flannel", "No more cold sheets at bedtime", "A snug bed all winter"]
+      },
+      "prix_achat": { "min": 15, "max": 25, "devise": "EUR", "fiabilite": "estimation" },
+      "prix_vente": 49,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-flannel-bed-sheet-set.html" }
+      ]
+    },
+    {
+      "id": "surmatelas-chauffant",
+      "categorie": "textiles",
+      "vedette": null,
+      "fr": {
+        "nom": "Surmatelas chauffant",
+        "slug": "surmatelas-chauffant",
+        "description": "Se place sous le drap pour chauffer le lit avant de dormir. Double commande pour les couples.",
+        "points_forts": ["Se glisse sous le drap", "Un lit déjà chaud quand on se couche", "Double commande : chacun règle son côté"]
+      },
+      "en": {
+        "nom": "Heated Mattress Pad",
+        "slug": "heated-mattress-pad",
+        "description": "Slips under the fitted sheet to warm the bed before you sleep. Dual controls for couples.",
+        "points_forts": ["Fits under your sheet", "Pre-warm the bed before you get in", "Dual controls: each side sets its own heat"]
+      },
+      "prix_achat": { "min": 25, "max": 35, "devise": "USD", "fiabilite": "verifie" },
+      "prix_vente": 79,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-electric-heating-mattress-pad.html" },
+        { "nom": "BigBuy", "type": "categorie", "url": "https://www.bigbuy.eu/fr/shop/category/linge-de-lit-et-oreillers-couvertures-electriques-et-chauffe-matelas" }
+      ]
+    },
+    {
+      "id": "rideaux-thermiques",
+      "categorie": "textiles",
+      "vedette": null,
+      "fr": {
+        "nom": "Rideaux thermiques isolants (la paire)",
+        "slug": "rideaux-thermiques-isolants",
+        "description": "Ils bloquent le froid et la lumière, et aident à baisser la facture de chauffage. Vendus par paire.",
+        "points_forts": ["Bloquent le froid venu des fenêtres", "Occultants", "Aident à réduire la facture de chauffage", "Vendus par paire"]
+      },
+      "en": {
+        "nom": "Thermal Insulated Curtains (Pair)",
+        "slug": "thermal-insulated-curtains",
+        "description": "Keep out cold drafts and light, and help lower your heating bill. Sold as a pair.",
+        "points_forts": ["Block drafts from windows", "Blackout fabric", "Help cut heating costs", "Sold as a pair"]
+      },
+      "prix_achat": { "min": 9, "max": 25, "devise": "USD", "fiabilite": "verifie" },
+      "prix_vente": 44,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-insulated-thermal-curtains.html" }
+      ]
+    },
+
+    {
+      "id": "chauffe-pieds-bureau",
+      "categorie": "chauffage",
+      "vedette": null,
+      "fr": {
+        "nom": "Chauffe-pieds sous le bureau",
+        "slug": "chauffe-pieds-bureau",
+        "description": "Coussin chauffant pour les pieds, parfait en télétravail ou pour étudier.",
+        "points_forts": ["Se glisse sous le bureau", "Pieds au chaud pendant qu'on travaille", "Idéal en télétravail ou pour réviser"]
+      },
+      "en": {
+        "nom": "Under-Desk Foot Warmer",
+        "slug": "under-desk-foot-warmer",
+        "description": "A heated foot pad for under your desk, perfect for working from home or studying.",
+        "points_forts": ["Sits right under your desk", "Warm feet while you work", "Great for home office or study time"]
+      },
+      "prix_achat": { "min": 6, "max": 20, "devise": "USD", "fiabilite": "verifie" },
+      "prix_vente": 39,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-office-foot-warmer.html" },
+        { "nom": "AliExpress", "type": "fiche", "url": "https://www.aliexpress.us/item/3256805895271748.html" },
+        { "nom": "BigBuy", "type": "fiche", "url": "https://www.bigbuy.eu/en/shop/product/electric-heat-pad-hemat-innovagoods_282037" }
+      ]
+    },
+    {
+      "id": "chaussons-chauffants",
+      "categorie": "chauffage",
+      "vedette": null,
+      "fr": {
+        "nom": "Chaussons chauffants rechargeables",
+        "slug": "chaussons-chauffants-rechargeables",
+        "description": "Des chaussons qui chauffent grâce à une batterie, pour ne plus jamais avoir les pieds gelés.",
+        "points_forts": ["Batterie rechargeable", "Sans fil : on se déplace librement", "Fini les pieds gelés"]
+      },
+      "en": {
+        "nom": "Rechargeable Heated Slippers",
+        "slug": "heated-slippers",
+        "description": "Battery-heated slippers, so your feet are never cold again.",
+        "points_forts": ["Rechargeable battery", "Cordless, so you can move around freely", "No more frozen toes"]
+      },
+      "prix_achat": { "min": 9, "max": 20, "devise": "USD", "fiabilite": "verifie" },
+      "prix_vente": 34,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-usb-heated-slippers.html" },
+        { "nom": "CJ Dropshipping", "type": "fiche", "url": "https://cjdropshipping.com/product/electric-heating-shoes-rechargeable-foot-warmer-artifact-heating-home-shoes-winter-warm-temperature-regulating-cotton-shoes-p-2411031308311601800.html" }
+      ]
+    },
+    {
+      "id": "chaussons-cachemire",
+      "categorie": "chauffage",
+      "vedette": null,
+      "fr": {
+        "nom": "Chaussons d'intérieur effet cachemire",
+        "slug": "chaussons-effet-cachemire",
+        "description": "Des chaussons d'intérieur doux et chauds, avec un toucher effet cachemire. Petit prix, cadeau facile.",
+        "points_forts": ["Toucher doux effet cachemire", "Bien chauds pour la maison", "Petit prix, cadeau facile"]
+      },
+      "en": {
+        "nom": "Cashmere-Feel House Slippers",
+        "slug": "cashmere-feel-slippers",
+        "description": "Soft, warm house slippers with a cashmere-like feel. Affordable and an easy gift.",
+        "points_forts": ["Soft, cashmere-like feel", "Warm around the house", "Affordable, easy gift"]
+      },
+      "prix_achat": { "min": 4.8, "max": 4.8, "devise": "USD", "fiabilite": "verifie", "approximatif": true },
+      "prix_vente": 22,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-cashmere-slippers.html" }
+      ],
+      "notes": "Nom du brief : « Chaussons en cachemire ». Renommé « effet cachemire » : à ce prix, ce n'est presque sûrement pas du vrai cachemire, et l'appellation est encadrée (étiquetage textile UE, Wool Products Labeling Act aux US)."
+    },
+    {
+      "id": "chaussettes-chauffantes",
+      "categorie": "chauffage",
+      "vedette": 4,
+      "fr": {
+        "nom": "Chaussettes chauffantes rechargeables",
+        "slug": "chaussettes-chauffantes-rechargeables",
+        "description": "Chaussettes avec batterie et plusieurs niveaux de chaleur, pour plusieurs heures d'autonomie.",
+        "points_forts": ["Batterie rechargeable", "Plusieurs niveaux de chaleur", "Plusieurs heures d'autonomie"]
+      },
+      "en": {
+        "nom": "Rechargeable Heated Socks",
+        "slug": "heated-socks",
+        "description": "Battery-powered socks with several heat settings and hours of battery life.",
+        "points_forts": ["Rechargeable battery", "Multiple heat settings", "Hours of battery life"]
+      },
+      "prix_achat": { "min": 15, "max": 20, "devise": "USD", "fiabilite": "verifie" },
+      "prix_vente": 64,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-heated-socks-rechargeable.html" }
+      ]
+    },
+    {
+      "id": "chauffe-mains",
+      "categorie": "chauffage",
+      "vedette": null,
+      "fr": {
+        "nom": "Chauffe-mains rechargeables (pack de 2)",
+        "slug": "chauffe-mains-rechargeables",
+        "description": "Chauffe-mains de poche rechargeables en USB : chaleur instantanée, plusieurs niveaux. Vendus par deux.",
+        "points_forts": ["Pack de 2", "Rechargeables en USB", "Chaleur instantanée, plusieurs niveaux"]
+      },
+      "en": {
+        "nom": "Rechargeable Hand Warmers (2-Pack)",
+        "slug": "rechargeable-hand-warmers",
+        "description": "Pocket hand warmers that recharge over USB. Instant heat with several settings. Pack of 2.",
+        "points_forts": ["Pack of 2", "USB rechargeable", "Instant heat, multiple settings"]
+      },
+      "prix_achat": { "min": 5, "max": 15, "devise": "USD", "fiabilite": "verifie" },
+      "prix_vente": 27,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-usb-hand-warmer-rechargeable.html" },
+        { "nom": "CJ Dropshipping", "type": "recherche", "url": "https://cjdropshipping.com/search/bottle+warmer.html" }
+      ],
+      "notes": "Le lien CJ du brief est une recherche « bottle warmer » (le même que pour la ceinture bouillotte) : sans doute une erreur de copier-coller, à remplacer."
+    },
+    {
+      "id": "gants-chauffants",
+      "categorie": "chauffage",
+      "vedette": null,
+      "fr": {
+        "nom": "Gants chauffants USB",
+        "slug": "gants-chauffants-usb",
+        "description": "Mitaines chauffantes qui laissent les doigts libres pour taper au clavier.",
+        "points_forts": ["Doigts libres pour taper au clavier", "Chauffent par USB", "Idéales au bureau"]
+      },
+      "en": {
+        "nom": "USB Heated Gloves",
+        "slug": "usb-heated-gloves",
+        "description": "Heated fingerless gloves that keep your fingers free for typing.",
+        "points_forts": ["Fingers free for typing", "USB powered", "Made for the desk"]
+      },
+      "prix_achat": { "min": 10, "max": 10, "devise": "USD", "fiabilite": "verifie", "approximatif": true },
+      "prix_vente": 29,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-usb-heated-gloves.html" }
+      ]
+    },
+    {
+      "id": "echarpe-chauffante",
+      "categorie": "chauffage",
+      "vedette": null,
+      "fr": {
+        "nom": "Écharpe chauffante USB",
+        "slug": "echarpe-chauffante-usb",
+        "description": "Une écharpe avec 3 niveaux de chaleur, lavable à l'eau.",
+        "points_forts": ["3 niveaux de chaleur", "Alimentation USB", "Lavable à l'eau"]
+      },
+      "en": {
+        "nom": "Heated Neck Scarf",
+        "slug": "heated-neck-scarf",
+        "description": "A heated scarf with 3 heat settings. Washable.",
+        "points_forts": ["3 heat settings", "USB powered", "Washable"]
+      },
+      "prix_achat": { "min": 4.5, "max": 4.5, "devise": "USD", "fiabilite": "verifie", "approximatif": true },
+      "prix_vente": 24,
+      "fournisseurs": [
+        { "nom": "CJ Dropshipping", "type": "fiche", "url": "https://cjdropshipping.com/product/heating-scarf-usb-electric-heated-neck-wrap-heating-pad-pain-relief-three-gear-temperature-control-neck-warmer-for-women-men-p-2410090540211619700.html" }
+      ]
+    },
+    {
+      "id": "coussin-siege-chauffant",
+      "categorie": "chauffage",
+      "vedette": null,
+      "fr": {
+        "nom": "Coussin de siège chauffant",
+        "slug": "coussin-siege-chauffant",
+        "description": "Coussin chauffant pour chaise de bureau ou canapé, avec plusieurs niveaux de chaleur.",
+        "points_forts": ["Pour chaise de bureau ou canapé", "Plusieurs niveaux de chaleur", "Chaleur douce dans le dos et sous l'assise"]
+      },
+      "en": {
+        "nom": "Heated Seat Cushion",
+        "slug": "heated-seat-cushion",
+        "description": "A heated cushion for your desk chair or couch, with several heat settings.",
+        "points_forts": ["For desk chairs or couches", "Multiple heat settings", "Gentle warmth where you sit"]
+      },
+      "prix_achat": { "min": 15, "max": 25, "devise": "EUR", "fiabilite": "estimation" },
+      "prix_vente": 45,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-heated-seat-cushion.html" }
+      ]
+    },
+    {
+      "id": "bouillotte-electrique",
+      "categorie": "chauffage",
+      "vedette": null,
+      "fr": {
+        "nom": "Bouillotte électrique rechargeable",
+        "slug": "bouillotte-electrique-rechargeable",
+        "description": "Elle chauffe en quelques minutes et reste chaude plusieurs heures, sans avoir à la remplir d'eau.",
+        "points_forts": ["Chaude en quelques minutes", "Garde la chaleur plusieurs heures", "Rien à remplir"]
+      },
+      "en": {
+        "nom": "Rechargeable Hot Water Bottle",
+        "slug": "rechargeable-hot-water-bottle",
+        "description": "Heats up in minutes and stays warm for hours, with no water to fill.",
+        "points_forts": ["Warm in minutes", "Stays warm for hours", "Nothing to fill"]
+      },
+      "prix_achat": { "min": 3, "max": 8, "devise": "EUR", "fiabilite": "estimation" },
+      "prix_vente": 22,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-electric-hot-water-bottle.html" },
+        { "nom": "BigBuy", "type": "fiche", "url": "https://www.bigbuy.eu/fr/shop/product/bouillotte-d-eau-chaude-reglable-rechargeable-hutter-innovagoods-gris-400-w_144668" }
+      ]
+    },
+    {
+      "id": "ceinture-bouillotte",
+      "categorie": "chauffage",
+      "vedette": null,
+      "fr": {
+        "nom": "Ceinture chauffante avec bouillotte",
+        "slug": "ceinture-chauffante-bouillotte",
+        "description": "Une ceinture en peluche avec bouillotte intégrée pour garder le ventre au chaud.",
+        "points_forts": ["Peluche toute douce", "Bouillotte intégrée", "Ventre au chaud, mains libres"]
+      },
+      "en": {
+        "nom": "Plush Belly Warmer with Hot Water Bottle",
+        "slug": "plush-belly-warmer",
+        "description": "A plush belt with a built-in hot water bottle to keep your tummy warm.",
+        "points_forts": ["Super-soft plush", "Built-in hot water bottle", "Warm tummy, hands free"]
+      },
+      "prix_achat": { "min": 3, "max": 4, "devise": "USD", "fiabilite": "verifie" },
+      "prix_vente": 19,
+      "fournisseurs": [
+        { "nom": "CJ Dropshipping", "type": "recherche", "url": "https://cjdropshipping.com/search/bottle+warmer.html" }
+      ]
+    },
+    {
+      "id": "masque-yeux-chauffant",
+      "categorie": "chauffage",
+      "vedette": null,
+      "fr": {
+        "nom": "Masque chauffant pour les yeux",
+        "slug": "masque-chauffant-yeux",
+        "description": "Un masque doux qui chauffe, pour se détendre avant de dormir.",
+        "points_forts": ["Douce chaleur sur les yeux", "Alimentation USB", "Un moment de détente avant de dormir"]
+      },
+      "en": {
+        "nom": "USB Heated Eye Mask",
+        "slug": "heated-eye-mask",
+        "description": "A soft heated eye mask to help you unwind before sleep.",
+        "points_forts": ["Gentle warmth over your eyes", "USB powered", "A calm moment before bed"]
+      },
+      "prix_achat": { "min": 4, "max": 8, "devise": "EUR", "fiabilite": "estimation" },
+      "prix_vente": 22,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-usb-heated-eye-mask.html" }
+      ]
+    },
+    {
+      "id": "mini-chauffage-ceramique",
+      "categorie": "chauffage",
+      "vedette": null,
+      "fr": {
+        "nom": "Mini chauffage céramique",
+        "slug": "mini-chauffage-ceramique",
+        "description": "Petit chauffage de bureau ou sur prise, qui chauffe vite une petite pièce.",
+        "points_forts": ["Format compact", "Version bureau ou sur prise", "Chauffe vite une petite pièce"]
+      },
+      "en": {
+        "nom": "Mini Ceramic Space Heater",
+        "slug": "mini-ceramic-heater",
+        "description": "A compact heater for your desk or wall outlet that quickly warms a small room.",
+        "points_forts": ["Compact size", "Desk or plug-in versions", "Quickly warms a small room"]
+      },
+      "prix_achat": { "min": 10, "max": 22, "devise": "USD", "fiabilite": "verifie" },
+      "prix_vente": 39,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-desk-heater-mini.html" },
+        { "nom": "BigBuy", "type": "fiche", "url": "https://www.bigbuy.eu/fr/chauffage-thermo-ceramique-sur-prise-heatpod-innovagoods-400w_100837.html" }
+      ]
+    },
+
+    {
+      "id": "tapis-bureau-chauffant",
+      "categorie": "bureau",
+      "vedette": null,
+      "fr": {
+        "nom": "Tapis de bureau chauffant",
+        "slug": "tapis-bureau-chauffant",
+        "description": "Grand tapis de bureau chauffant pour garder les mains au chaud en travaillant ou en jouant.",
+        "points_forts": ["Grand format : clavier et souris", "Mains au chaud au bureau", "Pour travailler ou jouer"]
+      },
+      "en": {
+        "nom": "Heated Desk Pad",
+        "slug": "heated-desk-pad",
+        "description": "A large heated desk mat that keeps your hands warm while you work or game.",
+        "points_forts": ["Large size fits keyboard and mouse", "Warm hands at your desk", "For work or gaming"]
+      },
+      "prix_achat": { "min": 9, "max": 23, "devise": "USD", "fiabilite": "verifie" },
+      "prix_vente": 34,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-heated-mouse-pad.html" },
+        { "nom": "AliExpress", "type": "fiche", "url": "https://www.aliexpress.us/item/3256810199537303.html" }
+      ]
+    },
+    {
+      "id": "chauffe-tasse",
+      "categorie": "bureau",
+      "vedette": 3,
+      "fr": {
+        "nom": "Chauffe-tasse électrique",
+        "slug": "chauffe-tasse-electrique",
+        "description": "Garde le café ou le thé chaud sur le bureau, avec plusieurs températures au choix.",
+        "points_forts": ["Boisson chaude jusqu'à la dernière gorgée", "Plusieurs températures", "Format compact pour le bureau"]
+      },
+      "en": {
+        "nom": "Mug Warmer",
+        "slug": "mug-warmer",
+        "description": "Keeps your coffee or tea hot at your desk, with several temperature settings.",
+        "points_forts": ["Hot to the last sip", "Multiple temperature settings", "Compact, desk-friendly size"]
+      },
+      "prix_achat": { "min": 3, "max": 8, "devise": "USD", "fiabilite": "verifie" },
+      "prix_vente": 22,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-mug-warmer.html" },
+        { "nom": "AliExpress", "type": "fiche", "url": "https://www.aliexpress.us/item/3256805727494216.html" }
+      ]
+    },
+    {
+      "id": "mug-chauffant-intelligent",
+      "categorie": "bureau",
+      "vedette": null,
+      "fr": {
+        "nom": "Mug chauffant intelligent",
+        "slug": "mug-chauffant-intelligent",
+        "description": "Un mug qui garde la boisson à la température choisie. Notre produit premium.",
+        "points_forts": ["Température au choix", "Boisson à la bonne température du début à la fin", "Un cadeau premium"]
+      },
+      "en": {
+        "nom": "Smart Heated Mug",
+        "slug": "smart-heated-mug",
+        "description": "A mug that holds your drink at the temperature you choose. Our premium pick.",
+        "points_forts": ["Choose your temperature", "Just right from first sip to last", "A premium gift"]
+      },
+      "prix_achat": { "min": 25, "max": 25, "devise": "USD", "fiabilite": "verifie", "approximatif": true },
+      "prix_vente": 69,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-smart-heated-mug.html" }
+      ]
+    },
+    {
+      "id": "lunch-box-chauffante",
+      "categorie": "bureau",
+      "vedette": null,
+      "fr": {
+        "nom": "Lunch box chauffante",
+        "slug": "lunch-box-chauffante",
+        "description": "Une boîte repas qui réchauffe le plat, pour manger chaud au travail ou à l'école.",
+        "points_forts": ["Réchauffe le plat", "Pas besoin de micro-ondes", "Au travail ou à l'école"]
+      },
+      "en": {
+        "nom": "Electric Heated Lunch Box",
+        "slug": "heated-lunch-box",
+        "description": "A lunch box that heats your meal, so you can eat hot food at work or school.",
+        "points_forts": ["Heats your meal", "No microwave needed", "For work or school"]
+      },
+      "prix_achat": { "min": 12, "max": 18, "devise": "EUR", "fiabilite": "estimation" },
+      "prix_vente": 39,
+      "fournisseurs": [
+        { "nom": "AliExpress", "type": "recherche", "url": "https://www.aliexpress.com/w/wholesale-electric-heated-lunch-box.html" }
+      ]
+    },
+
+    {
+      "id": "diffuseur-flamme",
+      "categorie": "deco",
+      "vedette": 1,
+      "fr": {
+        "nom": "Diffuseur humidificateur effet flamme",
+        "slug": "diffuseur-humidificateur-effet-flamme",
+        "description": "Un diffuseur d'huiles essentielles avec une flamme LED réaliste, pour une ambiance cocooning en toute saison.",
+        "points_forts": ["Effet flamme LED réaliste", "Diffuse vos huiles essentielles et humidifie l'air", "Réservoir de 130 ml", "S'arrête tout seul quand l'eau manque"]
+      },
+      "en": {
+        "nom": "Flame Aroma Diffuser",
+        "slug": "flame-aroma-diffuser",
+        "description": "An essential oil diffuser with a realistic LED flame, for a cozy glow in every season.",
+        "points_forts": ["Realistic LED flame effect", "Diffuses essential oils and humidifies the air", "130 ml water tank", "Shuts off automatically when the water runs low"]
+      },
+      "prix_achat": { "min": 6, "max": 10, "devise": "USD", "fiabilite": "verifie" },
+      "prix_vente": 39,
+      "fournisseurs": [
+        { "nom": "CJ Dropshipping", "type": "fiche", "url": "https://cjdropshipping.com/product/newest-rgb-flame-aroma-diffuser-130ml-3d-colorful-flame-humidifier-fire-volcano-diffuser-flame-p-1578948189683077120.html" }
+      ],
+      "notes": "Lien coupé dans le brief, complété depuis CJ. Fiche CJ : modèle DQ-705, 130 ml, blanc ou noir, arrêt automatique sans eau."
+    },
+    {
+      "id": "lampe-chauffe-bougie",
+      "categorie": "deco",
+      "vedette": 5,
+      "a_completer": true,
+      "fr": {
+        "nom": "Lampe chauffe-bougie",
+        "slug": "lampe-chauffe-bougie",
+        "description": "Une lampe qui fait fondre la bougie par le dessus pour diffuser son parfum, sans flamme nue.",
+        "points_forts": ["Le parfum de la bougie, sans flamme nue", "Lumière douce et chaleureuse", "S'utilise avec les bougies en pot"]
+      },
+      "en": {
+        "nom": "Candle Warmer Lamp",
+        "slug": "candle-warmer-lamp",
+        "description": "A lamp that melts your candle from the top to release its scent, with no open flame.",
+        "points_forts": ["Candle scent without an open flame", "Soft, warm light", "Works with jar candles"]
+      },
+      "prix_achat": null,
+      "prix_vente": 39,
+      "prix_vente_a_valider": true,
+      "fournisseurs": [],
+      "notes": "Produit cité dans les vedettes, mais sa fiche manque dans le brief (coupé dans la partie Déco). Prix de vente de 39 € proposé, à valider. Prix d'achat et fournisseur à compléter."
+    }
+  ]
+}
