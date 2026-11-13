@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Génère, à partir de catalogue.json :
 //   dist/fr/…, dist/us/…         site vitrine statique (accueil, catégories, fiches produits)
+//   dist/apercu.html             la même boutique dans un seul fichier autonome (tablette, téléphone)
 //   exports/shopify-fr.csv, -us  fichiers d'import produits Shopify (brouillons)
 //   exports/catalogue-interne.md tableau des prix, marges et fournisseurs (usage interne)
 //
@@ -208,11 +209,50 @@ function visuel(ctx, p, { classe = '', etiquette = '', badge = '' } = {}) {
   }</div>`;
 }
 
+// Adresses des pages. Mode « site » : fichiers HTML séparés. Mode « apercu » : un seul
+// fichier où chaque page est un écran, désigné par un #nom (fr-produit-…, us-products-…).
+function liens(code, mode, base = '') {
+  const lang = marches[code].langue;
+  const ui = UI[lang];
+  const autre = Object.keys(marches).find((k) => k !== code) ?? code;
+  const tous = ui.allFile.replace(/\.html$/, '');
+  if (mode === 'apercu') {
+    return {
+      accueil: () => `#${code}`,
+      tous: () => `#${code}-${tous}`,
+      categorie: (c) => `#${code}-${ui.categoryDir}-${c[lang].slug}`,
+      produit: (p) => `#${code}-${ui.productDir}-${p[lang].slug}`,
+      autreMarche: () => `#${autre}`,
+    };
+  }
+  return {
+    accueil: () => `${base}index.html`,
+    tous: () => `${base}${ui.allFile}`,
+    categorie: (c) => `${base}${ui.categoryDir}/${c[lang].slug}.html`,
+    produit: (p) => `${base}${ui.productDir}/${p[lang].slug}.html`,
+    autreMarche: () => `${base}../${autre}/index.html`,
+  };
+}
+
+function contexte(code, mode, profondeur = 0) {
+  const marche = marches[code];
+  const lang = marche.langue;
+  const base = '../'.repeat(profondeur);
+  return {
+    code,
+    marche,
+    lang,
+    ui: UI[lang],
+    href: liens(code, mode, base),
+    assets: mode === 'apercu' ? 'assets/' : `${base}../assets/`,
+  };
+}
+
 function carte(ctx, p) {
   const t = p[ctx.lang];
   const cat = catById[p.categorie];
   const badge = p.vedette != null ? `<span class="badge">${esc(ctx.ui.favoriteBadge)}</span>` : '';
-  return `<a class="card" href="${ctx.base}${ctx.ui.productDir}/${t.slug}.html">
+  return `<a class="card" href="${ctx.href.produit(p)}">
   ${visuel(ctx, p, { badge })}
   <span class="card__body">
     <span class="card__cat">${esc(cat[ctx.lang].nom)}</span>
@@ -224,30 +264,17 @@ function carte(ctx, p) {
 
 const grille = (ctx, liste) => `<div class="grid">${liste.map((p) => carte(ctx, p)).join('\n')}</div>`;
 
-function page(ctx, { titre, description, corps, jsonld, actif }) {
-  const { ui, marche, lang, base } = ctx;
+// En-tête, contenu et pied de page d'une page (sans la balise <html>).
+function habillage(ctx, { corps, actif }) {
+  const { ui, marche, lang, href } = ctx;
   const lienCat = (c) =>
-    `<a href="${base}${ui.categoryDir}/${c[lang].slug}.html"${actif === c.id ? ' aria-current="page"' : ''}>${esc(c[lang].nom)}</a>`;
-  const autre = ctx.code === 'fr' ? 'us' : 'fr';
-  return `<!doctype html>
-<html lang="${lang}">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(titre)}</title>
-<meta name="description" content="${esc(description)}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="${ctx.assets}style.css">
-${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld).replace(/</g, '\\u003c')}</script>\n` : ''}</head>
-<body>
-<header class="site-header">
+    `<a href="${href.categorie(c)}"${actif === c.id ? ' aria-current="page"' : ''}>${esc(c[lang].nom)}</a>`;
+  return `<header class="site-header">
   <div class="wrap site-header__inner">
-    <a class="brand" href="${base}index.html">${icone('flamme', 'brand__mark')}<span>${esc(marche.nom_boutique)}</span></a>
+    <a class="brand" href="${href.accueil()}">${icone('flamme', 'brand__mark')}<span>${esc(marche.nom_boutique)}</span></a>
     <nav class="site-nav" aria-label="${esc(ui.nav)}">
       ${categories.map(lienCat).join('\n      ')}
-      <a href="${base}${ui.allFile}"${actif === 'tous' ? ' aria-current="page"' : ''}>${esc(ui.allProducts)}</a>
+      <a href="${href.tous()}"${actif === 'tous' ? ' aria-current="page"' : ''}>${esc(ui.allProducts)}</a>
     </nav>
   </div>
 </header>
@@ -265,10 +292,29 @@ ${corps}
     </ul>
     <div class="footer-meta">
       <p class="muted">${esc(ui.footerNote)}</p>
-      <p><a href="${base}../${autre}/index.html">${esc(ui.otherMarket)}</a></p>
+      <p><a href="${href.autreMarche()}">${esc(ui.otherMarket)}</a></p>
     </div>
   </div>
-</footer>
+</footer>`;
+}
+
+const POLICES =
+  '<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap">';
+
+function documentHtml(ctx, vue) {
+  const { titre, description, jsonld } = vue;
+  return `<!doctype html>
+<html lang="${ctx.lang}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(titre)}</title>
+<meta name="description" content="${esc(description)}">
+${POLICES}
+<link rel="stylesheet" href="${ctx.assets}style.css">
+${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld).replace(/</g, '\\u003c')}</script>\n` : ''}</head>
+<body>
+${habillage(ctx, vue)}
 <div class="toast" role="status" aria-live="polite"></div>
 <script src="${ctx.assets}app.js" defer></script>
 </body>
@@ -283,8 +329,10 @@ function filAriane(ctx, elements) {
   return `<nav class="crumbs wrap" aria-label="${esc(ctx.ui.breadcrumb)}"><ol>${items}</ol></nav>`;
 }
 
-function pageAccueil(ctx) {
-  const { ui, marche, lang } = ctx;
+// Chaque fonction « vue… » renvoie { titre, description, corps, jsonld?, actif? }.
+
+function vueAccueil(ctx) {
+  const { ui, marche, lang, href } = ctx;
   const cadeaux = produits.filter((p) => p.prix_vente <= SEUIL_CADEAUX && p.vedette == null);
   const tuiles = categories
     .map((c) => `<div class="visual visual--${c.id}">${icone(c.icone, 'visual__icon')}</div>`)
@@ -292,7 +340,7 @@ function pageAccueil(ctx) {
   const univers = categories
     .map((c) => {
       const n = produitsDe(c.id).length;
-      return `<a class="universe" href="${ui.categoryDir}/${c[lang].slug}.html">
+      return `<a class="universe" href="${href.categorie(c)}">
   <span class="visual visual--${c.id} universe__visual">${icone(c.icone, 'visual__icon')}</span>
   <span class="universe__body">
     <span class="universe__title">${esc(c[lang].nom)}</span>
@@ -311,7 +359,7 @@ function pageAccueil(ctx) {
       <p class="lede">${esc(marche.hero_texte)}</p>
       <div class="actions">
         <a class="btn" href="#${ui.favoritesId}">${esc(ui.seeFavorites)}</a>
-        <a class="btn btn--ghost" href="${ui.allFile}">${esc(ui.seeAll)}</a>
+        <a class="btn btn--ghost" href="${href.tous()}">${esc(ui.seeAll)}</a>
       </div>
     </div>
     <div class="hero__art" aria-hidden="true">${tuiles}</div>
@@ -347,17 +395,13 @@ ${univers}
   ${grille(ctx, cadeaux)}
 </section>`;
 
-  return page(ctx, {
-    titre: `${marche.nom_boutique} | ${marche.slogan}`,
-    description: marche.hero_texte,
-    corps,
-  });
+  return { titre: `${marche.nom_boutique} | ${marche.slogan}`, description: marche.hero_texte, corps };
 }
 
-function pageCategorie(ctx, c) {
-  const { ui, lang } = ctx;
+function vueCategorie(ctx, c) {
+  const { ui, lang, href } = ctx;
   const liste = produitsDe(c.id);
-  const corps = `${filAriane(ctx, [[ui.home, `${ctx.base}index.html`], [c[lang].nom]])}
+  const corps = `${filAriane(ctx, [[ui.home, href.accueil()], [c[lang].nom]])}
 <header class="page-head wrap">
   <span class="visual visual--${c.id} page-head__icon">${icone(c.icone, 'visual__icon')}</span>
   <div>
@@ -369,28 +413,23 @@ function pageCategorie(ctx, c) {
 <section class="section section--flush wrap">
   ${grille(ctx, liste)}
 </section>`;
-  return page(ctx, {
-    titre: `${c[lang].nom} | ${ctx.marche.nom_boutique}`,
-    description: c[lang].intro,
-    corps,
-    actif: c.id,
-  });
+  return { titre: `${c[lang].nom} | ${ctx.marche.nom_boutique}`, description: c[lang].intro, corps, actif: c.id };
 }
 
-function pageTous(ctx) {
-  const { ui, lang } = ctx;
+function vueTous(ctx) {
+  const { ui, lang, href } = ctx;
   const sections = categories
     .map(
       (c) => `<section class="section section--flush wrap">
   <div class="section__head section__head--row">
     <h2>${esc(c[lang].nom)}</h2>
-    <a href="${ui.categoryDir}/${c[lang].slug}.html">${esc(ui.seeCategory)} →</a>
+    <a href="${href.categorie(c)}">${esc(ui.seeCategory)} →</a>
   </div>
   ${grille(ctx, produitsDe(c.id))}
 </section>`,
     )
     .join('\n');
-  const corps = `${filAriane(ctx, [[ui.home, 'index.html'], [ui.allProducts]])}
+  const corps = `${filAriane(ctx, [[ui.home, href.accueil()], [ui.allProducts]])}
 <header class="page-head wrap">
   <div>
     <h1>${esc(ui.allProducts)}</h1>
@@ -398,23 +437,18 @@ function pageTous(ctx) {
   </div>
 </header>
 ${sections}`;
-  return page(ctx, {
-    titre: `${ui.allProducts} | ${ctx.marche.nom_boutique}`,
-    description: ctx.marche.hero_texte,
-    corps,
-    actif: 'tous',
-  });
+  return { titre: `${ui.allProducts} | ${ctx.marche.nom_boutique}`, description: ctx.marche.hero_texte, corps, actif: 'tous' };
 }
 
-function pageProduit(ctx, p) {
-  const { ui, marche, lang } = ctx;
+function vueProduit(ctx, p) {
+  const { ui, marche, lang, href } = ctx;
   const t = p[lang];
   const cat = catById[p.categorie];
-  const lienCat = `${ctx.base}${ui.categoryDir}/${cat[lang].slug}.html`;
+  const lienCat = href.categorie(cat);
   const voisins = produitsDe(cat.id).filter((x) => x.id !== p.id).slice(0, 4);
   const badge = p.vedette != null ? `<span class="badge">${esc(ui.favoriteBadge)}</span>` : '';
 
-  const corps = `${filAriane(ctx, [[ui.home, `${ctx.base}index.html`], [cat[lang].nom, lienCat], [t.nom]])}
+  const corps = `${filAriane(ctx, [[ui.home, href.accueil()], [cat[lang].nom, lienCat], [t.nom]])}
 <article class="product wrap">
   <div class="product__media">${visuel(ctx, p, { classe: 'visual--large', etiquette: ui.photoSoon, badge })}</div>
   <div class="product__info">
@@ -460,13 +494,7 @@ ${
     },
   };
 
-  return page(ctx, {
-    titre: `${t.nom} | ${marche.nom_boutique}`,
-    description: t.description,
-    corps,
-    jsonld,
-    actif: cat.id,
-  });
+  return { titre: `${t.nom} | ${marche.nom_boutique}`, description: t.description, corps, jsonld, actif: cat.id };
 }
 
 function pageChoixMarche() {
@@ -480,14 +508,14 @@ function pageChoixMarche() {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Aperçu boutique</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap">
+${POLICES}
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 <main class="wrap section">
   <div class="section__head">
     <h1>Aperçu de la boutique</h1>
-    <p class="muted">Deux versions sont générées à partir du même catalogue. Choisissez un marché.</p>
+    <p class="muted">Deux versions sont générées à partir du même catalogue. Choisissez un marché, ou ouvrez <a href="apercu.html">apercu.html</a> : toute la boutique dans un seul fichier.</p>
   </div>
   <div class="universes universes--two">
     ${Object.keys(marches).map(lien).join('\n    ')}
@@ -498,6 +526,19 @@ function pageChoixMarche() {
 `;
 }
 
+// Toutes les pages de tous les marchés, dans l'ordre : [ctx, vue, chemin du fichier].
+function* toutesLesVues(mode) {
+  for (const code of Object.keys(marches)) {
+    const ui = UI[marches[code].langue];
+    const racine = contexte(code, mode, 0);
+    const sous = contexte(code, mode, 1);
+    yield [racine, vueAccueil(racine), join(code, 'index.html')];
+    yield [racine, vueTous(racine), join(code, ui.allFile)];
+    for (const c of categories) yield [sous, vueCategorie(sous, c), join(code, ui.categoryDir, `${c[racine.lang].slug}.html`)];
+    for (const p of produits) yield [sous, vueProduit(sous, p), join(code, ui.productDir, `${p[racine.lang].slug}.html`)];
+  }
+}
+
 function construireSite() {
   rmSync(DIST, { recursive: true, force: true });
   mkdirSync(join(DIST, 'assets'), { recursive: true });
@@ -505,29 +546,59 @@ function construireSite() {
   copyFileSync(join(SRC, 'app.js'), join(DIST, 'assets', 'app.js'));
   if (existsSync(join(SRC, 'images'))) cpSync(join(SRC, 'images'), join(DIST, 'assets', 'images'), { recursive: true });
 
-  let nbPages = 1;
   ecrire(join(DIST, 'index.html'), pageChoixMarche());
-
-  for (const [code, marche] of Object.entries(marches)) {
-    const lang = marche.langue;
-    const ui = UI[lang];
-    const dossier = join(DIST, code);
-    const racine = { code, marche, lang, ui, base: '', assets: '../assets/' };
-    const sous = { ...racine, base: '../', assets: '../../assets/' };
-
-    ecrire(join(dossier, 'index.html'), pageAccueil(racine));
-    ecrire(join(dossier, ui.allFile), pageTous(racine));
-    nbPages += 2;
-    for (const c of categories) {
-      ecrire(join(dossier, ui.categoryDir, `${c[lang].slug}.html`), pageCategorie(sous, c));
-      nbPages++;
-    }
-    for (const p of produits) {
-      ecrire(join(dossier, ui.productDir, `${p[lang].slug}.html`), pageProduit(sous, p));
-      nbPages++;
-    }
+  let nbPages = 1;
+  for (const [ctx, vue, chemin] of toutesLesVues('site')) {
+    ecrire(join(DIST, chemin), documentHtml(ctx, vue));
+    nbPages++;
   }
   return nbPages;
+}
+
+// Toute la boutique dans un seul fichier autonome (style et script intégrés), pratique
+// sur tablette ou téléphone : chaque page est un écran affiché selon le #nom de l'adresse.
+function construireApercu() {
+  // L'identifiant d'un écran est l'adresse qui y mène, sans le #.
+  const html = [];
+  for (const [ctx, vue, chemin] of toutesLesVues('apercu')) {
+    const id = idEcran(ctx, chemin);
+    html.push(
+      `<div class="view" data-view="${id}" data-title="${esc(vue.titre)}" lang="${ctx.lang}" hidden>\n${habillage(ctx, vue)}\n</div>`,
+    );
+  }
+  const style = readFileSync(join(SRC, 'style.css'), 'utf8');
+  const script = readFileSync(join(SRC, 'app.js'), 'utf8');
+  const routeur = readFileSync(join(SRC, 'apercu.js'), 'utf8');
+  const premier = marches[Object.keys(marches)[0]];
+  const contenu = `<!doctype html>
+<html lang="${premier.langue}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(premier.nom_boutique)}</title>
+${POLICES}
+<style>
+${style}
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+${html.join('\n')}
+<div class="toast" role="status" aria-live="polite"></div>
+<script>
+${script}
+${routeur}
+</script>
+</body>
+</html>
+`;
+  ecrire(join(DIST, 'apercu.html'), contenu);
+  return html.length;
+}
+
+// Identifiant d'écran déduit du chemin du fichier : fr/produit/x.html → fr-produit-x, fr/index.html → fr.
+function idEcran(ctx, chemin) {
+  return chemin.replace(/\.html$/, '').replace(/\/index$/, '').split(/[\\/]/).join('-');
 }
 
 // ---------------------------------------------------------------------------
@@ -720,12 +791,13 @@ function exporterCatalogueInterne() {
 
 valider();
 const nbPages = construireSite();
+const nbEcrans = construireApercu();
 const csv = Object.keys(marches).map(exporterShopify);
 const interne = exporterCatalogueInterne();
 
 const aCompleter = produits.filter((p) => p.a_completer).map((p) => p.fr.nom);
 console.log(`Catalogue : ${produits.length} produits, ${categories.length} catégories, ${vedettes().length} vedettes.`);
-console.log(`Site : ${nbPages} pages générées dans dist/ (ouvrir dist/index.html).`);
+console.log(`Site : ${nbPages} pages générées dans dist/ (ouvrir dist/index.html), et dist/apercu.html (${nbEcrans} écrans dans un seul fichier).`);
 console.log(`Exports : ${[...csv, interne.fichier].map((f) => f.replace(ROOT + '/', '')).join(', ')}`);
 console.log(`Coefficient moyen (pire cas) : ${nbFr(interne.coefMoyen, 1)} ; marges serrées : ${interne.serres.length}.`);
 if (aCompleter.length) console.log(`À compléter : ${aCompleter.join(', ')}.`);

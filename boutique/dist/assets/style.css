@@ -76,11 +76,21 @@ img { max-width: 100%; display: block; }
 
 .site-header {
   position: sticky;
-  top: 0;
+  top: env(safe-area-inset-top, 0px);
   z-index: 10;
   background: rgb(250 246 240 / 92%);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line);
+}
+
+/* Bande sous la barre d'état des téléphones et tablettes, pour que rien ne défile au-dessus de l'en-tête. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  background: var(--bg);
 }
 
 .site-header__inner {
@@ -513,7 +523,7 @@ img { max-width: 100%; display: block; }
 .toast {
   position: fixed;
   left: 50%;
-  bottom: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
   z-index: 20;
   width: max-content;
   max-width: calc(100% - 32px);

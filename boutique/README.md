@@ -4,7 +4,7 @@ Tout part d'un seul fichier, `catalogue.json` : catégories, produits, prix d'ac
 
 | Sortie | Contenu |
 |---|---|
-| `dist/` | Aperçu du site en version **France (€, français)** et **US ($, anglais)** : accueil avec les 5 coups de cœur, une page par catégorie, une fiche par produit, la page « tout le catalogue ». |
+| `dist/` | Aperçu du site (pages séparées, plus `dist/apercu.html` en un seul fichier) en version **France (€, français)** et **US ($, anglais)** : accueil avec les 5 coups de cœur, une page par catégorie, une fiche par produit, la page « tout le catalogue ». |
 | `exports/shopify-fr.csv`, `exports/shopify-us.csv` | Fichiers d'import produits pour Shopify. Tous les produits sont importés en **brouillon**. |
 | `exports/catalogue-interne.md` | Tableau interne des prix, marges et fournisseurs, avec la liste de ce qui reste à compléter. |
 
@@ -12,7 +12,9 @@ Le marché n'est pas encore tranché ? Les deux versions sont générées à par
 
 ## Voir l'aperçu
 
-Ouvrir `dist/index.html` dans un navigateur, puis choisir France ou US. Le bouton « Ajouter au panier » n'affiche qu'un message : le paiement sera géré par la plateforme e-commerce.
+Ouvrir `dist/index.html` dans un navigateur, puis choisir France ou US.
+
+Sur tablette ou téléphone, ouvrir plutôt `dist/apercu.html` : c'est toute la boutique dans un seul fichier. Chaque page y devient un écran, et les adresses prennent la forme `apercu.html#fr-produit-…`. Ce fichier sert aussi d'aperçu en ligne sur Claude. Le bouton « Ajouter au panier » n'affiche qu'un message : le paiement sera géré par la plateforme e-commerce.
 
 Tant qu'il n'y a pas de photos, chaque produit affiche l'illustration de sa catégorie.
 
