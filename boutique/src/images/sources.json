@@ -7,22 +7,6 @@
   "source": "https://images.unsplash.com/photo-1496302912295-8d0451c184e2",
   "description": "woman sitting on black surface inside room"
  },
- "pack-plaid-coussins": {
-  "source": "https://images.unsplash.com/photo-1677868761434-f15b2faa73d0",
-  "description": "a living room with a white couch and pillows"
- },
- "draps-flanelle": {
-  "source": "https://images.unsplash.com/photo-1723811093200-33aad9e99c50",
-  "description": "A bed with pillows and a blanket on top of it"
- },
- "surmatelas-chauffant": {
-  "source": "https://images.unsplash.com/photo-1606796913825-2b02883605e9",
-  "description": "white bed linen near green plant"
- },
- "rideaux-thermiques": {
-  "source": "https://images.unsplash.com/photo-1754611362309-71297e9f42fd",
-  "description": "Modern living room with neutral color scheme and minimalist decor"
- },
  "chauffe-pieds-bureau": {
   "source": "https://images.unsplash.com/photo-1554310907-884c51f7c099",
   "description": "blue pants"
@@ -31,17 +15,9 @@
   "source": "https://images.unsplash.com/photo-1650307535558-fa2b39ed16eb",
   "description": "a person's feet with a pair of slippers on"
  },
- "chaussons-cachemire": {
-  "source": "https://images.unsplash.com/photo-1668519095685-07e13097c41f",
-  "description": "a person's feet on a couch"
- },
  "chaussettes-chauffantes": {
   "source": "https://images.unsplash.com/photo-1735659141062-dab261314da7",
   "description": "A person sitting at a table in front of a television"
- },
- "chauffe-mains": {
-  "source": "https://images.unsplash.com/photo-1580133588950-de89bb18f35d",
-  "description": "person holding gray knit gloves"
  },
  "gants-chauffants": {
   "source": "https://images.unsplash.com/photo-1791133085076-8d1fa1ddfe8f",
@@ -58,10 +34,6 @@
  "bouillotte-electrique": {
   "source": "https://images.unsplash.com/photo-1773747608435-0fa80d11a32f",
   "description": "A knitted hot water bottle with a green stopper"
- },
- "ceinture-bouillotte": {
-  "source": "https://images.unsplash.com/photo-1586011591237-2772414429d2",
-  "description": "white ceramic mug on white knit textile"
  },
  "masque-yeux-chauffant": {
   "source": "https://images.unsplash.com/photo-1687435703153-88f6bc0cdcff",
@@ -95,10 +67,6 @@
   "source": "https://images.unsplash.com/photo-1668393078580-d5b388f73b28",
   "description": "a white bottle next to a white device with a black cap"
  },
- "bougies-led": {
-  "source": "https://images.unsplash.com/photo-1605101600616-a8c6db5b98aa",
-  "description": "white pillar candle on brown wooden table"
- },
  "lampe-lune": {
   "source": "https://images.unsplash.com/photo-1549216011-894fb68ef744",
   "description": "crystal ball on brown rack"
@@ -114,14 +82,6 @@
  "mini-sapin-led": {
   "source": "https://images.unsplash.com/photo-1513003541363-48566f75d05f",
   "description": "white pillar candle"
- },
- "housses-coussin-noel": {
-  "source": "https://images.unsplash.com/photo-1766145373813-0adde489eb15",
-  "description": "Christmas pillows on a white sofa with fireplace"
- },
- "chaussettes-noel": {
-  "source": "https://images.unsplash.com/photo-1582966772680-860e372bb558",
-  "description": "white red and blue socks"
  },
  "hero": {
   "source": "https://images.unsplash.com/photo-1607196707151-2db8b71294ba",
@@ -154,5 +114,21 @@
  "cat-noel": {
   "source": "https://images.unsplash.com/photo-1701256537481-e15a0ef76741",
   "description": "a close up of a christmas ornament on a tree"
+ },
+ "plaid-double-face": {
+  "source": "https://images.unsplash.com/photo-1677868761434-f15b2faa73d0",
+  "description": "a living room with a white couch and pillows"
+ },
+ "parure-polaire": {
+  "source": "https://images.unsplash.com/photo-1723811093200-33aad9e99c50",
+  "description": "A bed with pillows and a blanket on top of it"
+ },
+ "chaussons-panda": {
+  "source": "https://images.unsplash.com/photo-1668519095685-07e13097c41f",
+  "description": "a person's feet on a couch"
+ },
+ "housse-coussin-noel": {
+  "source": "https://images.unsplash.com/photo-1766145373813-0adde489eb15",
+  "description": "Christmas pillows on a white sofa with fireplace"
  }
 }

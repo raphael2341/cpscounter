@@ -1,226 +1,337 @@
 # Catalogue interne : prix, marges et fournisseurs
 
-> Document généré par `node build.mjs` à partir de `catalogue.json` (mise à jour du catalogue : 2026-11-13). Ne pas modifier à la main : modifier le JSON puis relancer le script.
+> Document généré par `node build.mjs` à partir de `catalogue.json` (mise à jour : 2026-11-13). Ne pas modifier à la main : modifier le JSON puis relancer le script.
 
-## Règle de marge
+## Méthode
 
-Chaque produit se vend au moins **2 fois** son prix d'achat, même au prix d'achat le plus haut relevé, en France comme aux US. Le script refuse un catalogue qui ne respecte pas cette règle.
-
-- **Coût retenu** : le haut de la fourchette du prix d'achat, **hors frais de port**.
-- **Taux de change** : 1 $ = 0,86 € (à mettre à jour dans `catalogue.json` → `meta.taux_usd_vers_eur`).
-- **Coef.** : prix de vente ÷ coût, au prix d'achat le plus haut puis le plus bas (« pire → meilleur »).
-- **Achat max pour x2** : le prix d'achat à ne pas dépasser chez le fournisseur.
-- **Marge après TVA** : marge si la boutique facture la TVA française (20 %), c'est-à-dire prix ÷ 1,2 − coût.
-- **Vente US** : par défaut le même chiffre en dollars. Quand cela ferait passer sous x2, le produit a un prix US propre (`prix_vente_us`).
-- ⚠ = coefficient inférieur à 2,5 : la règle est respectée, mais il reste peu de place pour le port, la publicité et les frais de paiement.
+- **Une fiche par produit** : chaque produit renvoie à la page d'un article précis chez le fournisseur, jamais à une page de recherche.
+- **Prix relevés** : Prix relevés le 13/11/2026 dans l'index de recherche des fiches CJ Dropshipping et AliExpress (les fiches elles-mêmes bloquent les robots). Quand la fiche n'affiche qu'une fourchette, le prix d'achat d'une variante sans prix précis est compté au haut de la fourchette.
+- **Règle de marge** : chaque variante se vend au moins **2 fois** son coût d'achat, sur chaque marché où elle est vendue. Le script refuse un catalogue qui ne la respecte pas.
+- **Coût** : prix d'achat **hors frais de port**, converti en euros à 1 $ = 0,86 €.
+- ⚠ = coefficient inférieur à 2,5 : peu de place pour le port, la publicité et les frais de paiement.
 
 ## Synthèse
 
 | Indicateur | Valeur |
 |---|---|
-| Produits au catalogue | 31 (dont 7 nouveautés) |
-| Prix d'achat vérifiés / estimés | 21 / 10 |
-| Prix de vente moyen | 37,90 € |
-| Coefficient le plus bas (pire cas, France et US) | 2,01 |
-| Coefficient moyen (pire cas, France) | 3,04 |
-| Produits sous 2,5 en France (⚠) | 15 |
-
-## Produits vedettes (page d’accueil)
-
-1. Diffuseur humidificateur effet flamme (39 €)
-2. Sweat-plaid oversize sherpa (42 €)
-3. Chauffe-tasse électrique (22 €)
-4. Chaussettes chauffantes rechargeables (64 €)
-5. Lampe chauffe-bougie (49 €)
+| Produits | 25 (15 AliExpress, 10 CJ Dropshipping) |
+| Variantes | 75 |
+| Coefficient le plus bas (France et US) | 2,02 |
+| Coefficient moyen | 4,07 |
+| Produits vendus en France seulement | Mini chauffage céramique 500 W, Tapis de bureau chauffant, Lunch box chauffante 1,5 L |
 
 ## Sélection de Noël
 
-| Produit | Achat relevé | Fiabilité | Vente | Coût max | Coef. (pire → meilleur) | Achat max pour x2 | Marge brute | Marge après TVA | Vente US (coef.) |
-|---|---|---|---:|---:|---:|---:|---:|---:|---:|
-| (nouveau) Guirlande rideau lumineuse LED | 6 à 10 $ | Estimation | 24 € | 8,60 € | 2,79 → 4,65 | 13,95 $ | 15,40 € | 11,40 € | 24 $ (2,40) |
-| (nouveau) Sapin lumineux de table | 4,70 $ | Vérifié | 19 € | 4,04 € | 4,70 | 11,05 $ | 14,96 € | 11,79 € | 19 $ (4,04) |
-| (nouveau) Housses de coussin de Noël (lot de 4) | 3,36 à 11,80 $ | Estimation | 24 € | 10,15 € | 2,36 → 8,31 ⚠ | 13,95 $ | 13,85 € | 9,85 € | 24 $ (2,03) |
-| (nouveau) Chaussettes de Noël toutes douces (3 paires) | 3 à 6 $ | Estimation | 16 € | 5,16 € | 3,10 → 6,20 | 9,30 $ | 10,84 € | 8,17 € | 16 $ (2,67) |
+### Guirlande rideau lumineuse LED (nouveau)
+
+- Fiche AliExpress : [Window Curtain String Lights 8 Modes Light Fairy For Bedroom Plug In Usb 3m*3m 300 Led Copper Wire Hook Remote Party 300/200leds](https://www.aliexpress.us/item/3256809758869591.html)
+- Prix affiché : 5,25 $ (4,75 $ à partir de 2 pièces)
+- Même prix affiché pour toutes les variantes. Annonce : usage intérieur seulement (non étanche). Nombre de LED de chaque taille (200 ou 300) à vérifier sur la fiche.
+
+| Taille | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| 3 × 2 m, multicolore | 5,25 $ | 4,52 € | 22 € | 4,87 | 22 $ | 4,19 |
+| 3 × 3 m, blanc chaud | 5,25 $ | 4,52 € | 24 € | 5,32 | 24 $ | 4,57 |
+| 3 × 3 m, multicolore | 5,25 $ | 4,52 € | 24 € | 5,32 | 24 $ | 4,57 |
+| 3 × 3 m, blanc froid | 5,25 $ | 4,52 € | 24 € | 5,32 | 24 $ | 4,57 |
+
+### Sapin lumineux de table (nouveau)
+
+- Fiche CJ Dropshipping : [LED Christmas Tree Spiral Light Table Ornament Wrought Iron Xmas Tree Bedroom Desk Lamp](https://cjdropshipping.com/product/led-christmas-tree-spiral-light-table-ornament-wrought-iron-xmas-tree-bedroom-desk-lamp-christmas-atmosphere-night-light-decor-p-2409270619361600100.html), réf. CJHD214824101AZ
+- Prix affiché : 4,70 $ pour chaque variante
+- Fiche CJ : 330 à 370 g, IP42, usage intérieur, piles non précisées.
+
+| Modèle | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| Sapin doré | 4,70 $ | 4,04 € | 19 € | 4,70 | 19 $ | 4,04 |
+| Sapin blanc | 4,70 $ | 4,04 € | 19 € | 4,70 | 19 $ | 4,04 |
+| Spirale dorée | 4,70 $ | 4,04 € | 19 € | 4,70 | 19 $ | 4,04 |
+| Spirale blanche | 4,70 $ | 4,04 € | 19 € | 4,70 | 19 $ | 4,04 |
+
+### Housse de coussin de Noël 45 × 45 cm (nouveau)
+
+- Fiche AliExpress : [1/4pcs Christmas pillow cover, holiday decoration sofa cushion cover (without pillow core)](https://www.aliexpress.us/item/3256809537698962.html)
+- Prix affiché : 1,09 $ (promotion), prix barré 7,71 $
+- Le prix de vente garde le x2 même au prix barré (7,71 $). 100 % polyester, motifs BZ416 à BZ523, vendue à l'unité.
+
+| Variante | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| 45 × 45 cm | 1,09 $ à 7,71 $ | 6,63 € | 16 € | 2,41 ⚠ | 16 $ | 2,08 ⚠ |
 
 ## Couvertures et textiles
 
-| Produit | Achat relevé | Fiabilité | Vente | Coût max | Coef. (pire → meilleur) | Achat max pour x2 | Marge brute | Marge après TVA | Vente US (coef.) |
-|---|---|---|---:|---:|---:|---:|---:|---:|---:|
-| Plaid chauffant électrique | 17 à 30 $ | Vérifié | 59 € | 25,80 € | 2,29 → 4,04 ⚠ | 34,30 $ | 33,20 € | 23,37 € | 62 $ (2,07) |
-| ★ Sweat-plaid oversize sherpa | 12 à 22 $ | Vérifié | 42 € | 18,92 € | 2,22 → 4,07 ⚠ | 24,42 $ | 23,08 € | 16,08 € | 45 $ (2,05) |
-| Pack plaid + housses de coussin assorties | 12 à 20 € | Estimation | 49 € | 20,00 € | 2,45 → 4,08 ⚠ | 24,50 € | 29,00 € | 20,83 € | 49 $ (2,11) |
-| Draps en flanelle | 15 à 25 € | Estimation | 54 € | 25,00 € | 2,16 → 3,60 ⚠ | 27,00 € | 29,00 € | 20,00 € | 59 $ (2,03) |
-| Surmatelas chauffant | 25 à 35 $ | Vérifié | 79 € | 30,10 € | 2,62 → 3,67 | 45,93 $ | 48,90 € | 35,73 € | 79 $ (2,26) |
-| Rideaux thermiques isolants (la paire) | 9 à 25 $ | Vérifié | 44 € | 21,50 € | 2,05 → 5,68 ⚠ | 25,58 $ | 22,50 € | 15,17 € | 52 $ (2,08) |
+### Plaid chauffant USB
+
+- Fiche AliExpress : [Fashion Wearable USB Electric Heated Blanket 3 Heating Levels Washable Warm Shawl Portable Heating Lap Blanket](https://www.aliexpress.us/item/3256811407201922.html)
+- Prix affiché : 17,15 $ (prix barré 48,88 $)
+- Remplace le plaid chauffant sur secteur, sans fiche fiable. Dimensions non indiquées dans l'annonce : à vérifier. 4,3/5 sur 6 avis.
+
+| Coloris | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| Abricot | 17,15 $ | 14,75 € | 39 € | 2,64 | 39 $ | 2,27 ⚠ |
+| Vert | 17,15 $ | 14,75 € | 39 € | 2,64 | 39 $ | 2,27 ⚠ |
+| Gris | 17,15 $ | 14,75 € | 39 € | 2,64 | 39 $ | 2,27 ⚠ |
+| Violet | 17,15 $ | 14,75 € | 39 € | 2,64 | 39 $ | 2,27 ⚠ |
+| Rouge | 17,15 $ | 14,75 € | 39 € | 2,64 | 39 $ | 2,27 ⚠ |
+
+### Sweat-plaid oversize sherpa (★ coup de cœur)
+
+- Fiche AliExpress : [Wearable Blanket Hoodie Oversized Flannel Sherpa Fleece Hooded Soft Cozy Warm Blanket Sweatshirt](https://www.aliexpress.us/item/3256807802977787.html)
+- Prix affiché : 27,19 $ (prix barré 45,32 $)
+- Prix de vente passé de 42 à 59 € : le seul sweat-plaid trouvé avec un prix se vend 27,19 $. Le même vendeur l'affiche à 32,95 $ sur une autre annonce (item 3256807803123291).
+
+| Coloris | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| Bleu | 27,19 $ | 23,38 € | 59 € | 2,52 | 59 $ | 2,17 ⚠ |
+| Gris | 27,19 $ | 23,38 € | 59 € | 2,52 | 59 $ | 2,17 ⚠ |
+| Rose clair | 27,19 $ | 23,38 € | 59 € | 2,52 | 59 $ | 2,17 ⚠ |
+| Noir | 27,19 $ | 23,38 € | 59 € | 2,52 | 59 $ | 2,17 ⚠ |
+| Rouge | 27,19 $ | 23,38 € | 59 € | 2,52 | 59 $ | 2,17 ⚠ |
+
+### Plaid double face tout doux (nouveau)
+
+- Fiche CJ Dropshipping : [Soft Wind Bubble Velvet Blanket Warm Solid Rabbit Fur Blankets Double-sided Thickening Cover Throw](https://cjdropshipping.com/product/soft-wind-bubble-velvet-blanket-warm-solid-rabbit-fur-blankets-double-sided-thickening-cover-throw-warm-fur-blanket-p-2410100547241617300.html), réf. CJCS215603119SH
+- Prix affiché : de 2,25 à 7,09 $ selon la taille
+- Remplace le pack plaid + housses, introuvable en un seul produit. CJ affiche une fourchette pour toutes les tailles ; le prix de chaque taille s'affiche sur la fiche quand on la choisit. Les prix de vente gardent le x2 même au haut de la fourchette.
+
+| Taille | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| 100 × 150 cm | 2,25 $ à 7,09 $ | 6,10 € | 25 € | 4,10 | 25 $ | 3,53 |
+| 120 × 200 cm | 2,25 $ à 7,09 $ | 6,10 € | 29 € | 4,76 | 29 $ | 4,09 |
+| 150 × 200 cm | 2,25 $ à 7,09 $ | 6,10 € | 35 € | 5,74 | 35 $ | 4,94 |
+| 180 × 200 cm | 2,25 $ à 7,09 $ | 6,10 € | 39 € | 6,40 | 39 $ | 5,50 |
+| 200 × 230 cm | 2,25 $ à 7,09 $ | 6,10 € | 45 € | 7,38 | 45 $ | 6,35 |
+| 230 × 250 cm | 2,25 $ à 7,09 $ | 6,10 € | 49 € | 8,04 | 49 $ | 6,91 |
+
+### Parure de lit polaire (nouveau)
+
+- Fiche CJ Dropshipping : [Luxury Thick Fleece Duvet Cover Queen King Winter Warm Bed Quilt Cover Pillowcase Bedding Set](https://cjdropshipping.com/product/luxury-thick-fleece-duvet-cover-queen-king-winter-warm-bed-quilt-cover-pillowcase-fluffy-plush-shaggy-bedclothes-bedding-set-winter-body-keep-warm-p-1355AFF2-4533-4772-A5AC-0F0D74F00E26.html), réf. CJJJJFCS00988
+- Prix affiché : de 12,60 à 15,75 $ selon la taille
+- Remplace les draps en flanelle, introuvables en fiche précise. Fourchette CJ pour toutes les tailles ; les prix de vente gardent le x2 au haut de la fourchette. La fiche propose aussi des variantes « bed sheet » (drap housse) à vérifier.
+
+| Taille | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| Lit 1,5 m : housse 200 × 230 cm, drap 230 × 250 cm | 12,60 $ à 15,75 $ | 13,55 € | 49 € | 3,62 | 49 $ | 3,11 |
+| Lit 1,8 m : housse 200 × 230 cm, drap 230 × 250 cm | 12,60 $ à 15,75 $ | 13,55 € | 54 € | 3,99 | 54 $ | 3,43 |
+| Lit 2 m : housse 220 × 240 cm, drap 230 × 250 cm | 12,60 $ à 15,75 $ | 13,55 € | 59 € | 4,36 | 59 $ | 3,75 |
 
 ## Chauffage personnel
 
-| Produit | Achat relevé | Fiabilité | Vente | Coût max | Coef. (pire → meilleur) | Achat max pour x2 | Marge brute | Marge après TVA | Vente US (coef.) |
-|---|---|---|---:|---:|---:|---:|---:|---:|---:|
-| Chauffe-pieds sous le bureau | 6 à 20 $ | Vérifié | 39 € | 17,20 € | 2,27 → 7,56 ⚠ | 22,67 $ | 21,80 € | 15,30 € | 42 $ (2,10) |
-| Chaussons chauffants rechargeables | 19,73 à 20,77 $ | Vérifié | 39 € | 17,86 € | 2,18 → 2,30 ⚠ | 22,67 $ | 21,14 € | 14,64 € | 42 $ (2,02) |
-| Chaussons d'intérieur effet cachemire | ~4,80 $ | Vérifié | 22 € | 4,13 € | 5,33 | 12,79 $ | 17,87 € | 14,21 € | 22 $ (4,58) |
-| ★ Chaussettes chauffantes rechargeables | 15 à 20 $ | Vérifié | 64 € | 17,20 € | 3,72 → 4,96 | 37,21 $ | 46,80 € | 36,13 € | 64 $ (3,20) |
-| Chauffe-mains rechargeables (pack de 2) | 5 à 15 $ | Vérifié | 27 € | 12,90 € | 2,09 → 6,28 ⚠ | 15,70 $ | 14,10 € | 9,60 € | 32 $ (2,13) |
-| Gants chauffants USB | ~10 $ | Vérifié | 29 € | 8,60 € | 3,37 | 16,86 $ | 20,40 € | 15,57 € | 29 $ (2,90) |
-| Écharpe chauffante USB | ~4,50 $ | Vérifié | 24 € | 3,87 € | 6,20 | 13,95 $ | 20,13 € | 16,13 € | 24 $ (5,33) |
-| Coussin de siège chauffant | 15 à 25 € | Estimation | 52 € | 25,00 € | 2,08 → 3,47 ⚠ | 26,00 € | 27,00 € | 18,33 € | 59 $ (2,03) |
-| Bouillotte électrique rechargeable | 3 à 8 € | Estimation | 22 € | 8,00 € | 2,75 → 7,33 | 11,00 € | 14,00 € | 10,33 € | 22 $ (2,36) |
-| Ceinture chauffante avec bouillotte | 3 à 4 $ | Vérifié | 19 € | 3,44 € | 5,52 → 7,36 | 11,05 $ | 15,56 € | 12,39 € | 19 $ (4,75) |
-| Masque chauffant pour les yeux | 4 à 8 € | Estimation | 22 € | 8,00 € | 2,75 → 5,50 | 11,00 € | 14,00 € | 10,33 € | 22 $ (2,36) |
-| Mini chauffage céramique | 10 à 22 $ | Vérifié | 39 € | 18,92 € | 2,06 → 4,53 ⚠ | 22,67 $ | 20,08 € | 13,58 € | 45 $ (2,05) |
+### Chauffe-pieds sous le bureau
+
+- Fiche AliExpress : [Electric Heating Foot Pad Washable Feet Warmer Household Soft Plush Thermal Heating Blanket Foot Warming Mat](https://www.aliexpress.us/item/3256806667240579.html)
+- Prix affiché : 6,65 $ (prix barré 21,69 $)
+- 4,6/5 sur 179 avis, plus de 1 000 ventes. Prix de vente passé de 39 à 29 € : l'achat est bas. Dimensions à vérifier sur la fiche.
+
+| Branchement | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| Prise européenne | 6,65 $ | 5,72 € | 29 € | 5,07 | 29 $ | 4,36 |
+| Prise américaine | 6,65 $ | 5,72 € | 29 € | 5,07 | 29 $ | 4,36 |
+| Câble USB | 6,65 $ | 5,72 € | 29 € | 5,07 | 29 $ | 4,36 |
+
+### Chaussons chauffants rechargeables
+
+- Fiche CJ Dropshipping : [Electric Heating Shoes Rechargeable Foot Warmer Heating Home Shoes](https://cjdropshipping.com/product/electric-heating-shoes-rechargeable-foot-warmer-artifact-heating-home-shoes-winter-warm-temperature-regulating-cotton-shoes-p-2411031308311601800.html)
+- Prix affiché : de 19,73 à 20,77 $ selon la pointure et le coloris
+- Prix de vente passé de 39 à 42 € pour garder le x2 au haut de la fourchette (20,77 $).
+
+| Pointure | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| 36-37 | 19,73 $ à 20,77 $ | 17,86 € | 42 € | 2,35 ⚠ | 42 $ | 2,02 ⚠ |
+| 38-39 | 19,73 $ à 20,77 $ | 17,86 € | 42 € | 2,35 ⚠ | 42 $ | 2,02 ⚠ |
+| 40-41 | 19,73 $ à 20,77 $ | 17,86 € | 42 € | 2,35 ⚠ | 42 $ | 2,02 ⚠ |
+| 42-43 | 19,73 $ à 20,77 $ | 17,86 € | 42 € | 2,35 ⚠ | 42 $ | 2,02 ⚠ |
+| 44-45 | 19,73 $ à 20,77 $ | 17,86 € | 42 € | 2,35 ⚠ | 42 $ | 2,02 ⚠ |
+
+### Chaussons panda tout doux
+
+- Fiche AliExpress : [Fluffy Panda Slippers Women Winter Fuzzy Home Shoes](https://www.aliexpress.com/item/1005007597536207.html)
+- Prix affiché : 12,83 €
+- Remplace les chaussons « effet cachemire », sans fiche fiable.
+
+| Pointure | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| 36-37 | 12,83 € | 12,83 € | 29 € | 2,26 ⚠ | 32 $ | 2,14 ⚠ |
+| 38-39 | 12,83 € | 12,83 € | 29 € | 2,26 ⚠ | 32 $ | 2,14 ⚠ |
+| 40-41 | 12,83 € | 12,83 € | 29 € | 2,26 ⚠ | 32 $ | 2,14 ⚠ |
+| 42-43 | 12,83 € | 12,83 € | 29 € | 2,26 ⚠ | 32 $ | 2,14 ⚠ |
+| 44-45 | 12,83 € | 12,83 € | 29 € | 2,26 ⚠ | 32 $ | 2,14 ⚠ |
+
+### Chaussettes chauffantes rechargeables (★ coup de cœur)
+
+- Fiche AliExpress : [Rechargeable Heated Socks Washable Electric Thermal Socks 3 Modes Elastic Thickened Winter (APWIKOGER)](https://www.aliexpress.us/item/3256809796129848.html)
+- Prix affiché : 15,77 $ (prix barré 37,56 $)
+- Tailles non indiquées dans l'annonce : à vérifier. 4,4/5 sur 7 avis seulement.
+
+| Coloris | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| Gris | 15,77 $ | 13,56 € | 54 € | 3,98 | 54 $ | 3,42 |
+| Noir | 15,77 $ | 13,56 € | 54 € | 3,98 | 54 $ | 3,42 |
+
+### Gants chauffants USB
+
+- Fiche AliExpress : [USB Heated Electric Heating Gloves Full&Half Finger Winter Mittens Thermal Winter Knitting Gloves](https://www.aliexpress.us/item/3256806067732173.html)
+- Prix affiché : 13,21 $
+- Une autre page de résultats affichait 1,09 $ (promotion) : prix retenu, 13,21 $.
+
+| Modèle | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| Mitaines (doigts libres) | 13,21 $ | 11,36 € | 29 € | 2,55 | 29 $ | 2,20 ⚠ |
+| Doigts entiers | 13,21 $ | 11,36 € | 29 € | 2,55 | 29 $ | 2,20 ⚠ |
+
+### Écharpe chauffante USB
+
+- Fiche CJ Dropshipping : [Heating Scarf USB Electric Heated Neck Wrap Three-gear Temperature Control Neck Warmer](https://cjdropshipping.com/product/heating-scarf-usb-electric-heated-neck-wrap-heating-pad-pain-relief-three-gear-temperature-control-neck-warmer-for-women-men-p-2410090540211619700.html)
+- Prix affiché : 4,53 $
+- Batterie non fournie (alimentation USB).
+
+| Variante | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| Modèle unique | 4,53 $ | 3,90 € | 24 € | 6,16 | 24 $ | 5,30 |
+
+### Coussin de siège chauffant
+
+- Fiche AliExpress : [Heating Cushion 5V USB Intelligent Heated Seat Cushion For Office Chair 45x45cm Graphene With 3 Heating Level](https://www.aliexpress.us/item/3256809297573455.html)
+- Prix affiché : 18,65 $ (prix barré 28,69 $)
+- Prix de vente passé de 52 à 45 € : achat relevé plus bas que l'estimation.
+
+| Coloris | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| Noir | 18,65 $ | 16,04 € | 45 € | 2,81 | 45 $ | 2,41 ⚠ |
+| Gris | 18,65 $ | 16,04 € | 45 € | 2,81 | 45 $ | 2,41 ⚠ |
+| Café | 18,65 $ | 16,04 € | 45 € | 2,81 | 45 $ | 2,41 ⚠ |
+
+### Bouillotte électrique rechargeable
+
+- Fiche AliExpress : [Rechargeable Hot Water Bottle with Plush Cover Relieve Neck Shoulder Hands Feet](https://www.aliexpress.us/item/3256809970713140.html)
+- Prix affiché : 3,45 $ (prix barré 13,73 $)
+- 3,6/5 sur 9 avis seulement : commander un échantillon avant de vendre.
+
+| Coloris | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| Gris | 3,45 $ | 2,97 € | 22 € | 7,41 | 22 $ | 6,38 |
+| Vert | 3,45 $ | 2,97 € | 22 € | 7,41 | 22 $ | 6,38 |
+| Kaki | 3,45 $ | 2,97 € | 22 € | 7,41 | 22 $ | 6,38 |
+| Rose | 3,45 $ | 2,97 € | 22 € | 7,41 | 22 $ | 6,38 |
+
+### Masque chauffant pour les yeux
+
+- Fiche AliExpress : [Heated Eye Mask USB Eye Mask for Dry Eyes with Constant Heating Temperature](https://www.aliexpress.us/item/3256806823681160.html)
+- Prix affiché : 2,79 $
+
+| Variante | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| Modèle unique | 2,79 $ | 2,40 € | 22 € | 9,17 | 22 $ | 7,89 |
+
+### Mini chauffage céramique 500 W (vendu en FR seulement)
+
+- Fiche AliExpress : [Portable Mini Heaters Household Desktop Fast Heating Warmer Fan 500W PTC-Ceramic Warm Air Heaters](https://www.aliexpress.us/item/3256807906528710.html)
+- Prix affiché : 10,75 $ (prix barré 29,86 $)
+- Vendu en France seulement : appareil 220 V, inutilisable sur le courant américain (110 V). Annonce : certifié CE. 4,3/5 sur 29 avis.
+
+| Coloris | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| Jaune | 10,75 $ | 9,25 € | 39 € | 4,22 | non vendu | — |
+| Blanc | 10,75 $ | 9,25 € | 39 € | 4,22 | non vendu | — |
+| Bleu | 10,75 $ | 9,25 € | 39 € | 4,22 | non vendu | — |
+| Vert | 10,75 $ | 9,25 € | 39 € | 4,22 | non vendu | — |
 
 ## Bureau et télétravail
 
-| Produit | Achat relevé | Fiabilité | Vente | Coût max | Coef. (pire → meilleur) | Achat max pour x2 | Marge brute | Marge après TVA | Vente US (coef.) |
-|---|---|---|---:|---:|---:|---:|---:|---:|---:|
-| Tapis de bureau chauffant | 9 à 23 $ | Vérifié | 42 € | 19,78 € | 2,12 → 5,43 ⚠ | 24,42 $ | 22,22 € | 15,22 € | 47 $ (2,04) |
-| ★ Chauffe-tasse électrique | 3 à 8 $ | Vérifié | 22 € | 6,88 € | 3,20 → 8,53 | 12,79 $ | 15,12 € | 11,45 € | 22 $ (2,75) |
-| Mug chauffant intelligent | ~25 $ | Vérifié | 69 € | 21,50 € | 3,21 | 40,12 $ | 47,50 € | 36,00 € | 69 $ (2,76) |
-| Lunch box chauffante | 12 à 18 € | Estimation | 39 € | 18,00 € | 2,17 → 3,25 ⚠ | 19,50 € | 21,00 € | 14,50 € | 42 $ (2,01) |
+### Tapis de bureau chauffant (vendu en FR seulement)
+
+- Fiche AliExpress : [New EU Plug Heating Mouse Pad with Digital Display Quick Heating Heated Desk Mat Waterproof Extra-large](https://www.aliexpress.us/item/3256810155241067.html)
+- Prix affiché : 17,64 $ (prix barré 20,64 $)
+- Vendu en France seulement (prise européenne). Le prix de chaque taille n'apparaît pas dans l'index : les prix de vente gardent le x2 au prix barré (20,64 $).
+
+| Taille | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| 60 × 36 cm | 17,64 $ à 20,64 $ | 17,75 € | 42 € | 2,37 ⚠ | non vendu | — |
+| 80 × 33 cm | 17,64 $ à 20,64 $ | 17,75 € | 47 € | 2,65 | non vendu | — |
+
+### Chauffe-tasse électrique (★ coup de cœur)
+
+- Fiche CJ Dropshipping : [Electric Tea Water Heating Pad Constant Temperature Coffee Mug Heating Coaster](https://cjdropshipping.com/product/electric-tea-water-heating-pad-constant-temperature-coffee-mug-heating-coaster-lightweight-water-pad-heater-safe-for-home-office-p-1597111928982351872.html)
+- Prix affiché : de 1,62 à 1,71 $ selon le branchement
+- Coloris au choix sur la fiche : bleu, vert ou rose. Prix de vente passé de 22 à 19 € : achat très bas.
+
+| Branchement | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| Prise européenne | 1,62 $ à 1,71 $ | 1,47 € | 19 € | 12,92 | 19 $ | 11,11 |
+| Prise américaine | 1,62 $ à 1,71 $ | 1,47 € | 19 € | 12,92 | 19 $ | 11,11 |
+| Câble USB | 1,62 $ à 1,71 $ | 1,47 € | 19 € | 12,92 | 19 $ | 11,11 |
+
+### Mug chauffant intelligent
+
+- Fiche AliExpress : [Smart Multifunction Magnetic Mug - 55℃ Constant Temp Cup Warmer & Electric Self-Stirring Coffee Cup (Luckima)](https://www.aliexpress.us/item/3256809922258435.html)
+- Prix affiché : 29,80 $ (prix barré 59,61 $)
+
+| Variante | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| Rose | 29,80 $ | 25,63 € | 69 € | 2,69 | 69 $ | 2,32 ⚠ |
+
+### Lunch box chauffante 1,5 L (vendu en FR seulement)
+
+- Fiche AliExpress : [Electric Lunch Box, 1.5L Portable Food Warmer Car & Office, 12V/24V/220V Multi-Voltage With stainless steel container](https://www.aliexpress.us/item/3256812466322059.html)
+- Prix affiché : 19,74 $ (prix barré 79,46 $)
+- Vendue en France seulement (220 V). Pour les US, il existe une version 110 V / 220 V à 29,36 $ (item 3256812262820595). Prix de vente passé de 39 à 45 €.
+
+| Variante | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| 1,5 L, 12 V / 24 V / 220 V | 19,74 $ | 16,98 € | 45 € | 2,65 | non vendu | — |
 
 ## Déco et ambiance
 
-| Produit | Achat relevé | Fiabilité | Vente | Coût max | Coef. (pire → meilleur) | Achat max pour x2 | Marge brute | Marge après TVA | Vente US (coef.) |
-|---|---|---|---:|---:|---:|---:|---:|---:|---:|
-| ★ Diffuseur humidificateur effet flamme | 6 à 10 $ | Vérifié | 39 € | 8,60 € | 4,53 → 7,56 | 22,67 $ | 30,40 € | 23,90 € | 39 $ (3,90) |
-| ★ Lampe chauffe-bougie | 23,91 $ | Vérifié | 49 € | 20,56 € | 2,38 ⚠ | 28,49 $ | 28,44 € | 20,27 € | 49 $ (2,05) |
-| (nouveau) Bougies LED sans flamme (lot de 3) | 8 à 12 $ | Estimation | 29 € | 10,32 € | 2,81 → 4,22 | 16,86 $ | 18,68 € | 13,85 € | 29 $ (2,42) |
-| (nouveau) Lampe lune 3D | 10,61 à 19,68 $ | Vérifié | 39 € | 16,92 € | 2,30 → 4,27 ⚠ | 22,67 $ | 22,08 € | 15,58 € | 42 $ (2,13) |
-| (nouveau) Projecteur galaxie astronaute | ~10,33 $ | Vérifié | 39 € | 8,88 € | 4,39 | 22,67 $ | 30,12 € | 23,62 € | 39 $ (3,78) |
+### Diffuseur humidificateur effet flamme (★ coup de cœur)
 
-★ = coup de cœur de la page d’accueil.
+- Fiche CJ Dropshipping : [Newest RGB Flame Aroma Diffuser 130Ml 3d Colorful Flame Humidifier](https://cjdropshipping.com/product/newest-rgb-flame-aroma-diffuser-130ml-3d-colorful-flame-humidifier-fire-volcano-diffuser-flame-p-1578948189683077120.html), réf. CJJD1582742
+- Prix affiché : 6,99 $
+- Modèle DQ-705, 130 ml, 6 à 9 h de diffusion, arrêt automatique sans eau.
 
-## Fournisseurs
+| Coloris | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| Blanc | 6,99 $ | 6,01 € | 39 € | 6,49 | 39 $ | 5,58 |
+| Noir | 6,99 $ | 6,01 € | 39 € | 6,49 | 39 $ | 5,58 |
 
-« Fiche produit » = page d’un article précis. « Recherche » ou « catégorie » = page de résultats : il faut encore choisir une annonce précise (avis, délais, entrepôt US/UE) dont le prix reste sous l’achat maximum.
+### Lampe chauffe-bougie (★ coup de cœur)
 
-- **Plaid chauffant électrique**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-throw-blanket-electric.html
-  - BigBuy (catégorie) : https://www.bigbuy.eu/fr/shop/category/maison-et-cuisine-textiles-de-maison
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/heated+blanket.html
-- **Sweat-plaid oversize sherpa**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-sherpa-blanket-hoodie.html
-  - CJ Dropshipping (fiche produit) : https://cjdropshipping.com/product/winter-hoodie-blanket-with-button-design-warm-home-clothes-women-men-oversized-pullover-p-1592402824729088000.html
-  - BigBuy (catégorie) : https://www.bigbuy.eu/fr/shop/category/vetements-homme_19729
-- **Pack plaid + housses de coussin assorties**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-throw-blanket-pillow-cover-set.html
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/throw+blanket.html
-- **Draps en flanelle**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-flannel-bed-sheet-set.html
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/flannel+bedding+set.html
-- **Surmatelas chauffant**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-electric-heating-mattress-pad.html
-  - BigBuy (catégorie) : https://www.bigbuy.eu/fr/shop/category/linge-de-lit-et-oreillers-couvertures-electriques-et-chauffe-matelas
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/electric+blanket.html
-- **Rideaux thermiques isolants (la paire)**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-insulated-thermal-curtains.html
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/blackout+curtain.html
-- **Chauffe-pieds sous le bureau**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-office-foot-warmer.html
-  - AliExpress (fiche produit) : https://www.aliexpress.us/item/3256805895271748.html
-  - BigBuy (fiche produit) : https://www.bigbuy.eu/en/shop/product/electric-heat-pad-hemat-innovagoods_282037
-  - CJ Dropshipping (fiche produit, prix à relever) : https://cjdropshipping.com/product/gaobang-foot-warmer-charging-usb-unplugged-foot-warmer-artifact-p-1491610010227183616.html
-- **Chaussons chauffants rechargeables**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-usb-heated-slippers.html
-  - CJ Dropshipping (fiche produit) : https://cjdropshipping.com/product/electric-heating-shoes-rechargeable-foot-warmer-artifact-heating-home-shoes-winter-warm-temperature-regulating-cotton-shoes-p-2411031308311601800.html
-- **Chaussons d'intérieur effet cachemire**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-cashmere-slippers.html
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/plush+slippers.html
-- **Chaussettes chauffantes rechargeables**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-heated-socks-rechargeable.html
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/heated+socks.html
-- **Chauffe-mains rechargeables (pack de 2)**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-usb-hand-warmer-rechargeable.html
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/hand+warmer.html
-- **Gants chauffants USB**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-usb-heated-gloves.html
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/usb+heated+gloves.html
-- **Écharpe chauffante USB**
-  - CJ Dropshipping (fiche produit) : https://cjdropshipping.com/product/heating-scarf-usb-electric-heated-neck-wrap-heating-pad-pain-relief-three-gear-temperature-control-neck-warmer-for-women-men-p-2410090540211619700.html
-- **Coussin de siège chauffant**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-heated-seat-cushion.html
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/heated+seat+cushion.html
-- **Bouillotte électrique rechargeable**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-electric-hot-water-bottle.html
-  - BigBuy (fiche produit) : https://www.bigbuy.eu/fr/shop/product/bouillotte-d-eau-chaude-reglable-rechargeable-hutter-innovagoods-gris-400-w_144668
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/electric+hot+water+bottle.html
-- **Ceinture chauffante avec bouillotte**
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/bottle+warmer.html
-- **Masque chauffant pour les yeux**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-usb-heated-eye-mask.html
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/heated+eye+mask.html
-- **Mini chauffage céramique**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-desk-heater-mini.html
-  - BigBuy (fiche produit) : https://www.bigbuy.eu/fr/chauffage-thermo-ceramique-sur-prise-heatpod-innovagoods-400w_100837.html
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/mini+heater.html
-- **Tapis de bureau chauffant**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-heated-mouse-pad.html
-  - AliExpress (fiche produit) : https://www.aliexpress.us/item/3256810199537303.html
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/heated+mouse+pad.html
-- **Chauffe-tasse électrique**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-mug-warmer.html
-  - AliExpress (fiche produit) : https://www.aliexpress.us/item/3256805727494216.html
-  - CJ Dropshipping (fiche produit, 6,65 à 13,62 $ selon la variante) : https://cjdropshipping.com/product/usb-cup-heater-smart-thermostatic-heating-plate-3-temperature-adjustment-heating-coaster-heater-pad-for-tea-coffee-milk-gift-set-p-1479292500630966272.html
-- **Mug chauffant intelligent**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-smart-heated-mug.html
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/smart+mug.html
-- **Lunch box chauffante**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-electric-heated-lunch-box.html
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/electric+lunch+box.html
-- **Diffuseur humidificateur effet flamme**
-  - CJ Dropshipping (fiche produit) : https://cjdropshipping.com/product/newest-rgb-flame-aroma-diffuser-130ml-3d-colorful-flame-humidifier-fire-volcano-diffuser-flame-p-1578948189683077120.html
-- **Lampe chauffe-bougie**
-  - CJ Dropshipping (fiche produit) : https://cjdropshipping.com/product/candle-warmer-candle-warmer-lamp-with-timer-dimmable-and-adjustable-height-candle-lamp-warmer-compatible-with-jar-candles-for-home-decor-electric-wax-melter-warmer-wooden-base-black-p-1687009800938737664.html
-- **Bougies LED sans flamme (lot de 3)**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-flameless-led-candles-remote.html
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/led+flameless+candles.html
-- **Lampe lune 3D**
-  - CJ Dropshipping (fiche produit) : https://cjdropshipping.com/product/rambery-moon-lamp-3d-print-night-light-rechargeable-3-color-tap-control-lamp-lights-p-1DC11DAB-FAC4-492D-B532-4A69EC8C512D.html
-- **Projecteur galaxie astronaute**
-  - CJ Dropshipping (fiche produit) : https://cjdropshipping.com/product/creative-astronaut-galaxy-starry-sky-projector-nightlight-usb-atmospher-bedroom-table-lamp-p-1427515807545561088.html
-- **Guirlande rideau lumineuse LED**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-led-curtain-string-lights.html
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/curtain+string+lights.html
-- **Sapin lumineux de table**
-  - CJ Dropshipping (fiche produit) : https://cjdropshipping.com/product/led-christmas-tree-spiral-light-table-ornament-wrought-iron-xmas-tree-bedroom-desk-lamp-christmas-atmosphere-night-light-decor-p-2409270619361600100.html
-- **Housses de coussin de Noël (lot de 4)**
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/christmas+cushion+cover.html
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-christmas-pillow-covers.html
-- **Chaussettes de Noël toutes douces (3 paires)**
-  - AliExpress (recherche) : https://www.aliexpress.com/w/wholesale-christmas-fuzzy-socks.html
-  - CJ Dropshipping (recherche) : https://cjdropshipping.com/search/christmas+socks.html
+- Fiche CJ Dropshipping : [Candle Warmer Lamp With Timer Dimmable And Adjustable Height, Wooden Base Black](https://cjdropshipping.com/product/candle-warmer-candle-warmer-lamp-with-timer-dimmable-and-adjustable-height-candle-lamp-warmer-compatible-with-jar-candles-for-home-decor-electric-wax-melter-warmer-wooden-base-black-p-1687009800938737664.html), réf. CJSN1813977-Black
+- Prix affiché : 23,91 $, livraison offerte
+- Fournisseur Rainbean. Type de prise non précisé : à demander avant de vendre en France.
 
-## À compléter ou vérifier
+| Variante | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| Noir, base en bois | 23,91 $ | 20,56 € | 49 € | 2,38 ⚠ | 49 $ | 2,05 ⚠ |
 
-- **Plaid chauffant électrique** : pas encore de fiche fournisseur précise ; photo d'ambiance à remplacer par la photo du fournisseur.
-- **Sweat-plaid oversize sherpa** : photo d'ambiance à remplacer par la photo du fournisseur.
-- **Pack plaid + housses de coussin assorties** : prix d'achat estimé, à vérifier chez le fournisseur ; pas encore de fiche fournisseur précise ; photo d'ambiance à remplacer par la photo du fournisseur.
-- **Draps en flanelle** : prix d'achat estimé, à vérifier chez le fournisseur ; pas encore de fiche fournisseur précise ; photo d'ambiance à remplacer par la photo du fournisseur. _Prix de vente passé de 49 à 54 € pour garder le x2 si l'achat est au plus haut (25 €)._
-- **Surmatelas chauffant** : pas encore de fiche fournisseur précise ; photo d'ambiance à remplacer par la photo du fournisseur.
-- **Rideaux thermiques isolants (la paire)** : pas encore de fiche fournisseur précise ; photo d'ambiance à remplacer par la photo du fournisseur.
-- **Chauffe-pieds sous le bureau** : photo d'ambiance à remplacer par la photo du fournisseur.
-- **Chaussons chauffants rechargeables** : photo d'ambiance à remplacer par la photo du fournisseur. _Prix CJ : 19,73 à 20,77 $ selon la couleur et la pointure, batterie externe et câble USB inclus. Prix de vente passé de 34 à 39 € pour garder le x2._
-- **Chaussons d'intérieur effet cachemire** : pas encore de fiche fournisseur précise ; photo d'ambiance à remplacer par la photo du fournisseur. _Nom du brief : « Chaussons en cachemire ». Renommé « effet cachemire » : à ce prix, ce n'est presque sûrement pas du vrai cachemire, et l'appellation est encadrée (étiquetage textile UE, Wool Products Labeling Act aux US)._
-- **Chaussettes chauffantes rechargeables** : pas encore de fiche fournisseur précise ; photo d'ambiance à remplacer par la photo du fournisseur.
-- **Chauffe-mains rechargeables (pack de 2)** : pas encore de fiche fournisseur précise ; photo d'ambiance à remplacer par la photo du fournisseur. _Le lien CJ du brief pointait vers une recherche « bottle warmer » (erreur de copier-coller) : remplacé par une recherche « hand warmer »._
-- **Gants chauffants USB** : pas encore de fiche fournisseur précise ; photo d'ambiance à remplacer par la photo du fournisseur.
-- **Écharpe chauffante USB** : photo d'ambiance à remplacer par la photo du fournisseur.
-- **Coussin de siège chauffant** : prix d'achat estimé, à vérifier chez le fournisseur ; pas encore de fiche fournisseur précise ; photo d'ambiance à remplacer par la photo du fournisseur. _Prix de vente passé de 45 à 52 € pour garder le x2 si l'achat est au plus haut (25 €)._
-- **Bouillotte électrique rechargeable** : prix d'achat estimé, à vérifier chez le fournisseur ; photo d'ambiance à remplacer par la photo du fournisseur.
-- **Ceinture chauffante avec bouillotte** : pas encore de fiche fournisseur précise ; photo d'ambiance à remplacer par la photo du fournisseur.
-- **Masque chauffant pour les yeux** : prix d'achat estimé, à vérifier chez le fournisseur ; pas encore de fiche fournisseur précise ; photo d'ambiance à remplacer par la photo du fournisseur.
-- **Mini chauffage céramique** : photo d'ambiance à remplacer par la photo du fournisseur.
-- **Tapis de bureau chauffant** : photo d'ambiance à remplacer par la photo du fournisseur. _Prix de vente passé de 34 à 42 € pour garder le x2 si l'achat est au plus haut (23 $)._
-- **Chauffe-tasse électrique** : photo d'ambiance à remplacer par la photo du fournisseur. _Sur la fiche CJ, la variante coffret monte à 13,62 $ : rester sous le prix d'achat maximum pour garder le x2._
-- **Mug chauffant intelligent** : pas encore de fiche fournisseur précise ; photo d'ambiance à remplacer par la photo du fournisseur.
-- **Lunch box chauffante** : prix d'achat estimé, à vérifier chez le fournisseur ; pas encore de fiche fournisseur précise ; photo d'ambiance à remplacer par la photo du fournisseur.
-- **Diffuseur humidificateur effet flamme** : photo d'ambiance à remplacer par la photo du fournisseur. _Lien coupé dans le brief, complété depuis CJ. Fiche CJ : 6,99 $ relevé le 13/11/2026, modèle DQ-705, 130 ml, blanc ou noir, arrêt automatique sans eau._
-- **Lampe chauffe-bougie** : photo d'ambiance à remplacer par la photo du fournisseur. _Fiche CJ : base en bois, 4 niveaux d'intensité, minuterie 2/4/8 h, hauteur réglable, bougie non fournie._
-- **Bougies LED sans flamme (lot de 3)** : prix d'achat estimé, à vérifier chez le fournisseur ; pas encore de fiche fournisseur précise ; photo d'ambiance à remplacer par la photo du fournisseur.
-- **Lampe lune 3D** : photo d'ambiance à remplacer par la photo du fournisseur. _Fiche CJ : tailles de 10 à 20 cm, de 10,61 à 19,68 $. La télécommande n'est fournie qu'avec la version 16 couleurs._
-- **Projecteur galaxie astronaute** : photo d'ambiance à remplacer par la photo du fournisseur. _Fiche CJ : à partir de 10,33 $ l'unité. Les prix plus élevés de la fiche (jusqu'à 59,76 $) correspondent à des lots de plusieurs pièces._
-- **Guirlande rideau lumineuse LED** : prix d'achat estimé, à vérifier chez le fournisseur ; pas encore de fiche fournisseur précise ; photo d'ambiance à remplacer par la photo du fournisseur. _Les deux fiches CJ trouvées (19,87 $ et 26,88 $) sont trop chères pour ce prix de vente : viser une guirlande USB à 10 $ ou moins._
-- **Sapin lumineux de table** : photo d'ambiance à remplacer par la photo du fournisseur. _Fiche CJ : sapin spirale en fer forgé, environ 12 × 12 × 33 cm, à piles, usage intérieur._
-- **Housses de coussin de Noël (lot de 4)** : prix d'achat estimé, à vérifier chez le fournisseur ; pas encore de fiche fournisseur précise ; photo d'ambiance à remplacer par la photo du fournisseur. _Prix calculé pour 4 housses à partir d'une annonce CJ « Christmas Cushion Cover Pillowcase » vue à 0,84–2,95 $ pièce sur une page de liste. Fiche précise à retrouver, taille à vérifier (45 × 45 cm conseillé)._
-- **Chaussettes de Noël toutes douces (3 paires)** : prix d'achat estimé, à vérifier chez le fournisseur ; pas encore de fiche fournisseur précise ; photo d'ambiance à remplacer par la photo du fournisseur.
+### Lampe lune 3D (nouveau)
+
+- Fiche CJ Dropshipping : [Rambery Moon Lamp 3D Print Night Light Rechargeable](https://cjdropshipping.com/product/rambery-moon-lamp-3d-print-night-light-rechargeable-3-color-tap-control-lamp-lights-p-1DC11DAB-FAC4-492D-B532-4A69EC8C512D.html), réf. CJJJJTJT51477
+- Prix affiché : de 10,61 à 19,68 $ selon la taille
+- Version 16 couleurs avec télécommande. Fourchette CJ pour toutes les tailles ; les prix de vente gardent le x2 au haut de la fourchette.
+
+| Taille | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| 10 cm | 10,61 $ à 19,68 $ | 16,92 € | 35 € | 2,07 ⚠ | 40 $ | 2,03 ⚠ |
+| 13 cm | 10,61 $ à 19,68 $ | 16,92 € | 39 € | 2,30 ⚠ | 44 $ | 2,24 ⚠ |
+| 15 cm | 10,61 $ à 19,68 $ | 16,92 € | 45 € | 2,66 | 49 $ | 2,49 ⚠ |
+| 18 cm | 10,61 $ à 19,68 $ | 16,92 € | 49 € | 2,90 | 54 $ | 2,74 |
+| 20 cm | 10,61 $ à 19,68 $ | 16,92 € | 55 € | 3,25 | 59 $ | 3,00 |
+
+### Projecteur galaxie astronaute (nouveau)
+
+- Fiche CJ Dropshipping : [Creative Astronaut Galaxy Starry Sky Projector Nightlight USB](https://cjdropshipping.com/product/creative-astronaut-galaxy-starry-sky-projector-nightlight-usb-atmospher-bedroom-table-lamp-p-1427515807545561088.html)
+- Prix affiché : de 10,33 à 12,30 $ l'unité
+- La fiche propose aussi des lots de 2, 3 ou 4 (jusqu'à 59,76 $) : ne pas les confondre avec l'unité.
+
+| Coloris | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |
+|---|---|---:|---:|---:|---:|---:|
+| Blanc | 10,33 $ à 12,30 $ | 10,58 € | 39 € | 3,69 | 39 $ | 3,17 |
+| Noir | 10,33 $ à 12,30 $ | 10,58 € | 39 € | 3,69 | 39 $ | 3,17 |
+
+## À vérifier avant la mise en vente
+
+- Ouvrir chaque fiche, choisir la variante et vérifier son prix : quand la fiche ne donne qu’une fourchette, le prix exact d’une taille n’apparaît qu’une fois la taille choisie.
+- Ajouter les frais de port du fournisseur : ils ne sont pas comptés.
+- Sur AliExpress, beaucoup de prix affichés sont des promotions : vérifier le prix le jour de la commande.
+- Remplacer les photos d’ambiance par celles du fournisseur.
+- Produits électriques : vérifier le marquage CE (Europe) ou UL/ETL (US).

@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Gloock&family=Sacramento&display=swap">
 <link rel="stylesheet" href="../../assets/style.css">
 <link rel="stylesheet" href="../../assets/photos.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Projecteur galaxie astronaute","description":"Un petit astronaute qui projette un ciel étoilé et des nébuleuses au plafond. Une veilleuse qui plaît aux petits comme aux grands.","sku":"PROJECTEUR-GALAXIE","category":"Déco et ambiance","brand":{"@type":"Brand","name":"Maison Cocon"},"offers":{"@type":"Offer","price":"39.00","priceCurrency":"EUR","availability":"https://schema.org/InStock"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Projecteur galaxie astronaute","description":"Un petit astronaute qui projette un ciel étoilé et des nébuleuses au plafond. Une veilleuse qui plaît aux petits comme aux grands.","sku":"PROJECTEUR-GALAXIE","category":"Déco et ambiance","brand":{"@type":"Brand","name":"Maison Cocon"},"offers":{"@type":"AggregateOffer","lowPrice":"39.00","highPrice":"39.00","offerCount":2,"priceCurrency":"EUR","availability":"https://schema.org/InStock"}}</script>
 </head>
 <body>
 <p class="promo"><span class="wrap promo__inner"><svg class="promo__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l1.9 6.1 6.1 1.9-6.1 1.9L12 18.5l-1.9-6.1L4 10.5l6.1-1.9z"/><path d="M19 17.5v3M17.5 19h3"/></svg><span>Idées cadeaux de Noël dès 16 €</span><span class="promo__count" data-noel="Noël dans {n} jours" data-noel-1="Noël, c'est demain"></span></span></p>
@@ -36,8 +36,21 @@
   <div class="product__info">
     <a class="product__cat" href="../categorie/deco-ambiance.html">Déco et ambiance</a>
     <h1>Projecteur galaxie astronaute</h1>
-    <p class="product__price">39 €</p>
+    <p class="product__price" data-prix-affiche>39 €</p>
     <p class="product__desc">Un petit astronaute qui projette un ciel étoilé et des nébuleuses au plafond. Une veilleuse qui plaît aux petits comme aux grands.</p>
+    <fieldset class="variants">
+      <legend class="product__subtitle">Coloris</legend>
+      <div class="variants__list">
+      <label class="variant">
+        <input type="radio" name="v-fr-projecteur-galaxie" value="blanc" data-prix="39 €" checked>
+        <span>Blanc</span>
+      </label>
+      <label class="variant">
+        <input type="radio" name="v-fr-projecteur-galaxie" value="noir" data-prix="39 €">
+        <span>Noir</span>
+      </label>
+      </div>
+    </fieldset>
     <h2 class="product__subtitle">Points forts</h2>
     <ul class="checks">
       <li><svg class="checks__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Ciel étoilé et nébuleuses au plafond</li>
@@ -64,6 +77,7 @@
   <span class="card__body">
     <span class="card__cat">Déco et ambiance</span>
     <span class="card__title">Diffuseur humidificateur effet flamme</span>
+    <span class="card__choices">2 coloriss au choix</span>
     <span class="card__price">39 €</span>
   </span>
 </a>
@@ -72,15 +86,8 @@
   <span class="card__body">
     <span class="card__cat">Déco et ambiance</span>
     <span class="card__title">Lampe chauffe-bougie</span>
+    
     <span class="card__price">49 €</span>
-  </span>
-</a>
-<a class="card" href="../produit/bougies-led-sans-flamme.html">
-  <span class="visual visual--deco "><span class="photo ph-bougies-led " role="img" aria-label="Bougies LED sans flamme (lot de 3)"></span><span class="badges"><span class="badge badge--new">Nouveau</span></span></span>
-  <span class="card__body">
-    <span class="card__cat">Déco et ambiance</span>
-    <span class="card__title">Bougies LED sans flamme (lot de 3)</span>
-    <span class="card__price">29 €</span>
   </span>
 </a>
 <a class="card" href="../produit/lampe-lune-3d.html">
@@ -88,7 +95,8 @@
   <span class="card__body">
     <span class="card__cat">Déco et ambiance</span>
     <span class="card__title">Lampe lune 3D</span>
-    <span class="card__price">39 €</span>
+    <span class="card__choices">5 tailles au choix</span>
+    <span class="card__price">dès 35 €</span>
   </span>
 </a></div>
 </section>

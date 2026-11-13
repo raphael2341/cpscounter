@@ -12,6 +12,14 @@
     minuterie = setTimeout(() => toast.classList.remove('is-visible'), 3200);
   });
 
+  // --- Fiche produit : le prix affiché suit la taille ou le coloris choisi. ---------------------
+  document.addEventListener('change', (event) => {
+    const choix = event.target.closest('input[data-prix]');
+    if (!choix) return;
+    const cible = choix.closest('.product__info')?.querySelector('[data-prix-affiche]');
+    if (cible) cible.textContent = choix.dataset.prix;
+  });
+
   // --- « Noël dans N jours », calculé à la date du visiteur. Rien ne s'affiche après le 24. -----
   const aujourdhui = new Date();
   aujourdhui.setHours(0, 0, 0, 0);

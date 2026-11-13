@@ -1,0 +1,1761 @@
+[
+ {
+  "type": "h1",
+  "runs": [
+   {
+    "text": "Boutique cocooning : produits, tailles et prix"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Catalogue du 13/11/2026 : 25 produits et 75 variantes. Chaque produit renvoie à la fiche d'un article précis chez CJ Dropshipping ou AliExpress, avec le prix de chaque taille ou coloris."
+   }
+  ]
+ },
+ {
+  "type": "h2",
+  "runs": [
+   {
+    "text": "Comment lire ce document"
+   }
+  ]
+ },
+ {
+  "type": "ul",
+  "items": [
+   [
+    {
+     "text": "Fiche fournisseur",
+     "bold": true
+    },
+    {
+     "text": " : le lien ouvre la page de l'article chez le fournisseur."
+    }
+   ],
+   [
+    {
+     "text": "Prix d'achat",
+     "bold": true
+    },
+    {
+     "text": " : prix affiché sur la fiche le 13/11/2026, frais de port non compris. Quand la fiche ne donne qu'une fourchette pour toutes les tailles, le tableau indique la fourchette : le prix exact d'une taille s'affiche sur la fiche quand on la choisit."
+    }
+   ],
+   [
+    {
+     "text": "Prix de vente",
+     "bold": true
+    },
+    {
+     "text": " : chaque variante se vend au moins 2 fois son prix d'achat, même au haut de la fourchette."
+    }
+   ],
+   [
+    {
+     "text": "Coef.",
+     "bold": true
+    },
+    {
+     "text": " : prix de vente France ÷ prix d'achat converti en euros (1 $ = 0,86 €)."
+    }
+   ],
+   [
+    {
+     "text": "Prix US",
+     "bold": true
+    },
+    {
+     "text": " : même chiffre en dollars, sauf mention contraire."
+    }
+   ]
+  ]
+ },
+ {
+  "type": "h2",
+  "runs": [
+   {
+    "text": "Sélection de Noël"
+   }
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Guirlande rideau lumineuse LED"
+   },
+   {
+    "text": " (nouveau)"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche AliExpress : ",
+    "bold": true
+   },
+   {
+    "text": "Window Curtain String Lights 8 Modes Light Fairy For Bedroom Plug In Usb 3m*3m 300 Led Copper Wire Hook Remote Party 300/200leds",
+    "link": "https://www.aliexpress.us/item/3256809758869591.html"
+   },
+   {
+    "text": ". Prix affiché : 5,25 $ (4,75 $ à partir de 2 pièces)."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Même prix affiché pour toutes les variantes. Annonce : usage intérieur seulement (non étanche). Nombre de LED de chaque taille (200 ou 300) à vérifier sur la fiche.",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Taille",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "3 × 2 m, multicolore",
+    "5,25 $",
+    "22 €",
+    "4,87"
+   ],
+   [
+    "3 × 3 m, blanc chaud",
+    "5,25 $",
+    "24 €",
+    "5,32"
+   ],
+   [
+    "3 × 3 m, multicolore",
+    "5,25 $",
+    "24 €",
+    "5,32"
+   ],
+   [
+    "3 × 3 m, blanc froid",
+    "5,25 $",
+    "24 €",
+    "5,32"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Sapin lumineux de table"
+   },
+   {
+    "text": " (nouveau)"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche CJ Dropshipping : ",
+    "bold": true
+   },
+   {
+    "text": "LED Christmas Tree Spiral Light Table Ornament Wrought Iron Xmas Tree Bedroom Desk Lamp",
+    "link": "https://cjdropshipping.com/product/led-christmas-tree-spiral-light-table-ornament-wrought-iron-xmas-tree-bedroom-desk-lamp-christmas-atmosphere-night-light-decor-p-2409270619361600100.html"
+   },
+   {
+    "text": " (réf. CJHD214824101AZ)"
+   },
+   {
+    "text": ". Prix affiché : 4,70 $ pour chaque variante."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche CJ : 330 à 370 g, IP42, usage intérieur, piles non précisées.",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Modèle",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "Sapin doré",
+    "4,70 $",
+    "19 €",
+    "4,70"
+   ],
+   [
+    "Sapin blanc",
+    "4,70 $",
+    "19 €",
+    "4,70"
+   ],
+   [
+    "Spirale dorée",
+    "4,70 $",
+    "19 €",
+    "4,70"
+   ],
+   [
+    "Spirale blanche",
+    "4,70 $",
+    "19 €",
+    "4,70"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Housse de coussin de Noël 45 × 45 cm"
+   },
+   {
+    "text": " (nouveau)"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche AliExpress : ",
+    "bold": true
+   },
+   {
+    "text": "1/4pcs Christmas pillow cover, holiday decoration sofa cushion cover (without pillow core)",
+    "link": "https://www.aliexpress.us/item/3256809537698962.html"
+   },
+   {
+    "text": ". Prix affiché : 1,09 $ (promotion), prix barré 7,71 $."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Le prix de vente garde le x2 même au prix barré (7,71 $). 100 % polyester, motifs BZ416 à BZ523, vendue à l'unité.",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Variante",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "45 × 45 cm",
+    "1,09 $ à 7,71 $",
+    "16 €",
+    "2,41"
+   ]
+  ]
+ },
+ {
+  "type": "h2",
+  "runs": [
+   {
+    "text": "Couvertures et textiles"
+   }
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Plaid chauffant USB"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche AliExpress : ",
+    "bold": true
+   },
+   {
+    "text": "Fashion Wearable USB Electric Heated Blanket 3 Heating Levels Washable Warm Shawl Portable Heating Lap Blanket",
+    "link": "https://www.aliexpress.us/item/3256811407201922.html"
+   },
+   {
+    "text": ". Prix affiché : 17,15 $ (prix barré 48,88 $)."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Remplace le plaid chauffant sur secteur, sans fiche fiable. Dimensions non indiquées dans l'annonce : à vérifier. 4,3/5 sur 6 avis.",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Coloris",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "Abricot",
+    "17,15 $",
+    "39 €",
+    "2,64"
+   ],
+   [
+    "Vert",
+    "17,15 $",
+    "39 €",
+    "2,64"
+   ],
+   [
+    "Gris",
+    "17,15 $",
+    "39 €",
+    "2,64"
+   ],
+   [
+    "Violet",
+    "17,15 $",
+    "39 €",
+    "2,64"
+   ],
+   [
+    "Rouge",
+    "17,15 $",
+    "39 €",
+    "2,64"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Sweat-plaid oversize sherpa"
+   },
+   {
+    "text": " (coup de cœur)"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche AliExpress : ",
+    "bold": true
+   },
+   {
+    "text": "Wearable Blanket Hoodie Oversized Flannel Sherpa Fleece Hooded Soft Cozy Warm Blanket Sweatshirt",
+    "link": "https://www.aliexpress.us/item/3256807802977787.html"
+   },
+   {
+    "text": ". Prix affiché : 27,19 $ (prix barré 45,32 $)."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Prix de vente passé de 42 à 59 € : le seul sweat-plaid trouvé avec un prix se vend 27,19 $. Le même vendeur l'affiche à 32,95 $ sur une autre annonce (item 3256807803123291).",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Coloris",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "Bleu",
+    "27,19 $",
+    "59 €",
+    "2,52"
+   ],
+   [
+    "Gris",
+    "27,19 $",
+    "59 €",
+    "2,52"
+   ],
+   [
+    "Rose clair",
+    "27,19 $",
+    "59 €",
+    "2,52"
+   ],
+   [
+    "Noir",
+    "27,19 $",
+    "59 €",
+    "2,52"
+   ],
+   [
+    "Rouge",
+    "27,19 $",
+    "59 €",
+    "2,52"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Plaid double face tout doux"
+   },
+   {
+    "text": " (nouveau)"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche CJ Dropshipping : ",
+    "bold": true
+   },
+   {
+    "text": "Soft Wind Bubble Velvet Blanket Warm Solid Rabbit Fur Blankets Double-sided Thickening Cover Throw",
+    "link": "https://cjdropshipping.com/product/soft-wind-bubble-velvet-blanket-warm-solid-rabbit-fur-blankets-double-sided-thickening-cover-throw-warm-fur-blanket-p-2410100547241617300.html"
+   },
+   {
+    "text": " (réf. CJCS215603119SH)"
+   },
+   {
+    "text": ". Prix affiché : de 2,25 à 7,09 $ selon la taille."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Remplace le pack plaid + housses, introuvable en un seul produit. CJ affiche une fourchette pour toutes les tailles ; le prix de chaque taille s'affiche sur la fiche quand on la choisit. Les prix de vente gardent le x2 même au haut de la fourchette.",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Taille",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "100 × 150 cm",
+    "2,25 $ à 7,09 $",
+    "25 €",
+    "4,10"
+   ],
+   [
+    "120 × 200 cm",
+    "2,25 $ à 7,09 $",
+    "29 €",
+    "4,76"
+   ],
+   [
+    "150 × 200 cm",
+    "2,25 $ à 7,09 $",
+    "35 €",
+    "5,74"
+   ],
+   [
+    "180 × 200 cm",
+    "2,25 $ à 7,09 $",
+    "39 €",
+    "6,40"
+   ],
+   [
+    "200 × 230 cm",
+    "2,25 $ à 7,09 $",
+    "45 €",
+    "7,38"
+   ],
+   [
+    "230 × 250 cm",
+    "2,25 $ à 7,09 $",
+    "49 €",
+    "8,04"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Parure de lit polaire"
+   },
+   {
+    "text": " (nouveau)"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche CJ Dropshipping : ",
+    "bold": true
+   },
+   {
+    "text": "Luxury Thick Fleece Duvet Cover Queen King Winter Warm Bed Quilt Cover Pillowcase Bedding Set",
+    "link": "https://cjdropshipping.com/product/luxury-thick-fleece-duvet-cover-queen-king-winter-warm-bed-quilt-cover-pillowcase-fluffy-plush-shaggy-bedclothes-bedding-set-winter-body-keep-warm-p-1355AFF2-4533-4772-A5AC-0F0D74F00E26.html"
+   },
+   {
+    "text": " (réf. CJJJJFCS00988)"
+   },
+   {
+    "text": ". Prix affiché : de 12,60 à 15,75 $ selon la taille."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Remplace les draps en flanelle, introuvables en fiche précise. Fourchette CJ pour toutes les tailles ; les prix de vente gardent le x2 au haut de la fourchette. La fiche propose aussi des variantes « bed sheet » (drap housse) à vérifier.",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Taille",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "Lit 1,5 m : housse 200 × 230 cm, drap 230 × 250 cm",
+    "12,60 $ à 15,75 $",
+    "49 €",
+    "3,62"
+   ],
+   [
+    "Lit 1,8 m : housse 200 × 230 cm, drap 230 × 250 cm",
+    "12,60 $ à 15,75 $",
+    "54 €",
+    "3,99"
+   ],
+   [
+    "Lit 2 m : housse 220 × 240 cm, drap 230 × 250 cm",
+    "12,60 $ à 15,75 $",
+    "59 €",
+    "4,36"
+   ]
+  ]
+ },
+ {
+  "type": "h2",
+  "runs": [
+   {
+    "text": "Chauffage personnel"
+   }
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Chauffe-pieds sous le bureau"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche AliExpress : ",
+    "bold": true
+   },
+   {
+    "text": "Electric Heating Foot Pad Washable Feet Warmer Household Soft Plush Thermal Heating Blanket Foot Warming Mat",
+    "link": "https://www.aliexpress.us/item/3256806667240579.html"
+   },
+   {
+    "text": ". Prix affiché : 6,65 $ (prix barré 21,69 $)."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "4,6/5 sur 179 avis, plus de 1 000 ventes. Prix de vente passé de 39 à 29 € : l'achat est bas. Dimensions à vérifier sur la fiche.",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Branchement",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "Prise européenne",
+    "6,65 $",
+    "29 €",
+    "5,07"
+   ],
+   [
+    "Prise américaine",
+    "6,65 $",
+    "29 €",
+    "5,07"
+   ],
+   [
+    "Câble USB",
+    "6,65 $",
+    "29 €",
+    "5,07"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Chaussons chauffants rechargeables"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche CJ Dropshipping : ",
+    "bold": true
+   },
+   {
+    "text": "Electric Heating Shoes Rechargeable Foot Warmer Heating Home Shoes",
+    "link": "https://cjdropshipping.com/product/electric-heating-shoes-rechargeable-foot-warmer-artifact-heating-home-shoes-winter-warm-temperature-regulating-cotton-shoes-p-2411031308311601800.html"
+   },
+   {
+    "text": ". Prix affiché : de 19,73 à 20,77 $ selon la pointure et le coloris."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Prix de vente passé de 39 à 42 € pour garder le x2 au haut de la fourchette (20,77 $).",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Pointure",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "36-37",
+    "19,73 $ à 20,77 $",
+    "42 €",
+    "2,35"
+   ],
+   [
+    "38-39",
+    "19,73 $ à 20,77 $",
+    "42 €",
+    "2,35"
+   ],
+   [
+    "40-41",
+    "19,73 $ à 20,77 $",
+    "42 €",
+    "2,35"
+   ],
+   [
+    "42-43",
+    "19,73 $ à 20,77 $",
+    "42 €",
+    "2,35"
+   ],
+   [
+    "44-45",
+    "19,73 $ à 20,77 $",
+    "42 €",
+    "2,35"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Chaussons panda tout doux"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche AliExpress : ",
+    "bold": true
+   },
+   {
+    "text": "Fluffy Panda Slippers Women Winter Fuzzy Home Shoes",
+    "link": "https://www.aliexpress.com/item/1005007597536207.html"
+   },
+   {
+    "text": ". Prix affiché : 12,83 €."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Remplace les chaussons « effet cachemire », sans fiche fiable.",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Pointure",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef.",
+    "Prix US"
+   ],
+   [
+    "36-37",
+    "12,83 €",
+    "29 €",
+    "2,26",
+    "32 $"
+   ],
+   [
+    "38-39",
+    "12,83 €",
+    "29 €",
+    "2,26",
+    "32 $"
+   ],
+   [
+    "40-41",
+    "12,83 €",
+    "29 €",
+    "2,26",
+    "32 $"
+   ],
+   [
+    "42-43",
+    "12,83 €",
+    "29 €",
+    "2,26",
+    "32 $"
+   ],
+   [
+    "44-45",
+    "12,83 €",
+    "29 €",
+    "2,26",
+    "32 $"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Chaussettes chauffantes rechargeables"
+   },
+   {
+    "text": " (coup de cœur)"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche AliExpress : ",
+    "bold": true
+   },
+   {
+    "text": "Rechargeable Heated Socks Washable Electric Thermal Socks 3 Modes Elastic Thickened Winter (APWIKOGER)",
+    "link": "https://www.aliexpress.us/item/3256809796129848.html"
+   },
+   {
+    "text": ". Prix affiché : 15,77 $ (prix barré 37,56 $)."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Tailles non indiquées dans l'annonce : à vérifier. 4,4/5 sur 7 avis seulement.",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Coloris",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "Gris",
+    "15,77 $",
+    "54 €",
+    "3,98"
+   ],
+   [
+    "Noir",
+    "15,77 $",
+    "54 €",
+    "3,98"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Gants chauffants USB"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche AliExpress : ",
+    "bold": true
+   },
+   {
+    "text": "USB Heated Electric Heating Gloves Full&Half Finger Winter Mittens Thermal Winter Knitting Gloves",
+    "link": "https://www.aliexpress.us/item/3256806067732173.html"
+   },
+   {
+    "text": ". Prix affiché : 13,21 $."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Une autre page de résultats affichait 1,09 $ (promotion) : prix retenu, 13,21 $.",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Modèle",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "Mitaines (doigts libres)",
+    "13,21 $",
+    "29 €",
+    "2,55"
+   ],
+   [
+    "Doigts entiers",
+    "13,21 $",
+    "29 €",
+    "2,55"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Écharpe chauffante USB"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche CJ Dropshipping : ",
+    "bold": true
+   },
+   {
+    "text": "Heating Scarf USB Electric Heated Neck Wrap Three-gear Temperature Control Neck Warmer",
+    "link": "https://cjdropshipping.com/product/heating-scarf-usb-electric-heated-neck-wrap-heating-pad-pain-relief-three-gear-temperature-control-neck-warmer-for-women-men-p-2410090540211619700.html"
+   },
+   {
+    "text": ". Prix affiché : 4,53 $."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Batterie non fournie (alimentation USB).",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Variante",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "Modèle unique",
+    "4,53 $",
+    "24 €",
+    "6,16"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Coussin de siège chauffant"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche AliExpress : ",
+    "bold": true
+   },
+   {
+    "text": "Heating Cushion 5V USB Intelligent Heated Seat Cushion For Office Chair 45x45cm Graphene With 3 Heating Level",
+    "link": "https://www.aliexpress.us/item/3256809297573455.html"
+   },
+   {
+    "text": ". Prix affiché : 18,65 $ (prix barré 28,69 $)."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Prix de vente passé de 52 à 45 € : achat relevé plus bas que l'estimation.",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Coloris",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "Noir",
+    "18,65 $",
+    "45 €",
+    "2,81"
+   ],
+   [
+    "Gris",
+    "18,65 $",
+    "45 €",
+    "2,81"
+   ],
+   [
+    "Café",
+    "18,65 $",
+    "45 €",
+    "2,81"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Bouillotte électrique rechargeable"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche AliExpress : ",
+    "bold": true
+   },
+   {
+    "text": "Rechargeable Hot Water Bottle with Plush Cover Relieve Neck Shoulder Hands Feet",
+    "link": "https://www.aliexpress.us/item/3256809970713140.html"
+   },
+   {
+    "text": ". Prix affiché : 3,45 $ (prix barré 13,73 $)."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "3,6/5 sur 9 avis seulement : commander un échantillon avant de vendre.",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Coloris",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "Gris",
+    "3,45 $",
+    "22 €",
+    "7,41"
+   ],
+   [
+    "Vert",
+    "3,45 $",
+    "22 €",
+    "7,41"
+   ],
+   [
+    "Kaki",
+    "3,45 $",
+    "22 €",
+    "7,41"
+   ],
+   [
+    "Rose",
+    "3,45 $",
+    "22 €",
+    "7,41"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Masque chauffant pour les yeux"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche AliExpress : ",
+    "bold": true
+   },
+   {
+    "text": "Heated Eye Mask USB Eye Mask for Dry Eyes with Constant Heating Temperature",
+    "link": "https://www.aliexpress.us/item/3256806823681160.html"
+   },
+   {
+    "text": ". Prix affiché : 2,79 $."
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Variante",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "Modèle unique",
+    "2,79 $",
+    "22 €",
+    "9,17"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Mini chauffage céramique 500 W"
+   },
+   {
+    "text": " (France seulement)"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche AliExpress : ",
+    "bold": true
+   },
+   {
+    "text": "Portable Mini Heaters Household Desktop Fast Heating Warmer Fan 500W PTC-Ceramic Warm Air Heaters",
+    "link": "https://www.aliexpress.us/item/3256807906528710.html"
+   },
+   {
+    "text": ". Prix affiché : 10,75 $ (prix barré 29,86 $)."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Vendu en France seulement : appareil 220 V, inutilisable sur le courant américain (110 V). Annonce : certifié CE. 4,3/5 sur 29 avis.",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Coloris",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "Jaune",
+    "10,75 $",
+    "39 €",
+    "4,22"
+   ],
+   [
+    "Blanc",
+    "10,75 $",
+    "39 €",
+    "4,22"
+   ],
+   [
+    "Bleu",
+    "10,75 $",
+    "39 €",
+    "4,22"
+   ],
+   [
+    "Vert",
+    "10,75 $",
+    "39 €",
+    "4,22"
+   ]
+  ]
+ },
+ {
+  "type": "h2",
+  "runs": [
+   {
+    "text": "Bureau et télétravail"
+   }
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Tapis de bureau chauffant"
+   },
+   {
+    "text": " (France seulement)"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche AliExpress : ",
+    "bold": true
+   },
+   {
+    "text": "New EU Plug Heating Mouse Pad with Digital Display Quick Heating Heated Desk Mat Waterproof Extra-large",
+    "link": "https://www.aliexpress.us/item/3256810155241067.html"
+   },
+   {
+    "text": ". Prix affiché : 17,64 $ (prix barré 20,64 $)."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Vendu en France seulement (prise européenne). Le prix de chaque taille n'apparaît pas dans l'index : les prix de vente gardent le x2 au prix barré (20,64 $).",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Taille",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "60 × 36 cm",
+    "17,64 $ à 20,64 $",
+    "42 €",
+    "2,37"
+   ],
+   [
+    "80 × 33 cm",
+    "17,64 $ à 20,64 $",
+    "47 €",
+    "2,65"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Chauffe-tasse électrique"
+   },
+   {
+    "text": " (coup de cœur)"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche CJ Dropshipping : ",
+    "bold": true
+   },
+   {
+    "text": "Electric Tea Water Heating Pad Constant Temperature Coffee Mug Heating Coaster",
+    "link": "https://cjdropshipping.com/product/electric-tea-water-heating-pad-constant-temperature-coffee-mug-heating-coaster-lightweight-water-pad-heater-safe-for-home-office-p-1597111928982351872.html"
+   },
+   {
+    "text": ". Prix affiché : de 1,62 à 1,71 $ selon le branchement."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Coloris au choix sur la fiche : bleu, vert ou rose. Prix de vente passé de 22 à 19 € : achat très bas.",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Branchement",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "Prise européenne",
+    "1,62 $ à 1,71 $",
+    "19 €",
+    "12,92"
+   ],
+   [
+    "Prise américaine",
+    "1,62 $ à 1,71 $",
+    "19 €",
+    "12,92"
+   ],
+   [
+    "Câble USB",
+    "1,62 $ à 1,71 $",
+    "19 €",
+    "12,92"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Mug chauffant intelligent"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche AliExpress : ",
+    "bold": true
+   },
+   {
+    "text": "Smart Multifunction Magnetic Mug - 55℃ Constant Temp Cup Warmer & Electric Self-Stirring Coffee Cup (Luckima)",
+    "link": "https://www.aliexpress.us/item/3256809922258435.html"
+   },
+   {
+    "text": ". Prix affiché : 29,80 $ (prix barré 59,61 $)."
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Variante",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "Rose",
+    "29,80 $",
+    "69 €",
+    "2,69"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Lunch box chauffante 1,5 L"
+   },
+   {
+    "text": " (France seulement)"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche AliExpress : ",
+    "bold": true
+   },
+   {
+    "text": "Electric Lunch Box, 1.5L Portable Food Warmer Car & Office, 12V/24V/220V Multi-Voltage With stainless steel container",
+    "link": "https://www.aliexpress.us/item/3256812466322059.html"
+   },
+   {
+    "text": ". Prix affiché : 19,74 $ (prix barré 79,46 $)."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Vendue en France seulement (220 V). Pour les US, il existe une version 110 V / 220 V à 29,36 $ (item 3256812262820595). Prix de vente passé de 39 à 45 €.",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Variante",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "1,5 L, 12 V / 24 V / 220 V",
+    "19,74 $",
+    "45 €",
+    "2,65"
+   ]
+  ]
+ },
+ {
+  "type": "h2",
+  "runs": [
+   {
+    "text": "Déco et ambiance"
+   }
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Diffuseur humidificateur effet flamme"
+   },
+   {
+    "text": " (coup de cœur)"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche CJ Dropshipping : ",
+    "bold": true
+   },
+   {
+    "text": "Newest RGB Flame Aroma Diffuser 130Ml 3d Colorful Flame Humidifier",
+    "link": "https://cjdropshipping.com/product/newest-rgb-flame-aroma-diffuser-130ml-3d-colorful-flame-humidifier-fire-volcano-diffuser-flame-p-1578948189683077120.html"
+   },
+   {
+    "text": " (réf. CJJD1582742)"
+   },
+   {
+    "text": ". Prix affiché : 6,99 $."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Modèle DQ-705, 130 ml, 6 à 9 h de diffusion, arrêt automatique sans eau.",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Coloris",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "Blanc",
+    "6,99 $",
+    "39 €",
+    "6,49"
+   ],
+   [
+    "Noir",
+    "6,99 $",
+    "39 €",
+    "6,49"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Lampe chauffe-bougie"
+   },
+   {
+    "text": " (coup de cœur)"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche CJ Dropshipping : ",
+    "bold": true
+   },
+   {
+    "text": "Candle Warmer Lamp With Timer Dimmable And Adjustable Height, Wooden Base Black",
+    "link": "https://cjdropshipping.com/product/candle-warmer-candle-warmer-lamp-with-timer-dimmable-and-adjustable-height-candle-lamp-warmer-compatible-with-jar-candles-for-home-decor-electric-wax-melter-warmer-wooden-base-black-p-1687009800938737664.html"
+   },
+   {
+    "text": " (réf. CJSN1813977-Black)"
+   },
+   {
+    "text": ". Prix affiché : 23,91 $, livraison offerte."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fournisseur Rainbean. Type de prise non précisé : à demander avant de vendre en France.",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Variante",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "Noir, base en bois",
+    "23,91 $",
+    "49 €",
+    "2,38"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Lampe lune 3D"
+   },
+   {
+    "text": " (nouveau)"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche CJ Dropshipping : ",
+    "bold": true
+   },
+   {
+    "text": "Rambery Moon Lamp 3D Print Night Light Rechargeable",
+    "link": "https://cjdropshipping.com/product/rambery-moon-lamp-3d-print-night-light-rechargeable-3-color-tap-control-lamp-lights-p-1DC11DAB-FAC4-492D-B532-4A69EC8C512D.html"
+   },
+   {
+    "text": " (réf. CJJJJTJT51477)"
+   },
+   {
+    "text": ". Prix affiché : de 10,61 à 19,68 $ selon la taille."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Version 16 couleurs avec télécommande. Fourchette CJ pour toutes les tailles ; les prix de vente gardent le x2 au haut de la fourchette.",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Taille",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef.",
+    "Prix US"
+   ],
+   [
+    "10 cm",
+    "10,61 $ à 19,68 $",
+    "35 €",
+    "2,07",
+    "40 $"
+   ],
+   [
+    "13 cm",
+    "10,61 $ à 19,68 $",
+    "39 €",
+    "2,30",
+    "44 $"
+   ],
+   [
+    "15 cm",
+    "10,61 $ à 19,68 $",
+    "45 €",
+    "2,66",
+    "49 $"
+   ],
+   [
+    "18 cm",
+    "10,61 $ à 19,68 $",
+    "49 €",
+    "2,90",
+    "54 $"
+   ],
+   [
+    "20 cm",
+    "10,61 $ à 19,68 $",
+    "55 €",
+    "3,25",
+    "59 $"
+   ]
+  ]
+ },
+ {
+  "type": "h3",
+  "runs": [
+   {
+    "text": "Projecteur galaxie astronaute"
+   },
+   {
+    "text": " (nouveau)"
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "Fiche CJ Dropshipping : ",
+    "bold": true
+   },
+   {
+    "text": "Creative Astronaut Galaxy Starry Sky Projector Nightlight USB",
+    "link": "https://cjdropshipping.com/product/creative-astronaut-galaxy-starry-sky-projector-nightlight-usb-atmospher-bedroom-table-lamp-p-1427515807545561088.html"
+   },
+   {
+    "text": ". Prix affiché : de 10,33 à 12,30 $ l'unité."
+   }
+  ]
+ },
+ {
+  "type": "p",
+  "runs": [
+   {
+    "text": "La fiche propose aussi des lots de 2, 3 ou 4 (jusqu'à 59,76 $) : ne pas les confondre avec l'unité.",
+    "italic": true
+   }
+  ]
+ },
+ {
+  "type": "table",
+  "rows": [
+   [
+    "Coloris",
+    "Prix d'achat",
+    "Prix de vente",
+    "Coef."
+   ],
+   [
+    "Blanc",
+    "10,33 $ à 12,30 $",
+    "39 €",
+    "3,69"
+   ],
+   [
+    "Noir",
+    "10,33 $ à 12,30 $",
+    "39 €",
+    "3,69"
+   ]
+  ]
+ },
+ {
+  "type": "h2",
+  "runs": [
+   {
+    "text": "À faire avant l'ouverture"
+   }
+  ]
+ },
+ {
+  "type": "ul",
+  "items": [
+   [
+    {
+     "text": "Ouvrir chaque fiche, choisir la taille ou le coloris et vérifier que le prix reste sous le prix de vente divisé par 2."
+    }
+   ],
+   [
+    {
+     "text": "Ajouter les frais de port du fournisseur : ils ne sont pas comptés ici."
+    }
+   ],
+   [
+    {
+     "text": "Sur AliExpress, beaucoup de prix affichés sont des promotions : vérifier le prix le jour de la commande."
+    }
+   ],
+   [
+    {
+     "text": "Remplacer les photos d'ambiance du site par les photos des fournisseurs."
+    }
+   ],
+   [
+    {
+     "text": "Produits électriques : vérifier le marquage CE (Europe) ou UL/ETL (États-Unis) auprès du fournisseur."
+    }
+   ]
+  ]
+ }
+]

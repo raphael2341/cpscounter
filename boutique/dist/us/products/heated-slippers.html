@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Gloock&family=Sacramento&display=swap">
 <link rel="stylesheet" href="../../assets/style.css">
 <link rel="stylesheet" href="../../assets/photos.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Rechargeable Heated Slippers","description":"Battery-heated slippers, so your feet are never cold again.","sku":"CHAUSSONS-CHAUFFANTS","category":"Personal Warmers","brand":{"@type":"Brand","name":"Warm Nest"},"offers":{"@type":"Offer","price":"42.00","priceCurrency":"USD","availability":"https://schema.org/InStock"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Rechargeable Heated Slippers","description":"Battery-heated slippers, so your feet are never cold again.","sku":"CHAUSSONS-CHAUFFANTS","category":"Personal Warmers","brand":{"@type":"Brand","name":"Warm Nest"},"offers":{"@type":"AggregateOffer","lowPrice":"42.00","highPrice":"42.00","offerCount":5,"priceCurrency":"USD","availability":"https://schema.org/InStock"}}</script>
 </head>
 <body>
 <p class="promo"><span class="wrap promo__inner"><svg class="promo__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l1.9 6.1 6.1 1.9-6.1 1.9L12 18.5l-1.9-6.1L4 10.5l6.1-1.9z"/><path d="M19 17.5v3M17.5 19h3"/></svg><span>Christmas gift ideas from $16</span><span class="promo__count" data-noel="{n} days until Christmas" data-noel-1="Christmas is tomorrow"></span></span></p>
@@ -36,13 +36,38 @@
   <div class="product__info">
     <a class="product__cat" href="../collections/personal-warmers.html">Personal Warmers</a>
     <h1>Rechargeable Heated Slippers</h1>
-    <p class="product__price">$42</p>
+    <p class="product__price" data-prix-affiche>$42</p>
     <p class="product__desc">Battery-heated slippers, so your feet are never cold again.</p>
+    <fieldset class="variants">
+      <legend class="product__subtitle">Size</legend>
+      <div class="variants__list">
+      <label class="variant">
+        <input type="radio" name="v-us-chaussons-chauffants" value="p36" data-prix="$42" checked>
+        <span>EU 36-37</span>
+      </label>
+      <label class="variant">
+        <input type="radio" name="v-us-chaussons-chauffants" value="p38" data-prix="$42">
+        <span>EU 38-39</span>
+      </label>
+      <label class="variant">
+        <input type="radio" name="v-us-chaussons-chauffants" value="p40" data-prix="$42">
+        <span>EU 40-41</span>
+      </label>
+      <label class="variant">
+        <input type="radio" name="v-us-chaussons-chauffants" value="p42" data-prix="$42">
+        <span>EU 42-43</span>
+      </label>
+      <label class="variant">
+        <input type="radio" name="v-us-chaussons-chauffants" value="p44" data-prix="$42">
+        <span>EU 44-45</span>
+      </label>
+      </div>
+    </fieldset>
     <h2 class="product__subtitle">Highlights</h2>
     <ul class="checks">
-      <li><svg class="checks__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Rechargeable battery</li>
-      <li><svg class="checks__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Cordless, so you can move around freely</li>
-      <li><svg class="checks__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>No more frozen toes</li>
+      <li><svg class="checks__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Power bank and USB cable included</li>
+      <li><svg class="checks__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>EU sizes 36 to 45</li>
+      <li><svg class="checks__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Beige, brown or gray</li>
     </ul>
     <button class="btn btn--block" type="button" data-add-to-cart data-message="Preview only: checkout will be enabled when the store opens.">Add to cart</button>
     <a class="giftline" href="../gift-guide.html#budget-2"><svg class="giftline__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11h16v9H4z"/><path d="M3 7.5h18V11H3z"/><path d="M12 7.5V20"/><path d="M12 7.5c-1-2.2-2.6-3.5-4-3.2-1.5.4-1.5 2.4.2 3.2"/><path d="M12 7.5c1-2.2 2.6-3.5 4-3.2 1.5.4 1.5 2.4-.2 3.2"/></svg><span>Gift ideas · $25 to $50</span><span aria-hidden="true">→</span></a>
@@ -64,15 +89,17 @@
   <span class="card__body">
     <span class="card__cat">Personal Warmers</span>
     <span class="card__title">Under-Desk Foot Warmer</span>
-    <span class="card__price">$42</span>
+    <span class="card__choices">3 plugs available</span>
+    <span class="card__price">$29</span>
   </span>
 </a>
-<a class="card" href="../products/cashmere-feel-slippers.html">
-  <span class="visual visual--chauffage "><span class="photo ph-chaussons-cachemire " role="img" aria-label="Cashmere-Feel House Slippers"></span></span>
+<a class="card" href="../products/fluffy-panda-slippers.html">
+  <span class="visual visual--chauffage "><span class="photo ph-chaussons-panda " role="img" aria-label="Fluffy Panda Slippers"></span></span>
   <span class="card__body">
     <span class="card__cat">Personal Warmers</span>
-    <span class="card__title">Cashmere-Feel House Slippers</span>
-    <span class="card__price">$22</span>
+    <span class="card__title">Fluffy Panda Slippers</span>
+    <span class="card__choices">5 sizes available</span>
+    <span class="card__price">$32</span>
   </span>
 </a>
 <a class="card" href="../products/heated-socks.html">
@@ -80,15 +107,17 @@
   <span class="card__body">
     <span class="card__cat">Personal Warmers</span>
     <span class="card__title">Rechargeable Heated Socks</span>
-    <span class="card__price">$64</span>
+    <span class="card__choices">2 colors available</span>
+    <span class="card__price">$54</span>
   </span>
 </a>
-<a class="card" href="../products/rechargeable-hand-warmers.html">
-  <span class="visual visual--chauffage "><span class="photo ph-chauffe-mains " role="img" aria-label="Rechargeable Hand Warmers (2-Pack)"></span></span>
+<a class="card" href="../products/usb-heated-gloves.html">
+  <span class="visual visual--chauffage "><span class="photo ph-gants-chauffants " role="img" aria-label="USB Heated Gloves"></span></span>
   <span class="card__body">
     <span class="card__cat">Personal Warmers</span>
-    <span class="card__title">Rechargeable Hand Warmers (2-Pack)</span>
-    <span class="card__price">$32</span>
+    <span class="card__title">USB Heated Gloves</span>
+    <span class="card__choices">2 styles available</span>
+    <span class="card__price">$29</span>
   </span>
 </a></div>
 </section>

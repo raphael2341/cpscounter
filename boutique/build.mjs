@@ -2,9 +2,10 @@
 // Génère, à partir de catalogue.json :
 //   dist/fr/…, dist/us/…            site vitrine statique (accueil, guide cadeaux, catégories, fiches produits)
 //   dist/apercu.html                la même boutique dans un seul fichier autonome (tablette, téléphone)
-//   exports/shopify-fr.csv, -us     fichiers d'import produits Shopify (brouillons)
-//   exports/catalogue-interne.md    tableau des prix, marges et fournisseurs (usage interne)
-//   exports/produits-et-liens.html  liste des produits avec leurs liens (base du Google Doc)
+//   exports/shopify-fr.csv, -us     fichiers d'import produits Shopify (brouillons, une ligne par variante)
+//   exports/catalogue-interne.md    prix, marges et fournisseurs, variante par variante (usage interne)
+//   exports/produits-et-liens.html  la liste des produits avec leur fiche fournisseur et le prix de chaque variante
+//   exports/produits-et-liens.json  le même contenu en blocs (titres, paragraphes, tableaux), pour le Google Doc
 //
 // Usage : node build.mjs    (Node 18+ ; aucune dépendance)
 
@@ -20,9 +21,25 @@ const EXPORTS = join(ROOT, 'exports');
 const catalogue = JSON.parse(readFileSync(join(ROOT, 'catalogue.json'), 'utf8'));
 const { meta, marches, categories, produits } = catalogue;
 const catById = Object.fromEntries(categories.map((c) => [c.id, c]));
+const CODES = Object.keys(marches);
 
-// Prix de vente d'un produit sur un marché : même chiffre partout, sauf si le produit porte un prix_vente_<marché>.
-const prixVente = (p, code) => p[`prix_vente_${code}`] ?? p.prix_vente;
+// ---------------------------------------------------------------------------
+// Prix : chaque produit a des variantes (taille, coloris…), chacune avec son prix de vente.
+// ---------------------------------------------------------------------------
+
+// Prix de vente d'une variante sur un marché : même chiffre partout, sauf si la variante porte un vente_<marché>.
+const venteVar = (v, code) => v[`vente_${code}`] ?? v.vente;
+// Prix d'achat d'une variante, dans la devise du fournisseur. Sans prix précis, on compte le haut de la fourchette.
+const achatVar = (p, v) => v.achat ?? p.prix_achat.max;
+const achatPrecis = (v) => v.achat != null;
+function convertir(montant, de, vers) {
+  if (de === vers) return montant;
+  return vers === 'EUR' ? montant * meta.taux_usd_vers_eur : montant / meta.taux_usd_vers_eur;
+}
+const coutVar = (p, v, devise) => convertir(achatVar(p, v), p.prix_achat.devise, devise);
+const disponible = (p, code) => !p.marches || p.marches.includes(code);
+const prixMin = (p, code) => Math.min(...p.variantes.map((v) => venteVar(v, code)));
+const prixVarie = (p, code) => new Set(p.variantes.map((v) => venteVar(v, code))).size > 1;
 
 // Tranches de prix du guide cadeaux : jusqu'à 25, de 25 à 50, plus de 50 (dans la devise du marché).
 const BUDGETS = [
@@ -51,7 +68,7 @@ const UI = {
     favoriteBadge: 'Coup de cœur',
     newBadge: 'Nouveau',
     newTitle: 'Nouveautés des fêtes',
-    newIntro: 'Lumières, sapin de table et petites attentions, tout juste arrivés.',
+    newIntro: 'Lumières, sapin de table, plaids et petites attentions, tout juste arrivés.',
     universes: 'Nos univers',
     giftsNav: 'Idées cadeaux',
     giftsScript: 'Le guide cadeaux',
@@ -69,6 +86,7 @@ const UI = {
     seeAll: 'Voir tout le catalogue',
     seeCategory: 'Voir la sélection',
     count: (n) => `${n} produit${n > 1 ? 's' : ''}`,
+    choices: (n, option) => `${n} ${option.toLowerCase()}s au choix`,
     addToCart: 'Ajouter au panier',
     cartPreview: "Aperçu : le paiement sera activé à l'ouverture de la boutique.",
     highlights: 'Points forts',
@@ -96,7 +114,7 @@ const UI = {
     favoriteBadge: 'Favorite',
     newBadge: 'New',
     newTitle: 'New for the holidays',
-    newIntro: 'Lights, a tabletop tree and little treats, just in.',
+    newIntro: 'Lights, a tabletop tree, throws and little treats, just in.',
     universes: 'Shop by category',
     giftsNav: 'Gift ideas',
     giftsScript: 'The gift guide',
@@ -114,6 +132,7 @@ const UI = {
     seeAll: 'Shop all products',
     seeCategory: 'Shop now',
     count: (n) => `${n} product${n > 1 ? 's' : ''}`,
+    choices: (n, option) => `${n} ${option.toLowerCase()}s available`,
     addToCart: 'Add to cart',
     cartPreview: 'Preview only: checkout will be enabled when the store opens.',
     highlights: 'Highlights',
@@ -162,19 +181,7 @@ function monnaie(marche, valeur, decimales = !Number.isInteger(valeur)) {
   }).format(valeur);
 }
 
-// Coût d'achat converti dans une devise. Par prudence on prend le haut de la fourchette.
-function coutMax(p, devise) {
-  const a = p.prix_achat;
-  if (!a) return null;
-  if (a.devise === devise) return a.max;
-  const taux = meta.taux_usd_vers_eur;
-  return devise === 'EUR' ? a.max * taux : a.max / taux;
-}
-
 const arrondi2 = (v) => Math.round(v * 100) / 100;
-const vedettes = () => produits.filter((p) => p.vedette != null).sort((a, b) => a.vedette - b.vedette);
-const nouveautes = () => produits.filter((p) => p.nouveau);
-const produitsDe = (catId) => produits.filter((p) => p.categorie === catId);
 
 function ecrire(chemin, contenu) {
   mkdirSync(dirname(chemin), { recursive: true });
@@ -227,29 +234,43 @@ function valider() {
       slugs[l].add(t.slug);
       if (!Array.isArray(t.points_forts) || t.points_forts.length === 0) erreurs.push(`${ref} : points forts manquants en « ${l} »`);
     }
-    if (!(typeof p.prix_vente === 'number' && p.prix_vente > 0)) erreurs.push(`${ref} : prix de vente invalide`);
     if (p.vedette != null) {
       if (rangs.has(p.vedette)) erreurs.push(`${ref} : rang de vedette ${p.vedette} déjà utilisé`);
       rangs.add(p.vedette);
     }
     if (p.image && !/^https?:/.test(p.image) && !existsSync(join(SRC, p.image))) erreurs.push(`${ref} : image introuvable src/${p.image}`);
+    for (const m of p.marches ?? []) if (!marches[m]) erreurs.push(`${ref} : marché inconnu « ${m} »`);
+
+    // Fiche fournisseur : un vrai produit, pas une page de recherche.
+    if (!p.fiche?.url || !/^https:\/\//.test(p.fiche.url)) erreurs.push(`${ref} : fiche fournisseur manquante`);
+    else if (/\/(search|w|list|wholesale)\b|[?&](search|SearchText)=/.test(p.fiche.url)) erreurs.push(`${ref} : la fiche est une page de recherche, pas un produit`);
+
     const a = p.prix_achat;
-    if (a != null) {
-      if (!['USD', 'EUR'].includes(a.devise)) erreurs.push(`${ref} : devise d'achat inconnue « ${a.devise} »`);
-      if (!['verifie', 'estimation'].includes(a.fiabilite)) erreurs.push(`${ref} : fiabilité inconnue « ${a.fiabilite} »`);
-      if (!(a.min > 0 && a.max >= a.min)) erreurs.push(`${ref} : fourchette de prix d'achat invalide`);
-      // Règle de marge : même au prix d'achat le plus haut, le prix de vente fait au moins « coef_minimum » fois le coût.
-      for (const [code, m] of Object.entries(marches)) {
-        const cout = coutMax(p, m.devise);
-        const coef = prixVente(p, code) / cout;
+    if (!a || !['USD', 'EUR'].includes(a.devise) || !(a.min > 0 && a.max >= a.min)) {
+      erreurs.push(`${ref} : prix d'achat (min, max, devise) invalide`);
+      continue;
+    }
+    if (!Array.isArray(p.variantes) || p.variantes.length === 0) {
+      erreurs.push(`${ref} : aucune variante`);
+      continue;
+    }
+    if (p.variantes.length > 1 && !p.option) erreurs.push(`${ref} : plusieurs variantes mais pas de nom d'option (taille, coloris…)`);
+    const idsVar = new Set();
+    for (const v of p.variantes) {
+      const rv = `${ref}, variante « ${v.id} »`;
+      if (idsVar.has(v.id)) erreurs.push(`${rv} : identifiant en double`);
+      idsVar.add(v.id);
+      if (!v.fr || !v.en) erreurs.push(`${rv} : libellé manquant`);
+      if (!(v.vente > 0)) erreurs.push(`${rv} : prix de vente invalide`);
+      if (v.achat != null && (v.achat < a.min - 1e-9 || v.achat > a.max + 1e-9)) erreurs.push(`${rv} : prix d'achat hors de la fourchette de la fiche`);
+      // Règle de marge : le prix de vente fait au moins « coef_minimum » fois le coût, sur chaque marché où le produit est vendu.
+      for (const code of CODES.filter((k) => disponible(p, k))) {
+        const cout = coutVar(p, v, marches[code].devise);
+        const coef = venteVar(v, code) / cout;
         if (coef < meta.coef_minimum) {
-          const champ = p[`prix_vente_${code}`] != null || code !== Object.keys(marches)[0] ? `prix_vente_${code}` : 'prix_vente';
-          erreurs.push(`${ref} : coefficient ${coef.toFixed(2)} sur le marché « ${code} », sous le minimum de ${meta.coef_minimum}. Porter ${champ} à ${Math.ceil(cout * meta.coef_minimum)} au moins.`);
+          erreurs.push(`${rv} : coefficient ${coef.toFixed(2)} sur le marché « ${code} », sous le minimum de ${meta.coef_minimum}. Prix à porter à ${Math.ceil(cout * meta.coef_minimum)} au moins.`);
         }
       }
-    }
-    for (const f of p.fournisseurs ?? []) {
-      if (!/^https:\/\//.test(f.url)) erreurs.push(`${ref} : lien fournisseur invalide ${f.url}`);
     }
   }
 
@@ -278,7 +299,7 @@ function photo(cle, alt = '', cls = '') {
 function liens(code, mode, base = '') {
   const lang = marches[code].langue;
   const ui = UI[lang];
-  const autre = Object.keys(marches).find((k) => k !== code) ?? code;
+  const autre = CODES.find((k) => k !== code) ?? code;
   const nom = (fichier) => fichier.replace(/\.html$/, '');
   if (mode === 'apercu') {
     return {
@@ -304,15 +325,23 @@ function contexte(code, mode, profondeur = 0) {
   const marche = marches[code];
   const lang = marche.langue;
   const base = '../'.repeat(profondeur);
-  const pv = (p) => prixVente(p, code);
+  const liste = produits.filter((p) => disponible(p, code));
+  const pv = (p) => prixMin(p, code);
+  const prix = (v) => monnaie(marche, v);
   return {
     code,
     marche,
     lang,
     ui: UI[lang],
-    pv, // prix de vente d'un produit sur ce marché
-    prix: (v) => monnaie(marche, v), // mise en forme d'un montant
-    prixMini: Math.min(...produits.map(pv)),
+    produits: liste, // produits vendus sur ce marché
+    vedettes: liste.filter((p) => p.vedette != null).sort((a, b) => a.vedette - b.vedette),
+    nouveautes: liste.filter((p) => p.nouveau),
+    produitsDe: (catId) => liste.filter((p) => p.categorie === catId),
+    pv, // prix de vente le plus bas d'un produit sur ce marché
+    prix, // mise en forme d'un montant
+    // Prix affiché sur une carte : « dès 25 € » quand les variantes n'ont pas toutes le même prix.
+    prixCarte: (p) => (prixVarie(p, code) ? UI[lang].from(prix(pv(p))) : prix(pv(p))),
+    prixMini: Math.min(...liste.map(pv)),
     budget: (p) => budgetDe(pv(p)),
     href: liens(code, mode, base),
     assets: mode === 'apercu' ? 'assets/' : `${base}../assets/`,
@@ -348,12 +377,14 @@ function visuel(ctx, p, { classe = '', legende = false } = {}) {
 function carte(ctx, p) {
   const t = p[ctx.lang];
   const cat = catById[p.categorie];
+  const choix = p.variantes.length > 1 ? `<span class="card__choices">${esc(ctx.ui.choices(p.variantes.length, p.option[ctx.lang]))}</span>` : '';
   return `<a class="card" href="${ctx.href.produit(p)}">
   ${visuel(ctx, p)}
   <span class="card__body">
     <span class="card__cat">${esc(cat[ctx.lang].nom)}</span>
     <span class="card__title">${esc(t.nom)}</span>
-    <span class="card__price">${ctx.prix(ctx.pv(p))}</span>
+    ${choix}
+    <span class="card__price">${ctx.prixCarte(p)}</span>
   </span>
 </a>`;
 }
@@ -453,7 +484,7 @@ function vueAccueil(ctx) {
   const { ui, marche, lang, href } = ctx;
 
   const budgets = BUDGETS.map((b) => {
-    const n = produits.filter((p) => ctx.budget(p) === b).length;
+    const n = ctx.produits.filter((p) => ctx.budget(p) === b).length;
     return `<a class="budget" href="${href.cadeaux(b.n)}">
         <span class="budget__label">${esc(ui.budget(b, ctx.prix))}</span>
         <span class="budget__count">${esc(ui.budgetCount(n))} →</span>
@@ -462,7 +493,7 @@ function vueAccueil(ctx) {
 
   const univers = categories
     .map((c) => {
-      const n = produitsDe(c.id).length;
+      const n = ctx.produitsDe(c.id).length;
       return `<a class="tile" href="${href.categorie(c)}">
       ${PHOTOS[`cat-${c.id}`] ? photo(`cat-${c.id}`) : `<span class="visual visual--${c.id}">${icone(c.icone, 'visual__icon')}</span>`}
       <span class="tile__body">
@@ -501,7 +532,7 @@ function vueAccueil(ctx) {
     <h2>${esc(ui.favorites)}</h2>
     <p class="muted">${esc(ui.favoritesIntro)}</p>
   </div>
-  ${grille(ctx, vedettes(), 'grid--feature')}
+  ${grille(ctx, ctx.vedettes, 'grid--feature')}
 </section>
 
 <section class="giftband">
@@ -532,7 +563,7 @@ function vueAccueil(ctx) {
       </div>
       <a href="${href.tous()}">${esc(ui.seeAll)} →</a>
     </div>
-    ${grille(ctx, nouveautes())}
+    ${grille(ctx, ctx.nouveautes)}
   </div>
 </section>
 
@@ -551,7 +582,7 @@ function vueAccueil(ctx) {
 function vueCadeaux(ctx) {
   const { ui, href } = ctx;
   const sections = BUDGETS.map((b) => {
-    const liste = produits.filter((p) => ctx.budget(p) === b).sort((a, z) => ctx.pv(a) - ctx.pv(z));
+    const liste = ctx.produits.filter((p) => ctx.budget(p) === b).sort((a, z) => ctx.pv(a) - ctx.pv(z));
     return `<section class="section section--flush wrap" id="budget-${b.n}">
   <div class="section__head section__head--row">
     <h2>${esc(ui.budget(b, ctx.prix))}</h2>
@@ -576,7 +607,7 @@ ${sections}`;
 
 function vueCategorie(ctx, c) {
   const { ui, lang, href } = ctx;
-  const liste = produitsDe(c.id);
+  const liste = ctx.produitsDe(c.id);
   const corps = `${banniere(ctx, {
     cle: `cat-${c.id}`,
     fil: [[ui.home, href.accueil()], [c[lang].nom]],
@@ -599,17 +630,37 @@ function vueTous(ctx) {
     <h2>${esc(c[lang].nom)}</h2>
     <a href="${href.categorie(c)}">${esc(ui.seeCategory)} →</a>
   </div>
-  ${grille(ctx, produitsDe(c.id))}
+  ${grille(ctx, ctx.produitsDe(c.id))}
 </section>`,
     )
     .join('\n');
   const corps = `<div class="wrap">${filAriane(ctx, [[ui.home, href.accueil()], [ui.allProducts]])}</div>
 <header class="page-head wrap">
   <h1>${esc(ui.allProducts)}</h1>
-  <p class="muted">${esc(ui.count(produits.length))}</p>
+  <p class="muted">${esc(ui.count(ctx.produits.length))}</p>
 </header>
 ${sections}`;
   return { titre: `${ui.allProducts} | ${ctx.marche.nom_boutique}`, description: ctx.marche.hero_texte, corps, actif: 'tous' };
+}
+
+// Choix de la variante (taille, coloris…) : des boutons radio ; le prix affiché suit le choix (voir app.js).
+function selecteurVariantes(ctx, p) {
+  if (p.variantes.length < 2) return '';
+  const nom = `v-${ctx.code}-${p.id}`;
+  const options = p.variantes
+    .map(
+      (v, i) => `<label class="variant">
+        <input type="radio" name="${nom}" value="${esc(v.id)}" data-prix="${esc(ctx.prix(venteVar(v, ctx.code)))}"${i === 0 ? ' checked' : ''}>
+        <span>${esc(v[ctx.lang])}</span>
+      </label>`,
+    )
+    .join('\n      ');
+  return `<fieldset class="variants">
+      <legend class="product__subtitle">${esc(p.option[ctx.lang])}</legend>
+      <div class="variants__list">
+      ${options}
+      </div>
+    </fieldset>`;
 }
 
 function vueProduit(ctx, p) {
@@ -617,8 +668,9 @@ function vueProduit(ctx, p) {
   const t = p[lang];
   const cat = catById[p.categorie];
   const lienCat = href.categorie(cat);
-  const voisins = produitsDe(cat.id).filter((x) => x.id !== p.id).slice(0, 4);
+  const voisins = ctx.produitsDe(cat.id).filter((x) => x.id !== p.id).slice(0, 4);
   const budget = ctx.budget(p);
+  const premier = venteVar(p.variantes[0], ctx.code);
 
   const corps = `<div class="wrap">${filAriane(ctx, [[ui.home, href.accueil()], [cat[lang].nom, lienCat], [t.nom]])}</div>
 <article class="product wrap">
@@ -626,8 +678,9 @@ function vueProduit(ctx, p) {
   <div class="product__info">
     <a class="product__cat" href="${lienCat}">${esc(cat[lang].nom)}</a>
     <h1>${esc(t.nom)}</h1>
-    <p class="product__price">${ctx.prix(ctx.pv(p))}</p>
+    <p class="product__price" data-prix-affiche>${ctx.prix(premier)}</p>
     <p class="product__desc">${esc(t.description)}</p>
+    ${selecteurVariantes(ctx, p)}
     <h2 class="product__subtitle">${esc(ui.highlights)}</h2>
     <ul class="checks">
       ${t.points_forts.map((x) => `<li>${icone('check', 'checks__icon')}${esc(x)}</li>`).join('\n      ')}
@@ -651,6 +704,11 @@ ${
     : ''
 }`;
 
+  const prixListe = p.variantes.map((v) => venteVar(v, ctx.code));
+  const offre =
+    p.variantes.length > 1
+      ? { '@type': 'AggregateOffer', lowPrice: Math.min(...prixListe).toFixed(2), highPrice: Math.max(...prixListe).toFixed(2), offerCount: p.variantes.length }
+      : { '@type': 'Offer', price: premier.toFixed(2) };
   const jsonld = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -659,12 +717,7 @@ ${
     sku: p.id.toUpperCase(),
     category: cat[lang].nom,
     brand: { '@type': 'Brand', name: marche.nom_boutique },
-    offers: {
-      '@type': 'Offer',
-      price: ctx.pv(p).toFixed(2),
-      priceCurrency: marche.devise,
-      availability: 'https://schema.org/InStock',
-    },
+    offers: { ...offre, priceCurrency: marche.devise, availability: 'https://schema.org/InStock' },
   };
 
   return { titre: `${t.nom} | ${marche.nom_boutique}`, description: t.description, corps, jsonld, actif: cat.id };
@@ -691,7 +744,7 @@ ${POLICES}
     <p class="muted">Deux versions sont générées à partir du même catalogue. Choisissez un marché, ou ouvrez <a href="apercu.html">apercu.html</a> : toute la boutique dans un seul fichier.</p>
   </div>
   <div class="budgets">
-    ${Object.keys(marches).map(lien).join('\n    ')}
+    ${CODES.map(lien).join('\n    ')}
   </div>
 </main>
 </body>
@@ -701,7 +754,7 @@ ${POLICES}
 
 // Toutes les pages de tous les marchés, dans l'ordre : [ctx, vue, chemin du fichier].
 function* toutesLesVues(mode) {
-  for (const code of Object.keys(marches)) {
+  for (const code of CODES) {
     const ui = UI[marches[code].langue];
     const racine = contexte(code, mode, 0);
     const sous = contexte(code, mode, 1);
@@ -709,7 +762,7 @@ function* toutesLesVues(mode) {
     yield [racine, vueCadeaux(racine), join(code, ui.giftsFile)];
     yield [racine, vueTous(racine), join(code, ui.allFile)];
     for (const c of categories) yield [sous, vueCategorie(sous, c), join(code, ui.categoryDir, `${c[racine.lang].slug}.html`)];
-    for (const p of produits) yield [sous, vueProduit(sous, p), join(code, ui.productDir, `${p[racine.lang].slug}.html`)];
+    for (const p of sous.produits) yield [sous, vueProduit(sous, p), join(code, ui.productDir, `${p[racine.lang].slug}.html`)];
   }
 }
 
@@ -756,7 +809,7 @@ function construireApercu() {
     );
   }
   const lire = (f) => readFileSync(join(SRC, f), 'utf8');
-  const premier = marches[Object.keys(marches)[0]];
+  const premier = marches[CODES[0]];
   const contenu = `<!doctype html>
 <html lang="${premier.langue}">
 <head>
@@ -787,7 +840,7 @@ ${lire('apercu.js')}
 }
 
 // ---------------------------------------------------------------------------
-// Export Shopify (format CSV d'import produits)
+// Export Shopify (format CSV d'import produits) : une ligne par variante.
 // ---------------------------------------------------------------------------
 
 const csvCellule = (v) => {
@@ -807,235 +860,243 @@ function exporterShopify(code) {
     'Variant Taxable', 'Image Src', 'Image Alt Text', 'Gift Card', 'SEO Title', 'SEO Description',
     'Cost per item', 'Status',
   ];
-  const lignes = produits.map((p) => {
+  const lignes = [];
+  for (const p of produits.filter((x) => disponible(x, code))) {
     const t = p[lang];
     const cat = catById[p.categorie];
-    const vente = prixVente(p, code);
-    const tags = [cat[lang].nom, `${ui.giftsNav} : ${ui.budget(budgetDe(vente), prix).toLowerCase()}`];
+    const tags = [cat[lang].nom, `${ui.giftsNav} : ${ui.budget(budgetDe(prixMin(p, code)), prix).toLowerCase()}`];
     if (p.vedette != null) tags.push(ui.favoriteBadge);
     if (p.nouveau) tags.push(ui.newBadge);
-    const cout = coutMax(p, marche.devise);
     const corps = `<p>${esc(t.description)}</p><ul>${t.points_forts.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`;
     // Les photos d'ambiance ne partent pas dans Shopify : seules les vraies photos produit (URL) sont exportées.
     const distante = /^https?:/.test(p.image ?? '') && !p.image_ambiance;
-    const ligne = {
-      Handle: t.slug,
-      Title: t.nom,
-      'Body (HTML)': corps,
-      Vendor: marche.nom_boutique,
-      Type: cat[lang].nom,
-      Tags: tags.join(', '),
-      Published: 'FALSE',
-      'Option1 Name': 'Title',
-      'Option1 Value': 'Default Title',
-      'Variant SKU': p.id.toUpperCase(),
-      'Variant Inventory Tracker': '',
-      'Variant Inventory Policy': 'deny',
-      'Variant Fulfillment Service': 'manual',
-      'Variant Price': vente.toFixed(2),
-      'Variant Compare At Price': '',
-      'Variant Requires Shipping': 'TRUE',
-      'Variant Taxable': 'TRUE',
-      'Image Src': distante ? p.image : '',
-      'Image Alt Text': distante ? t.nom : '',
-      'Gift Card': 'FALSE',
-      'SEO Title': `${t.nom} | ${marche.nom_boutique}`,
-      'SEO Description': t.description,
-      'Cost per item': cout == null ? '' : arrondi2(cout).toFixed(2),
-      Status: 'draft',
-    };
-    return colonnes.map((c) => csvCellule(ligne[c])).join(',');
-  });
+    p.variantes.forEach((v, i) => {
+      const variante = {
+        Handle: t.slug,
+        'Option1 Value': p.option ? v[lang] : 'Default Title',
+        'Variant SKU': `${p.id}-${v.id}`.toUpperCase(),
+        'Variant Inventory Tracker': '',
+        'Variant Inventory Policy': 'deny',
+        'Variant Fulfillment Service': 'manual',
+        'Variant Price': venteVar(v, code).toFixed(2),
+        'Variant Requires Shipping': 'TRUE',
+        'Variant Taxable': 'TRUE',
+        'Cost per item': arrondi2(coutVar(p, v, marche.devise)).toFixed(2),
+      };
+      const produit =
+        i === 0
+          ? {
+              Title: t.nom,
+              'Body (HTML)': corps,
+              Vendor: marche.nom_boutique,
+              Type: cat[lang].nom,
+              Tags: tags.join(', '),
+              Published: 'FALSE',
+              'Option1 Name': p.option ? p.option[lang] : 'Title',
+              'Image Src': distante ? p.image : '',
+              'Image Alt Text': distante ? t.nom : '',
+              'Gift Card': 'FALSE',
+              'SEO Title': `${t.nom} | ${marche.nom_boutique}`,
+              'SEO Description': t.description,
+              Status: 'draft',
+            }
+          : {};
+      const ligne = { ...variante, ...produit };
+      lignes.push(colonnes.map((c) => csvCellule(ligne[c])).join(','));
+    });
+  }
   const fichier = join(EXPORTS, `shopify-${code}.csv`);
   ecrire(fichier, [colonnes.join(','), ...lignes].join('\n') + '\n');
   return fichier;
 }
 
 // ---------------------------------------------------------------------------
-// Chiffres internes : prix, marges, fournisseurs
+// Chiffres internes : prix, marges, fournisseurs, variante par variante
 // ---------------------------------------------------------------------------
 
 const nbFr = (v, dec = 2) =>
   new Intl.NumberFormat('fr-FR', { minimumFractionDigits: dec, maximumFractionDigits: dec }).format(v);
 const euros = (v, dec = 2) => `${nbFr(v, dec)} €`;
 const dollars = (v, dec = 2) => `${nbFr(v, dec)} $`;
-const entier = (v) => nbFr(v, Number.isInteger(v) ? 0 : 2);
+const enDevise = (v, devise, dec = 2) => (devise === 'EUR' ? euros(v, dec) : dollars(v, dec));
 const X = `x${nbFr(meta.coef_minimum, 0)}`;
 
-function achatBrief(a) {
-  if (!a) return '—';
-  const sym = a.devise === 'USD' ? '$' : '€';
-  if (a.min === a.max) return `${a.approximatif ? '~' : ''}${entier(a.min)} ${sym}`;
-  return `${entier(a.min)} à ${entier(a.max)} ${sym}`;
+// Une ligne de chiffres par variante : achat, coût en euros, ventes et coefficients sur chaque marché.
+function lignesVariantes(p) {
+  return p.variantes.map((v) => {
+    const a = p.prix_achat;
+    const achat = achatPrecis(v) ? enDevise(v.achat, a.devise) : a.min === a.max ? enDevise(a.max, a.devise) : `${enDevise(a.min, a.devise)} à ${enDevise(a.max, a.devise)}`;
+    const cout = coutVar(p, v, 'EUR');
+    const lignes = { v, achat, precis: achatPrecis(v) || a.min === a.max, cout };
+    for (const code of CODES) {
+      if (!disponible(p, code)) continue;
+      const vente = venteVar(v, code);
+      lignes[code] = { vente, coef: vente / coutVar(p, v, marches[code].devise) };
+    }
+    return lignes;
+  });
 }
 
-const fiabilite = (p) => (!p.prix_achat ? 'À compléter' : p.prix_achat.fiabilite === 'verifie' ? 'Vérifié' : 'Estimation');
-const LIBELLE_TYPE = { fiche: 'fiche produit', recherche: 'recherche', categorie: 'catégorie' };
-
-// Chiffres d'un produit pour le marché français (euros), plus le prix et le coefficient US.
-function analyse(p) {
-  const cout = coutMax(p, 'EUR');
-  if (cout == null) return { cout: null };
-  const a = p.prix_achat;
-  const vente = prixVente(p, 'fr');
-  const coef = vente / cout;
-  // Prix d'achat à ne pas dépasser pour garder le coefficient minimum, dans la devise du fournisseur.
-  const plafondEur = vente / meta.coef_minimum;
-  const plafond = a.devise === 'EUR' ? euros(plafondEur) : dollars(plafondEur / meta.taux_usd_vers_eur);
-  const venteUs = prixVente(p, 'us');
-  return {
-    cout,
-    vente,
-    coef,
-    coefMeilleur: vente / (cout * (a.min / a.max)),
-    marge: vente - cout,
-    margeTva: vente / (1 + meta.tva_fr) - cout,
-    plafond,
-    venteUs,
-    coefUs: venteUs / coutMax(p, 'USD'),
-    juste: coef < meta.coef_confort,
-  };
-}
-
-const coefTexte = (x) => `${nbFr(x.coef)}${x.coefMeilleur - x.coef > 0.005 ? ` → ${nbFr(x.coefMeilleur)}` : ''}`;
+const tousLesCoefs = () => produits.flatMap((p) => lignesVariantes(p).flatMap((l) => CODES.filter((c) => l[c]).map((c) => l[c].coef)));
 
 function exporterCatalogueInterne() {
-  const analyses = produits.map((p) => ({ p, ...analyse(p) }));
-  const chiffres = analyses.filter((x) => x.cout != null);
-  const coefMoyen = chiffres.reduce((s, x) => s + x.coef, 0) / chiffres.length;
-  const coefMini = Math.min(...chiffres.flatMap((x) => [x.coef, x.coefUs]));
-  const prixMoyen = produits.reduce((s, p) => s + p.prix_vente, 0) / produits.length;
-  const justes = chiffres.filter((x) => x.juste).sort((a, b) => a.coef - b.coef);
-  const nb = (f) => produits.filter((p) => fiabilite(p) === f).length;
+  const coefs = tousLesCoefs();
+  const coefMini = Math.min(...coefs);
+  const coefMoyen = coefs.reduce((s, c) => s + c, 0) / coefs.length;
+  const nbVariantes = produits.reduce((s, p) => s + p.variantes.length, 0);
+  const parFournisseur = produits.reduce((acc, p) => ({ ...acc, [p.fiche.fournisseur]: (acc[p.fiche.fournisseur] ?? 0) + 1 }), {});
 
   const out = [];
   out.push('# Catalogue interne : prix, marges et fournisseurs');
   out.push('');
-  out.push(`> Document généré par \`node build.mjs\` à partir de \`catalogue.json\` (mise à jour du catalogue : ${meta.mise_a_jour}). Ne pas modifier à la main : modifier le JSON puis relancer le script.`);
+  out.push(`> Document généré par \`node build.mjs\` à partir de \`catalogue.json\` (mise à jour : ${meta.mise_a_jour}). Ne pas modifier à la main : modifier le JSON puis relancer le script.`);
   out.push('');
-  out.push('## Règle de marge');
+  out.push('## Méthode');
   out.push('');
-  out.push(`Chaque produit se vend au moins **${nbFr(meta.coef_minimum, 0)} fois** son prix d'achat, même au prix d'achat le plus haut relevé, en France comme aux US. Le script refuse un catalogue qui ne respecte pas cette règle.`);
-  out.push('');
-  out.push(`- **Coût retenu** : le haut de la fourchette du prix d'achat, **hors frais de port**.`);
-  out.push(`- **Taux de change** : 1 $ = ${nbFr(meta.taux_usd_vers_eur)} € (à mettre à jour dans \`catalogue.json\` → \`meta.taux_usd_vers_eur\`).`);
-  out.push(`- **Coef.** : prix de vente ÷ coût, au prix d'achat le plus haut puis le plus bas (« pire → meilleur »).`);
-  out.push(`- **Achat max pour ${X}** : le prix d'achat à ne pas dépasser chez le fournisseur.`);
-  out.push(`- **Marge après TVA** : marge si la boutique facture la TVA française (${nbFr(meta.tva_fr * 100, 0)} %), c'est-à-dire prix ÷ ${nbFr(1 + meta.tva_fr, 1)} − coût.`);
-  out.push(`- **Vente US** : par défaut le même chiffre en dollars. Quand cela ferait passer sous ${X}, le produit a un prix US propre (\`prix_vente_us\`).`);
-  out.push(`- ⚠ = coefficient inférieur à ${nbFr(meta.coef_confort, 1)} : la règle est respectée, mais il reste peu de place pour le port, la publicité et les frais de paiement.`);
+  out.push(`- **Une fiche par produit** : chaque produit renvoie à la page d'un article précis chez le fournisseur, jamais à une page de recherche.`);
+  out.push(`- **Prix relevés** : ${meta.releve}`);
+  out.push(`- **Règle de marge** : chaque variante se vend au moins **${nbFr(meta.coef_minimum, 0)} fois** son coût d'achat, sur chaque marché où elle est vendue. Le script refuse un catalogue qui ne la respecte pas.`);
+  out.push(`- **Coût** : prix d'achat **hors frais de port**, converti en euros à 1 $ = ${nbFr(meta.taux_usd_vers_eur)} €.`);
+  out.push(`- ⚠ = coefficient inférieur à ${nbFr(meta.coef_confort, 1)} : peu de place pour le port, la publicité et les frais de paiement.`);
   out.push('');
   out.push('## Synthèse');
   out.push('');
   out.push('| Indicateur | Valeur |');
   out.push('|---|---|');
-  out.push(`| Produits au catalogue | ${produits.length} (dont ${nouveautes().length} nouveautés) |`);
-  out.push(`| Prix d'achat vérifiés / estimés | ${nb('Vérifié')} / ${nb('Estimation')} |`);
-  out.push(`| Prix de vente moyen | ${euros(prixMoyen)} |`);
-  out.push(`| Coefficient le plus bas (pire cas, France et US) | ${nbFr(coefMini)} |`);
-  out.push(`| Coefficient moyen (pire cas, France) | ${nbFr(coefMoyen)} |`);
-  out.push(`| Produits sous ${nbFr(meta.coef_confort, 1)} en France (⚠) | ${justes.length} |`);
-  out.push('');
-  out.push('## Produits vedettes (page d’accueil)');
-  out.push('');
-  for (const p of vedettes()) out.push(`${p.vedette}. ${p.fr.nom} (${euros(p.prix_vente, 0)})`);
+  out.push(`| Produits | ${produits.length} (${Object.entries(parFournisseur).map(([f, n]) => `${n} ${f}`).join(', ')}) |`);
+  out.push(`| Variantes | ${nbVariantes} |`);
+  out.push(`| Coefficient le plus bas (France et US) | ${nbFr(coefMini)} |`);
+  out.push(`| Coefficient moyen | ${nbFr(coefMoyen)} |`);
+  out.push(`| Produits vendus en France seulement | ${produits.filter((p) => p.marches && !p.marches.includes('us')).map((p) => p.fr.nom).join(', ') || 'aucun'} |`);
   out.push('');
 
   for (const c of categories) {
     out.push(`## ${c.fr.nom}`);
     out.push('');
-    out.push(`| Produit | Achat relevé | Fiabilité | Vente | Coût max | Coef. (pire → meilleur) | Achat max pour ${X} | Marge brute | Marge après TVA | Vente US (coef.) |`);
-    out.push('|---|---|---|---:|---:|---:|---:|---:|---:|---:|');
-    for (const x of analyses.filter((a) => a.p.categorie === c.id)) {
-      const p = x.p;
-      const cells =
-        x.cout == null
-          ? ['—', '—', '—', '—', '—', '—']
-          : [euros(x.cout), `${coefTexte(x)}${x.juste ? ' ⚠' : ''}`, x.plafond, euros(x.marge), euros(x.margeTva), `${dollars(x.venteUs, 0)} (${nbFr(x.coefUs)})`];
-      const marques = `${p.vedette != null ? '★ ' : ''}${p.nouveau ? '(nouveau) ' : ''}`;
-      out.push(`| ${marques}${p.fr.nom} | ${achatBrief(p.prix_achat)} | ${fiabilite(p)} | ${euros(p.prix_vente, 0)} | ${cells.join(' | ')} |`);
+    for (const p of produits.filter((x) => x.categorie === c.id)) {
+      const marques = [p.vedette != null ? '★ coup de cœur' : '', p.nouveau ? 'nouveau' : '', p.marches ? `vendu en ${p.marches.join(', ').toUpperCase()} seulement` : ''].filter(Boolean);
+      out.push(`### ${p.fr.nom}${marques.length ? ` (${marques.join(', ')})` : ''}`);
+      out.push('');
+      out.push(`- Fiche ${p.fiche.fournisseur} : [${p.fiche.titre}](${p.fiche.url})${p.fiche.ref ? `, réf. ${p.fiche.ref}` : ''}`);
+      out.push(`- Prix affiché : ${p.fiche.prix_affiche}`);
+      if (p.notes) out.push(`- ${p.notes}`);
+      out.push('');
+      out.push(`| ${p.option ? p.option.fr : 'Variante'} | Achat | Coût max (€) | Vente France | Coef. | Vente US | Coef. US |`);
+      out.push('|---|---|---:|---:|---:|---:|---:|');
+      for (const l of lignesVariantes(p)) {
+        const fr = l.fr ? [euros(l.fr.vente, 0), `${nbFr(l.fr.coef)}${l.fr.coef < meta.coef_confort ? ' ⚠' : ''}`] : ['—', '—'];
+        const us = l.us ? [dollars(l.us.vente, 0), `${nbFr(l.us.coef)}${l.us.coef < meta.coef_confort ? ' ⚠' : ''}`] : ['non vendu', '—'];
+        out.push(`| ${l.v.fr} | ${l.achat} | ${euros(l.cout)} | ${fr.join(' | ')} | ${us.join(' | ')} |`);
+      }
+      out.push('');
     }
-    out.push('');
   }
-  out.push('★ = coup de cœur de la page d’accueil.');
-  out.push('');
 
-  out.push('## Fournisseurs');
+  out.push('## À vérifier avant la mise en vente');
   out.push('');
-  out.push('« Fiche produit » = page d’un article précis. « Recherche » ou « catégorie » = page de résultats : il faut encore choisir une annonce précise (avis, délais, entrepôt US/UE) dont le prix reste sous l’achat maximum.');
-  out.push('');
-  for (const p of produits) {
-    out.push(`- **${p.fr.nom}**`);
-    if (!p.fournisseurs?.length) out.push('  - _Aucun fournisseur renseigné_');
-    for (const f of p.fournisseurs ?? []) out.push(`  - ${f.nom} (${LIBELLE_TYPE[f.type] ?? f.type}${f.note ? `, ${f.note}` : ''}) : ${f.url}`);
-  }
-  out.push('');
-
-  out.push('## À compléter ou vérifier');
-  out.push('');
-  for (const p of produits) {
-    const points = [];
-    if (!p.prix_achat) points.push("prix d'achat manquant");
-    else if (p.prix_achat.fiabilite === 'estimation') points.push("prix d'achat estimé, à vérifier chez le fournisseur");
-    if (!(p.fournisseurs ?? []).some((f) => f.type === 'fiche')) points.push('pas encore de fiche fournisseur précise');
-    if (!p.image) points.push('photo manquante');
-    else if (p.image_ambiance) points.push("photo d'ambiance à remplacer par la photo du fournisseur");
-    if (points.length) out.push(`- **${p.fr.nom}** : ${points.join(' ; ')}.${p.notes ? ` _${p.notes}_` : ''}`);
-  }
+  out.push('- Ouvrir chaque fiche, choisir la variante et vérifier son prix : quand la fiche ne donne qu’une fourchette, le prix exact d’une taille n’apparaît qu’une fois la taille choisie.');
+  out.push('- Ajouter les frais de port du fournisseur : ils ne sont pas comptés.');
+  out.push('- Sur AliExpress, beaucoup de prix affichés sont des promotions : vérifier le prix le jour de la commande.');
+  out.push('- Remplacer les photos d’ambiance par celles du fournisseur.');
+  out.push('- Produits électriques : vérifier le marquage CE (Europe) ou UL/ETL (US).');
   out.push('');
 
   const fichier = join(EXPORTS, 'catalogue-interne.md');
   ecrire(fichier, out.join('\n'));
-  return { fichier, justes, coefMoyen, coefMini };
+  return { fichier, coefMini, coefMoyen, nbVariantes };
 }
 
-// Liste des produits avec leurs liens, en HTML simple : sert de base au Google Doc.
-function exporterListeLiens() {
-  const bord = 'border:1px solid #9fb3a8';
-  const th = (t) => `<th style="background-color:#12332b;color:#ffffff;text-align:left;padding:6px 8px;${bord}">${t}</th>`;
-  const td = (t, droite = false) => `<td style="padding:6px 8px;${bord};vertical-align:top${droite ? ';text-align:right' : ''}">${t}</td>`;
-  const petit = (t) => `<span style="color:#5b6a64;font-size:9pt">${t}</span>`;
-  const out = [];
-  out.push('<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Boutique cocooning : produits et liens fournisseurs</title></head><body style="font-family:Arial,sans-serif;font-size:10.5pt">');
-  out.push('<h1>Boutique cocooning : produits et liens fournisseurs</h1>');
-  out.push(`<p>Catalogue du ${meta.mise_a_jour.split('-').reverse().join('/')} : ${produits.length} produits, dont ${nouveautes().length} nouveautés pour Noël.</p>`);
-  out.push('<h2>Comment lire ce document</h2>');
-  out.push('<ul>');
-  out.push(`<li><b>Règle de marge</b> : chaque produit se vend au moins ${nbFr(meta.coef_minimum, 0)} fois son prix d'achat, même au prix d'achat le plus haut relevé.</li>`);
-  out.push(`<li><b>Achat max pour ${X}</b> : le prix à ne pas dépasser chez le fournisseur, frais de port non compris. Au-dessus, la marge passe sous ${X}.</li>`);
-  out.push("<li><b>Coef.</b> : prix de vente ÷ prix d'achat, du prix d'achat le plus haut au plus bas.</li>");
-  out.push('<li><b>Fiabilité</b> : « Vérifié » = prix relevé sur un site fournisseur en novembre 2026. « Estimation » = prix à confirmer.</li>');
-  out.push("<li><b>Liens</b> : « fiche produit » mène à un article précis. « recherche » et « catégorie » mènent à une liste où il reste à choisir l'annonce.</li>");
-  out.push(`<li><b>Prix US</b> : indiqué seulement quand il diffère du prix en euros. Taux retenu : 1 $ = ${nbFr(meta.taux_usd_vers_eur)} €.</li>`);
-  out.push('</ul>');
-
+// Liste des produits pour le Google Doc : des blocs (titres, paragraphes, listes, tableaux) écrits en
+// JSON pour la mise à jour du Doc, et rendus en HTML pour la lecture.
+function blocsListeProduits() {
+  const B = [];
+  const nbVariantes = produits.reduce((s, p) => s + p.variantes.length, 0);
+  const date = meta.mise_a_jour.split('-').reverse().join('/');
+  B.push({ type: 'h1', runs: [{ text: 'Boutique cocooning : produits, tailles et prix' }] });
+  B.push({ type: 'p', runs: [{ text: `Catalogue du ${date} : ${produits.length} produits et ${nbVariantes} variantes. Chaque produit renvoie à la fiche d'un article précis chez CJ Dropshipping ou AliExpress, avec le prix de chaque taille ou coloris.` }] });
+  B.push({ type: 'h2', runs: [{ text: 'Comment lire ce document' }] });
+  B.push({
+    type: 'ul',
+    items: [
+      [{ text: 'Fiche fournisseur', bold: true }, { text: " : le lien ouvre la page de l'article chez le fournisseur." }],
+      [{ text: "Prix d'achat", bold: true }, { text: ` : prix affiché sur la fiche le ${date}, frais de port non compris. Quand la fiche ne donne qu'une fourchette pour toutes les tailles, le tableau indique la fourchette : le prix exact d'une taille s'affiche sur la fiche quand on la choisit.` }],
+      [{ text: 'Prix de vente', bold: true }, { text: ` : chaque variante se vend au moins ${nbFr(meta.coef_minimum, 0)} fois son prix d'achat, même au haut de la fourchette.` }],
+      [{ text: 'Coef.', bold: true }, { text: ` : prix de vente France ÷ prix d'achat converti en euros (1 $ = ${nbFr(meta.taux_usd_vers_eur)} €).` }],
+      [{ text: 'Prix US', bold: true }, { text: ' : même chiffre en dollars, sauf mention contraire.' }],
+    ],
+  });
   for (const c of categories) {
-    out.push(`<h2>${esc(c.fr.nom)}</h2>`);
-    out.push('<table style="border-collapse:collapse;width:100%">');
-    out.push(`<tr>${['Produit', 'Prix de vente', "Prix d'achat", `Achat max pour ${X}`, 'Coef.', 'Liens fournisseurs'].map(th).join('')}</tr>`);
-    for (const p of produitsDe(c.id)) {
-      const x = analyse(p);
-      const marques = [p.vedette != null ? 'Coup de cœur' : '', p.nouveau ? 'Nouveau' : ''].filter(Boolean).join(', ');
-      const liensHtml = (p.fournisseurs ?? [])
-        .map((f) => `<a href="${esc(f.url)}">${esc(f.nom)} (${LIBELLE_TYPE[f.type] ?? f.type})</a>${f.note ? ` : ${esc(f.note)}` : ''}`)
-        .join('<br>');
-      const vente = `${euros(p.prix_vente, 0)}${x.venteUs !== p.prix_vente ? `<br>${petit(`US : ${dollars(x.venteUs, 0)}`)}` : ''}`;
-      out.push(
-        `<tr>${td(`<b>${esc(p.fr.nom)}</b>${marques ? `<br><i>${marques}</i>` : ''}${p.notes ? `<br>${petit(esc(p.notes))}` : ''}`)}${td(vente, true)}${td(`${achatBrief(p.prix_achat)}<br>${petit(fiabilite(p))}`)}${td(x.plafond ?? '—', true)}${td(x.cout == null ? '—' : coefTexte(x), true)}${td(liensHtml || '—')}</tr>`,
-      );
+    B.push({ type: 'h2', runs: [{ text: c.fr.nom }] });
+    for (const p of produits.filter((x) => x.categorie === c.id)) {
+      const marques = [p.vedette != null ? 'coup de cœur' : '', p.nouveau ? 'nouveau' : '', p.marches ? 'France seulement' : ''].filter(Boolean);
+      B.push({ type: 'h3', runs: [{ text: p.fr.nom }, ...(marques.length ? [{ text: ` (${marques.join(', ')})` }] : [])] });
+      B.push({
+        type: 'p',
+        runs: [
+          { text: `Fiche ${p.fiche.fournisseur} : `, bold: true },
+          { text: p.fiche.titre, link: p.fiche.url },
+          ...(p.fiche.ref ? [{ text: ` (réf. ${p.fiche.ref})` }] : []),
+          { text: `. Prix affiché : ${p.fiche.prix_affiche}.` },
+        ],
+      });
+      if (p.notes) B.push({ type: 'p', runs: [{ text: p.notes, italic: true }] });
+      const avecUs = p.variantes.some((v) => v.vente_us != null) || (p.prix_achat.devise === 'EUR' && disponible(p, 'us'));
+      const entete = [p.option ? p.option.fr : 'Variante', "Prix d'achat", 'Prix de vente', 'Coef.'];
+      if (avecUs) entete.push('Prix US');
+      const lignes = lignesVariantes(p).map((l) => {
+        const ligne = [l.v.fr, l.achat, euros(l.fr.vente, 0), nbFr(l.fr.coef)];
+        if (avecUs) ligne.push(l.us ? dollars(l.us.vente, 0) : '—');
+        return ligne;
+      });
+      B.push({ type: 'table', rows: [entete, ...lignes] });
     }
-    out.push('</table>');
   }
-  out.push("<h2>À faire avant l'ouverture</h2>");
-  out.push('<ul>');
-  out.push("<li>Ouvrir chaque lien, choisir une annonce précise et vérifier que son prix reste sous l'achat maximum.</li>");
-  out.push('<li>Ajouter les frais de port du fournisseur au calcul : ils ne sont pas comptés ici.</li>');
-  out.push("<li>Remplacer les photos d'ambiance du site par les photos des fournisseurs.</li>");
-  out.push('<li>Produits électriques : vérifier le marquage CE (Europe) ou UL/ETL (États-Unis) auprès du fournisseur.</li>');
-  out.push('</ul>');
-  out.push('</body></html>');
+  B.push({ type: 'h2', runs: [{ text: "À faire avant l'ouverture" }] });
+  B.push({
+    type: 'ul',
+    items: [
+      [{ text: 'Ouvrir chaque fiche, choisir la taille ou le coloris et vérifier que le prix reste sous le prix de vente divisé par 2.' }],
+      [{ text: 'Ajouter les frais de port du fournisseur : ils ne sont pas comptés ici.' }],
+      [{ text: 'Sur AliExpress, beaucoup de prix affichés sont des promotions : vérifier le prix le jour de la commande.' }],
+      [{ text: "Remplacer les photos d'ambiance du site par les photos des fournisseurs." }],
+      [{ text: 'Produits électriques : vérifier le marquage CE (Europe) ou UL/ETL (États-Unis) auprès du fournisseur.' }],
+    ],
+  });
+  return B;
+}
+
+function blocsEnHtml(blocs) {
+  const runs = (rs) =>
+    rs
+      .map((r) => {
+        let s = esc(r.text);
+        if (r.bold) s = `<b>${s}</b>`;
+        if (r.italic) s = `<i>${s}</i>`;
+        if (r.link) s = `<a href="${esc(r.link)}">${s}</a>`;
+        return s;
+      })
+      .join('');
+  const bord = 'border:1px solid #9fb3a8;padding:5px 8px;vertical-align:top';
+  return blocs
+    .map((b) => {
+      if (b.type === 'ul') return `<ul>${b.items.map((it) => `<li>${runs(it)}</li>`).join('')}</ul>`;
+      if (b.type === 'table') {
+        const [entete, ...rows] = b.rows;
+        return `<table style="border-collapse:collapse">\n<tr>${entete.map((x) => `<th style="${bord};background-color:#e7eee8;text-align:left">${esc(x)}</th>`).join('')}</tr>\n${rows
+          .map((r) => `<tr>${r.map((x, i) => `<td style="${bord}${i > 0 ? ';text-align:right' : ''}">${esc(x)}</td>`).join('')}</tr>`)
+          .join('\n')}\n</table>`;
+      }
+      return `<${b.type}>${runs(b.runs)}</${b.type}>`;
+    })
+    .join('\n');
+}
+
+function exporterListeProduits() {
+  const blocs = blocsListeProduits();
+  ecrire(join(EXPORTS, 'produits-et-liens.json'), JSON.stringify(blocs, null, 1) + '\n');
+  const html = `<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Boutique cocooning : produits, tailles et prix</title></head><body style="font-family:Arial,sans-serif;font-size:10.5pt">\n${blocsEnHtml(blocs)}\n</body></html>\n`;
   const fichier = join(EXPORTS, 'produits-et-liens.html');
-  ecrire(fichier, out.join('\n') + '\n');
+  ecrire(fichier, html);
   return fichier;
 }
 
@@ -1044,11 +1105,11 @@ function exporterListeLiens() {
 valider();
 const nbPages = construireSite();
 const nbEcrans = construireApercu();
-const csv = Object.keys(marches).map(exporterShopify);
+const csv = CODES.map(exporterShopify);
 const interne = exporterCatalogueInterne();
-const listeLiens = exporterListeLiens();
+const liste = exporterListeProduits();
 
-console.log(`Catalogue : ${produits.length} produits, ${categories.length} catégories, ${vedettes().length} vedettes, ${nouveautes().length} nouveautés.`);
+console.log(`Catalogue : ${produits.length} produits (${interne.nbVariantes} variantes), ${categories.length} catégories.`);
 console.log(`Site : ${nbPages} pages dans dist/ (ouvrir dist/index.html), et dist/apercu.html (${nbEcrans} écrans dans un seul fichier).`);
-console.log(`Exports : ${[...csv, interne.fichier, listeLiens].map((f) => f.replace(ROOT + '/', '')).join(', ')}`);
-console.log(`Marge : coefficient le plus bas ${nbFr(interne.coefMini)}, moyen ${nbFr(interne.coefMoyen)} ; ${interne.justes.length} produits sous ${nbFr(meta.coef_confort, 1)}.`);
+console.log(`Exports : ${[...csv, interne.fichier, liste].map((f) => f.replace(ROOT + '/', '')).join(', ')}`);
+console.log(`Marge : coefficient le plus bas ${nbFr(interne.coefMini)}, moyen ${nbFr(interne.coefMoyen)}.`);

@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Gloock&family=Sacramento&display=swap">
 <link rel="stylesheet" href="../../assets/style.css">
 <link rel="stylesheet" href="../../assets/photos.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Lampe lune 3D","description":"Une lune lumineuse posée sur son support en bois. 16 couleurs au choix, à la télécommande ou d'un simple toucher.","sku":"LAMPE-LUNE","category":"Déco et ambiance","brand":{"@type":"Brand","name":"Maison Cocon"},"offers":{"@type":"Offer","price":"39.00","priceCurrency":"EUR","availability":"https://schema.org/InStock"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Lampe lune 3D","description":"Une lune lumineuse posée sur son support en bois. 16 couleurs au choix, à la télécommande ou d'un simple toucher.","sku":"LAMPE-LUNE","category":"Déco et ambiance","brand":{"@type":"Brand","name":"Maison Cocon"},"offers":{"@type":"AggregateOffer","lowPrice":"35.00","highPrice":"55.00","offerCount":5,"priceCurrency":"EUR","availability":"https://schema.org/InStock"}}</script>
 </head>
 <body>
 <p class="promo"><span class="wrap promo__inner"><svg class="promo__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l1.9 6.1 6.1 1.9-6.1 1.9L12 18.5l-1.9-6.1L4 10.5l6.1-1.9z"/><path d="M19 17.5v3M17.5 19h3"/></svg><span>Idées cadeaux de Noël dès 16 €</span><span class="promo__count" data-noel="Noël dans {n} jours" data-noel-1="Noël, c'est demain"></span></span></p>
@@ -36,13 +36,39 @@
   <div class="product__info">
     <a class="product__cat" href="../categorie/deco-ambiance.html">Déco et ambiance</a>
     <h1>Lampe lune 3D</h1>
-    <p class="product__price">39 €</p>
+    <p class="product__price" data-prix-affiche>35 €</p>
     <p class="product__desc">Une lune lumineuse posée sur son support en bois. 16 couleurs au choix, à la télécommande ou d'un simple toucher.</p>
+    <fieldset class="variants">
+      <legend class="product__subtitle">Taille</legend>
+      <div class="variants__list">
+      <label class="variant">
+        <input type="radio" name="v-fr-lampe-lune" value="10cm" data-prix="35 €" checked>
+        <span>10 cm</span>
+      </label>
+      <label class="variant">
+        <input type="radio" name="v-fr-lampe-lune" value="13cm" data-prix="39 €">
+        <span>13 cm</span>
+      </label>
+      <label class="variant">
+        <input type="radio" name="v-fr-lampe-lune" value="15cm" data-prix="45 €">
+        <span>15 cm</span>
+      </label>
+      <label class="variant">
+        <input type="radio" name="v-fr-lampe-lune" value="18cm" data-prix="49 €">
+        <span>18 cm</span>
+      </label>
+      <label class="variant">
+        <input type="radio" name="v-fr-lampe-lune" value="20cm" data-prix="55 €">
+        <span>20 cm</span>
+      </label>
+      </div>
+    </fieldset>
     <h2 class="product__subtitle">Points forts</h2>
     <ul class="checks">
+      <li><svg class="checks__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>5 tailles, de 10 à 20 cm</li>
       <li><svg class="checks__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>16 couleurs, télécommande et commande tactile</li>
-      <li><svg class="checks__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Rechargeable en USB, 6 à 10 h d'autonomie</li>
-      <li><svg class="checks__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Livrée avec son support en bois</li>
+      <li><svg class="checks__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Rechargeable en USB, 6 à 10 h</li>
+      <li><svg class="checks__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Support en bois fourni</li>
     </ul>
     <button class="btn btn--block" type="button" data-add-to-cart data-message="Aperçu : le paiement sera activé à l'ouverture de la boutique.">Ajouter au panier</button>
     <a class="giftline" href="../idees-cadeaux.html#budget-2"><svg class="giftline__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11h16v9H4z"/><path d="M3 7.5h18V11H3z"/><path d="M12 7.5V20"/><path d="M12 7.5c-1-2.2-2.6-3.5-4-3.2-1.5.4-1.5 2.4.2 3.2"/><path d="M12 7.5c1-2.2 2.6-3.5 4-3.2 1.5.4 1.5 2.4-.2 3.2"/></svg><span>Idées cadeaux · De 25 € à 50 €</span><span aria-hidden="true">→</span></a>
@@ -64,6 +90,7 @@
   <span class="card__body">
     <span class="card__cat">Déco et ambiance</span>
     <span class="card__title">Diffuseur humidificateur effet flamme</span>
+    <span class="card__choices">2 coloriss au choix</span>
     <span class="card__price">39 €</span>
   </span>
 </a>
@@ -72,15 +99,8 @@
   <span class="card__body">
     <span class="card__cat">Déco et ambiance</span>
     <span class="card__title">Lampe chauffe-bougie</span>
+    
     <span class="card__price">49 €</span>
-  </span>
-</a>
-<a class="card" href="../produit/bougies-led-sans-flamme.html">
-  <span class="visual visual--deco "><span class="photo ph-bougies-led " role="img" aria-label="Bougies LED sans flamme (lot de 3)"></span><span class="badges"><span class="badge badge--new">Nouveau</span></span></span>
-  <span class="card__body">
-    <span class="card__cat">Déco et ambiance</span>
-    <span class="card__title">Bougies LED sans flamme (lot de 3)</span>
-    <span class="card__price">29 €</span>
   </span>
 </a>
 <a class="card" href="../produit/projecteur-galaxie-astronaute.html">
@@ -88,6 +108,7 @@
   <span class="card__body">
     <span class="card__cat">Déco et ambiance</span>
     <span class="card__title">Projecteur galaxie astronaute</span>
+    <span class="card__choices">2 coloriss au choix</span>
     <span class="card__price">39 €</span>
   </span>
 </a></div>
